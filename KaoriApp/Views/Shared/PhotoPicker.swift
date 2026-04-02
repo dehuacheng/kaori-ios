@@ -51,12 +51,21 @@ struct PhotoPickerButton: View {
             Task {
                 if let data = try? await item?.loadTransferable(type: Data.self),
                    let image = UIImage(data: data),
-                   let jpeg = image.jpegData(compressionQuality: 0.8) {
+                   let jpeg = resized(image).jpegData(compressionQuality: 0.8) {
                     imageData = jpeg
                 }
             }
         }
     }
+}
+
+private func resized(_ image: UIImage, maxDimension: CGFloat = 1600) -> UIImage {
+    let size = image.size
+    guard max(size.width, size.height) > maxDimension else { return image }
+    let scale = maxDimension / max(size.width, size.height)
+    let newSize = CGSize(width: size.width * scale, height: size.height * scale)
+    let renderer = UIGraphicsImageRenderer(size: newSize)
+    return renderer.image { _ in image.draw(in: CGRect(origin: .zero, size: newSize)) }
 }
 
 struct CameraView: UIViewControllerRepresentable {
@@ -86,7 +95,7 @@ struct CameraView: UIViewControllerRepresentable {
         func imagePickerController(_ picker: UIImagePickerController,
                                    didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
             if let image = info[.originalImage] as? UIImage,
-               let jpeg = image.jpegData(compressionQuality: 0.8) {
+               let jpeg = resized(image).jpegData(compressionQuality: 0.8) {
                 parent.imageData = jpeg
             }
             parent.dismiss()
