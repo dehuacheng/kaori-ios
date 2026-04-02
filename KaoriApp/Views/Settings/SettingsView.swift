@@ -158,8 +158,8 @@ struct SettingsView: View {
             WorkoutImportView(workouts: workoutImportList, existingWorkouts: existingWorkouts)
         }
         .onAppear {
-            serverURL = config.serverURL.isEmpty ? "https://REDACTED_SERVER_URL" : config.serverURL
-            token = config.token.isEmpty ? "REDACTED_TOKEN" : config.token
+            serverURL = config.serverURL.isEmpty ? (AppConfig.bundledDefaults["serverURL"] ?? "") : config.serverURL
+            token = config.token.isEmpty ? (AppConfig.bundledDefaults["token"] ?? "") : config.token
             if let mode = profileStore.profile?.llmMode, let llm = LLMMode(rawValue: mode) {
                 selectedLLMMode = llm
             }

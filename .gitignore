@@ -25,5 +25,8 @@ Packages/
 # Assets source
 asset/
 
+# Local config (private URLs, tokens)
+KaoriApp/defaults.json
+
 # OS
 .DS_Store

@@ -10,6 +10,7 @@
 		076770AAF9ABECC2B6D9D9E8 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E73336FBC606B1432E7C480 /* ProfileView.swift */; };
 		0C7D78FF8414F51BC0F8712A /* en.json in Resources */ = {isa = PBXBuildFile; fileRef = FB7D98DCD9C2AED3E0D3DEDB /* en.json */; };
 		118F9C5C63927AA39AB79459 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22A995323B78C5991EF12CB /* DashboardView.swift */; };
+		1456E9490821F2D168C640BF /* defaults.json in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A03AAB1927618F07B50F2 /* defaults.json */; };
 		1592819803EA1FB2DBA66D98 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E305087E896AFBA0AFB4DBF /* PhotoPicker.swift */; };
 		1BD326F61B192FF000E13F56 /* ExercisePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39346F4668E4F3EAC87B32D /* ExercisePickerView.swift */; };
 		205EF93C84D2E5265CDDFD5E /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF2A2F8F4116DAFA93C2CDC /* APIClient.swift */; };
@@ -95,6 +96,7 @@
 		2E5E0F9ED1381B9AC4ED6D20 /* zh-Hans.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "zh-Hans.json"; sourceTree = "<group>"; };
 		303B1E52034AEBB719445463 /* ProfileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStore.swift; sourceTree = "<group>"; };
 		37F18C3AE2E1127D37CE8361 /* MealListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealListView.swift; sourceTree = "<group>"; };
+		3C4A03AAB1927618F07B50F2 /* defaults.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = defaults.json; sourceTree = "<group>"; };
 		3E305087E896AFBA0AFB4DBF /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
 		4088294A4BCBA4D82EF459A4 /* MealRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealRowView.swift; sourceTree = "<group>"; };
 		45D956B57C133B098D2E75EE /* ConnectionBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionBanner.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				DCD339C8B5D5941E4356EC91 /* Assets.xcassets */,
+				3C4A03AAB1927618F07B50F2 /* defaults.json */,
 				87957F71691258B26CDA92FE /* Info.plist */,
 				88107ACB573A08C68773FDF8 /* KaoriApp.entitlements */,
 				192D6936A510F1EC2A651FFE /* KaoriApp.swift */,
@@ -426,6 +429,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD943E644F42AF40BD058C73 /* Assets.xcassets in Resources */,
+				1456E9490821F2D168C640BF /* defaults.json in Resources */,
 				0C7D78FF8414F51BC0F8712A /* en.json in Resources */,
 				24809FEB7DB2E1D611DAFF99 /* zh-Hans.json in Resources */,
 			);
