@@ -21,19 +21,25 @@
 		323EC25C79164DB3C06F59C6 /* WorkoutAnalysisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBD7792B31965E0769399AE /* WorkoutAnalysisView.swift */; };
 		33291EF7B2FCE4F256B06444 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CB71162C96FD59B8B31A1D /* APIError.swift */; };
 		36CB5CD95180E847E2B62C74 /* AppLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AFEDFB821A71709EE98DC76 /* AppLanguage.swift */; };
+		3CE5401AAB5C94C091B3A069 /* SummarySectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC039E0635E1BE6BD28D5E22 /* SummarySectionsView.swift */; };
 		3F05B819ACD2BD58A39F2DD4 /* TimerPresetPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BADA41A1B2E732E0BE810DE /* TimerPresetPickerView.swift */; };
+		41CC03C78AA848D9CE6ED032 /* BackgroundTaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8AC707079AE923CE770EB0 /* BackgroundTaskManager.swift */; };
+		455C5E5E58B480BE0B5B1A1F /* NotificationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3A5F9FDD1069B52CBB1FE2 /* NotificationRouter.swift */; };
 		45A8B0596303F4256533472E /* KaoriTimerLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1841399B6EBD1A804EB3E20 /* KaoriTimerLiveActivity.swift */; };
 		4608389648507B3BBB4C8387 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F9883054F13D3EB695B476 /* SettingsView.swift */; };
 		4A37A72996217DD57F4776EF /* MealCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0A06BF94F3C800F35D2560 /* MealCreateView.swift */; };
 		4D6849DE5A98ADA51DF02CBC /* ImportedWorkoutDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553174ED05FBF6A0DC71BC23 /* ImportedWorkoutDetailView.swift */; };
 		4F27A73B29E952033757C8E9 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DF9B688A1041D6787EE0A9 /* HealthKitManager.swift */; };
+		506C693C231F431D2A0E7317 /* SwipeActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74817287BFE3602055B516C4 /* SwipeActionView.swift */; };
 		532E5973BB1D7FBB50FD1AD1 /* MealStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9AB8A03863BD0C08D6697D /* MealStore.swift */; };
 		57426DE756EB6B38EE9AE615 /* KaoriTimerWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4FCEC9FEE75376F1773C6EE7 /* KaoriTimerWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		5B0BB6FB6685C7FB87C713E2 /* Weight.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEA26FF04B554F7679A7B4C0 /* Weight.swift */; };
 		5DC04D439AAB2B2E4FEF3342 /* AnalysisStatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29118F7D393B2E6A21E2FB6C /* AnalysisStatusBadge.swift */; };
+		5F9660B8B3E8A50B8573DC28 /* Summary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331E61143E2DD0F8D055F87B /* Summary.swift */; };
 		652DACF32CB255993621EF35 /* WeightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647C6A152720E00B28A55515 /* WeightView.swift */; };
 		6DEA6E7611A31F4BDAFE4E69 /* WorkoutListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA605630E157E285492955F /* WorkoutListView.swift */; };
 		6E5E05F6A94D0E9B26B1740B /* MealRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4088294A4BCBA4D82EF459A4 /* MealRowView.swift */; };
+		73AC9F0DAB9F0B963BA14D16 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B31E33107217C57F296F400 /* AppDelegate.swift */; };
 		7735EBC883D5CD034BADCCEF /* MealEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071BF34F3746B40727AB45DC /* MealEditView.swift */; };
 		7BDCAA5060ABF3D66F3E3C5A /* TimerActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB167B3D5954D349D6D17C4 /* TimerActivity.swift */; };
 		7D7162632F4C79E076C408E6 /* WorkoutImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579BBB648E4BF2D44F83F677 /* WorkoutImportView.swift */; };
@@ -46,6 +52,7 @@
 		9405433C46DB2468CA014AD7 /* TimerActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB167B3D5954D349D6D17C4 /* TimerActivity.swift */; };
 		98F64E3441459FDCB7645D51 /* ConnectionBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D956B57C133B098D2E75EE /* ConnectionBanner.swift */; };
 		9EE50008E94ECD5927BACBB8 /* NutritionBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CB4AEA8759F64F3F83D1C0 /* NutritionBar.swift */; };
+		9FC60404A01F67EA31FB2BCD /* NotificationSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A8BFBB0AA7673018179D63 /* NotificationSettingsView.swift */; };
 		A391DB5ADC4D916395C8CEEF /* KaoriTimerWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56EFC258D8FFDCEA908209C /* KaoriTimerWidgetBundle.swift */; };
 		A5F3319DB0A131CCC7074954 /* WorkoutStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB276F331D4A58B1AB64302 /* WorkoutStore.swift */; };
 		A9E80973719AA82394FF66BE /* MealDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D085BBC8CB56BB2B218B390 /* MealDetailView.swift */; };
@@ -54,7 +61,10 @@
 		BD943E644F42AF40BD058C73 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCD339C8B5D5941E4356EC91 /* Assets.xcassets */; };
 		C0B0D4BBFD239E20CC177682 /* TimerEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4CBC90D3E2E1018B6D94CC /* TimerEngine.swift */; };
 		CA042426C17B3F1EFF66222B /* MealListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F18C3AE2E1127D37CE8361 /* MealListView.swift */; };
+		D10FF928190F20C94059D030 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6342A0A859E54F590AD26E23 /* NotificationManager.swift */; };
 		D29BF20514F12E285C4C7E01 /* WorkoutDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AACBF7DA1F496716056BA0C9 /* WorkoutDetailView.swift */; };
+		D2AAF1B34D944110421145B4 /* NotificationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B38C0CFAA9E203A4714294 /* NotificationSettings.swift */; };
+		D3C844077134346054F740DA /* SummaryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79FACF2D6CFFF9A0D1F4326 /* SummaryDetailView.swift */; };
 		D8FFD7F8540EB146677E5F34 /* WeightCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC6BB4FC53852C40426E13C /* WeightCreateView.swift */; };
 		E0EA4FC30388DD90D1A5E151 /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7147A8679F3CFC8352E161CF /* Workout.swift */; };
 		F41F741B60D2F3B0A09DE1B2 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4BDBC4B40373E7CAFA954D /* AppConfig.swift */; };
@@ -95,6 +105,8 @@
 		29118F7D393B2E6A21E2FB6C /* AnalysisStatusBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisStatusBadge.swift; sourceTree = "<group>"; };
 		2E5E0F9ED1381B9AC4ED6D20 /* zh-Hans.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "zh-Hans.json"; sourceTree = "<group>"; };
 		303B1E52034AEBB719445463 /* ProfileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStore.swift; sourceTree = "<group>"; };
+		331E61143E2DD0F8D055F87B /* Summary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Summary.swift; sourceTree = "<group>"; };
+		37B38C0CFAA9E203A4714294 /* NotificationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettings.swift; sourceTree = "<group>"; };
 		37F18C3AE2E1127D37CE8361 /* MealListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealListView.swift; sourceTree = "<group>"; };
 		3C4A03AAB1927618F07B50F2 /* defaults.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = defaults.json; sourceTree = "<group>"; };
 		3E305087E896AFBA0AFB4DBF /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
@@ -107,15 +119,20 @@
 		553174ED05FBF6A0DC71BC23 /* ImportedWorkoutDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportedWorkoutDetailView.swift; sourceTree = "<group>"; };
 		576503C22041ADD79BA88998 /* WeightMiniChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightMiniChartView.swift; sourceTree = "<group>"; };
 		579BBB648E4BF2D44F83F677 /* WorkoutImportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutImportView.swift; sourceTree = "<group>"; };
+		6342A0A859E54F590AD26E23 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		647C6A152720E00B28A55515 /* WeightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightView.swift; sourceTree = "<group>"; };
 		6AFEDFB821A71709EE98DC76 /* AppLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLanguage.swift; sourceTree = "<group>"; };
 		6CC6BB4FC53852C40426E13C /* WeightCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightCreateView.swift; sourceTree = "<group>"; };
 		7147A8679F3CFC8352E161CF /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
+		74817287BFE3602055B516C4 /* SwipeActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeActionView.swift; sourceTree = "<group>"; };
 		76C24199376F64DF38580BBC /* ImportedWorkoutMeta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportedWorkoutMeta.swift; sourceTree = "<group>"; };
+		7B31E33107217C57F296F400 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7CB167B3D5954D349D6D17C4 /* TimerActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerActivity.swift; sourceTree = "<group>"; };
+		7F3A5F9FDD1069B52CBB1FE2 /* NotificationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRouter.swift; sourceTree = "<group>"; };
 		87957F71691258B26CDA92FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		88107ACB573A08C68773FDF8 /* KaoriApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KaoriApp.entitlements; sourceTree = "<group>"; };
 		89CB4AEA8759F64F3F83D1C0 /* NutritionBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionBar.swift; sourceTree = "<group>"; };
+		8C8AC707079AE923CE770EB0 /* BackgroundTaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundTaskManager.swift; sourceTree = "<group>"; };
 		8E6B8A88C6BBC610BD2F01C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8F4CBC90D3E2E1018B6D94CC /* TimerEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerEngine.swift; sourceTree = "<group>"; };
 		99DF9B688A1041D6787EE0A9 /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
@@ -132,11 +149,14 @@
 		C10D833F5F69DE4D7B8D1CC5 /* SetRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetRowView.swift; sourceTree = "<group>"; };
 		C22A995323B78C5991EF12CB /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		C56EFC258D8FFDCEA908209C /* KaoriTimerWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KaoriTimerWidgetBundle.swift; sourceTree = "<group>"; };
+		CC039E0635E1BE6BD28D5E22 /* SummarySectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummarySectionsView.swift; sourceTree = "<group>"; };
 		D13D1111C4EBEDC3AF4FA747 /* KaoriApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = KaoriApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D99AD8BBFFF23F562B463C20 /* WorkoutRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutRowView.swift; sourceTree = "<group>"; };
 		DCD339C8B5D5941E4356EC91 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DD9AB8A03863BD0C08D6697D /* MealStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealStore.swift; sourceTree = "<group>"; };
 		E1841399B6EBD1A804EB3E20 /* KaoriTimerLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KaoriTimerLiveActivity.swift; sourceTree = "<group>"; };
+		E4A8BFBB0AA7673018179D63 /* NotificationSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsView.swift; sourceTree = "<group>"; };
+		F79FACF2D6CFFF9A0D1F4326 /* SummaryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryDetailView.swift; sourceTree = "<group>"; };
 		F8CB71162C96FD59B8B31A1D /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		FB7D98DCD9C2AED3E0D3DEDB /* en.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = en.json; sourceTree = "<group>"; };
 		FBBD7792B31965E0769399AE /* WorkoutAnalysisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutAnalysisView.swift; sourceTree = "<group>"; };
@@ -173,6 +193,15 @@
 			path = Health;
 			sourceTree = "<group>";
 		};
+		092FAD55310621A30C970B01 /* Summary */ = {
+			isa = PBXGroup;
+			children = (
+				F79FACF2D6CFFF9A0D1F4326 /* SummaryDetailView.swift */,
+				CC039E0635E1BE6BD28D5E22 /* SummarySectionsView.swift */,
+			);
+			path = Summary;
+			sourceTree = "<group>";
+		};
 		15EDAA3023E68B2C7FAA7B4B /* Shared */ = {
 			isa = PBXGroup;
 			children = (
@@ -180,6 +209,7 @@
 				45D956B57C133B098D2E75EE /* ConnectionBanner.swift */,
 				89CB4AEA8759F64F3F83D1C0 /* NutritionBar.swift */,
 				3E305087E896AFBA0AFB4DBF /* PhotoPicker.swift */,
+				74817287BFE3602055B516C4 /* SwipeActionView.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -187,6 +217,7 @@
 		16F4B12B47CD59290E1AA18F /* KaoriApp */ = {
 			isa = PBXGroup;
 			children = (
+				7B31E33107217C57F296F400 /* AppDelegate.swift */,
 				DCD339C8B5D5941E4356EC91 /* Assets.xcassets */,
 				3C4A03AAB1927618F07B50F2 /* defaults.json */,
 				87957F71691258B26CDA92FE /* Info.plist */,
@@ -197,6 +228,7 @@
 				F8B07C8E4586FE569B026C2D /* Localization */,
 				F08331818F18B68E3917C49B /* Models */,
 				30A3A709AD4D79D40A8A26A3 /* Network */,
+				7580E6E1568313998DCA67FD /* Notifications */,
 				C05CD9878B69967530772BBA /* Stores */,
 				3BAF2E41ACE5EBA60AFFF416 /* Views */,
 			);
@@ -206,6 +238,7 @@
 		29C269B3174AAEA25C4ED89D /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				E4A8BFBB0AA7673018179D63 /* NotificationSettingsView.swift */,
 				53F9883054F13D3EB695B476 /* SettingsView.swift */,
 			);
 			path = Settings;
@@ -240,6 +273,7 @@
 				3E4AE7121ED2FC4AD67E3534 /* Profile */,
 				29C269B3174AAEA25C4ED89D /* Settings */,
 				15EDAA3023E68B2C7FAA7B4B /* Shared */,
+				092FAD55310621A30C970B01 /* Summary */,
 				9211173922DAB0218DFE918A /* Weight */,
 				03C7469DC61842EF253C3E97 /* Workout */,
 			);
@@ -260,6 +294,17 @@
 				AB4BDBC4B40373E7CAFA954D /* AppConfig.swift */,
 			);
 			path = Config;
+			sourceTree = "<group>";
+		};
+		7580E6E1568313998DCA67FD /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				8C8AC707079AE923CE770EB0 /* BackgroundTaskManager.swift */,
+				6342A0A859E54F590AD26E23 /* NotificationManager.swift */,
+				7F3A5F9FDD1069B52CBB1FE2 /* NotificationRouter.swift */,
+				37B38C0CFAA9E203A4714294 /* NotificationSettings.swift */,
+			);
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 		7A29CA4EDA5595EBDF979EE8 /* Products */ = {
@@ -318,6 +363,7 @@
 				76C24199376F64DF38580BBC /* ImportedWorkoutMeta.swift */,
 				FCC45B434D316B99DB578F96 /* Meal.swift */,
 				9FE7B77F17ABBAAEEFFC88FB /* Profile.swift */,
+				331E61143E2DD0F8D055F87B /* Summary.swift */,
 				7CB167B3D5954D349D6D17C4 /* TimerActivity.swift */,
 				AEA26FF04B554F7679A7B4C0 /* Weight.swift */,
 				7147A8679F3CFC8352E161CF /* Workout.swift */,
@@ -456,7 +502,9 @@
 				33291EF7B2FCE4F256B06444 /* APIError.swift in Sources */,
 				5DC04D439AAB2B2E4FEF3342 /* AnalysisStatusBadge.swift in Sources */,
 				F41F741B60D2F3B0A09DE1B2 /* AppConfig.swift in Sources */,
+				73AC9F0DAB9F0B963BA14D16 /* AppDelegate.swift in Sources */,
 				36CB5CD95180E847E2B62C74 /* AppLanguage.swift in Sources */,
+				41CC03C78AA848D9CE6ED032 /* BackgroundTaskManager.swift in Sources */,
 				98F64E3441459FDCB7645D51 /* ConnectionBanner.swift in Sources */,
 				118F9C5C63927AA39AB79459 /* DashboardView.swift in Sources */,
 				BBE49675447E4CB29B8C426C /* ExerciseManageView.swift in Sources */,
@@ -473,6 +521,10 @@
 				CA042426C17B3F1EFF66222B /* MealListView.swift in Sources */,
 				6E5E05F6A94D0E9B26B1740B /* MealRowView.swift in Sources */,
 				532E5973BB1D7FBB50FD1AD1 /* MealStore.swift in Sources */,
+				D10FF928190F20C94059D030 /* NotificationManager.swift in Sources */,
+				455C5E5E58B480BE0B5B1A1F /* NotificationRouter.swift in Sources */,
+				D2AAF1B34D944110421145B4 /* NotificationSettings.swift in Sources */,
+				9FC60404A01F67EA31FB2BCD /* NotificationSettingsView.swift in Sources */,
 				9EE50008E94ECD5927BACBB8 /* NutritionBar.swift in Sources */,
 				1592819803EA1FB2DBA66D98 /* PhotoPicker.swift in Sources */,
 				2F5A63776F5FBFC7CCA4F8C0 /* Profile.swift in Sources */,
@@ -480,6 +532,10 @@
 				076770AAF9ABECC2B6D9D9E8 /* ProfileView.swift in Sources */,
 				89FB08D4F71F7897215587EA /* SetRowView.swift in Sources */,
 				4608389648507B3BBB4C8387 /* SettingsView.swift in Sources */,
+				5F9660B8B3E8A50B8573DC28 /* Summary.swift in Sources */,
+				D3C844077134346054F740DA /* SummaryDetailView.swift in Sources */,
+				3CE5401AAB5C94C091B3A069 /* SummarySectionsView.swift in Sources */,
+				506C693C231F431D2A0E7317 /* SwipeActionView.swift in Sources */,
 				9405433C46DB2468CA014AD7 /* TimerActivity.swift in Sources */,
 				C0B0D4BBFD239E20CC177682 /* TimerEngine.swift in Sources */,
 				3F05B819ACD2BD58A39F2DD4 /* TimerPresetPickerView.swift in Sources */,

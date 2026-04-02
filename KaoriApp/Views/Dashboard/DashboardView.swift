@@ -7,11 +7,44 @@ struct DashboardView: View {
     @Environment(WeightStore.self) private var weightStore
     @Environment(ProfileStore.self) private var profileStore
     @Environment(WorkoutStore.self) private var workoutStore
+    @Environment(NotificationSettings.self) private var notificationSettings
+
+    // Summary state
+    @State private var dailySummaryText: String?
+    @State private var weeklySummaryText: String?
+    @State private var isGeneratingDaily = false
+    @State private var isGeneratingWeekly = false
+    @State private var dailySectionsCollapsed = false
+    @State private var weeklySectionsCollapsed = false
 
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 16) {
+                    // On weekly summary day: show weekly instead of daily
+                    // Other days: show daily only
+                    if isWeeklySummaryDay {
+                        if weeklySummaryText != nil || shouldShowWeeklySummary {
+                            SwipeActionView(
+                                icon: "arrow.clockwise",
+                                color: .blue,
+                                action: { Task { await generateWeeklySummary() } }
+                            ) {
+                                weeklySummaryCard
+                            }
+                        }
+                    } else {
+                        if dailySummaryText != nil || shouldShowDailySummary {
+                            SwipeActionView(
+                                icon: "arrow.clockwise",
+                                color: .blue,
+                                action: { Task { await generateDailySummary() } }
+                            ) {
+                                dailySummaryCard
+                            }
+                        }
+                    }
+
                     // Calorie progress
                     if let profile = profileStore.profile,
                        let target = profile.targetCalories,
@@ -56,6 +89,165 @@ struct DashboardView: View {
             }
         }
     }
+
+    // MARK: - Daily Summary Card
+
+    private var shouldShowDailySummary: Bool {
+        let hour = Calendar.current.component(.hour, from: Date())
+        return hour >= notificationSettings.dailySummaryHour
+    }
+
+    private var isWeeklySummaryDay: Bool {
+        let weekday = Calendar.current.component(.weekday, from: Date())
+        return weekday == notificationSettings.weeklySummaryWeekday
+    }
+
+    private var shouldShowWeeklySummary: Bool {
+        let hour = Calendar.current.component(.hour, from: Date())
+        return isWeeklySummaryDay && hour >= notificationSettings.weeklySummaryHour
+    }
+
+    private var todayString: String {
+        let f = DateFormatter()
+        f.dateFormat = "yyyy-MM-dd"
+        return f.string(from: Date())
+    }
+
+    private var dailySummaryCard: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Image(systemName: "sparkles")
+                    .foregroundStyle(.yellow)
+                Text(L.t("summary.dailyTitle"))
+                    .font(.headline)
+                Spacer()
+                if isGeneratingDaily {
+                    ProgressView()
+                        .controlSize(.small)
+                }
+            }
+
+            if isGeneratingDaily && dailySummaryText == nil {
+                Text(L.t("summary.generating"))
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .padding(.vertical, 4)
+            } else if let text = dailySummaryText {
+                SummarySectionsView(markdown: text, allCollapsed: $dailySectionsCollapsed)
+            } else {
+                Button(L.t("summary.generate")) {
+                    Task { await generateDailySummary() }
+                }
+                .font(.subheadline)
+                .padding(.vertical, 4)
+            }
+        }
+        .padding()
+        .background(.regularMaterial)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .onTapGesture(count: 2) {
+            withAnimation { dailySectionsCollapsed.toggle() }
+        }
+    }
+
+    private var weeklySummaryCard: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Image(systemName: "calendar.badge.clock")
+                    .foregroundStyle(.blue)
+                Text(L.t("summary.weeklyTitle"))
+                    .font(.headline)
+                Spacer()
+                if isGeneratingWeekly {
+                    ProgressView()
+                        .controlSize(.small)
+                }
+            }
+
+            if isGeneratingWeekly && weeklySummaryText == nil {
+                Text(L.t("summary.generating"))
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .padding(.vertical, 4)
+            } else if let text = weeklySummaryText {
+                SummarySectionsView(markdown: text, allCollapsed: $weeklySectionsCollapsed)
+            } else {
+                Button(L.t("summary.generate")) {
+                    Task { await generateWeeklySummary() }
+                }
+                .font(.subheadline)
+                .padding(.vertical, 4)
+            }
+        }
+        .padding()
+        .background(.regularMaterial)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .onTapGesture(count: 2) {
+            withAnimation { weeklySectionsCollapsed.toggle() }
+        }
+    }
+
+    // MARK: - Summary Loading
+
+    private func loadSummaries() async {
+        if isWeeklySummaryDay {
+            // On weekly day, load weekly summary
+            do {
+                let result: SummaryDetail = try await api.get(
+                    "/api/summary/weekly-detail",
+                    query: ["date": todayString]
+                )
+                weeklySummaryText = result.summaryText
+            } catch {}
+        } else {
+            // Other days, load daily summary
+            do {
+                let result: SummaryDetail = try await api.get(
+                    "/api/summary/daily-detail",
+                    query: ["date": todayString]
+                )
+                dailySummaryText = result.summaryText
+            } catch {}
+        }
+    }
+
+    private func generateDailySummary() async {
+        isGeneratingDaily = true
+        defer { isGeneratingDaily = false }
+
+        let langRaw = UserDefaults.standard.string(forKey: "appLanguage") ?? "en"
+        let lang = langRaw.hasPrefix("zh") ? "zh" : "en"
+
+        do {
+            let result: SummaryDetail = try await api.post(
+                "/api/summary/daily-detail",
+                query: ["language": lang, "date": todayString]
+            )
+            dailySummaryText = result.summaryText
+        } catch {
+            dailySummaryText = "Error: \(error.localizedDescription)"
+        }
+    }
+
+    private func generateWeeklySummary() async {
+        isGeneratingWeekly = true
+        defer { isGeneratingWeekly = false }
+
+        let langRaw = UserDefaults.standard.string(forKey: "appLanguage") ?? "en"
+        let lang = langRaw.hasPrefix("zh") ? "zh" : "en"
+
+        do {
+            let result: SummaryDetail = try await api.post(
+                "/api/summary/weekly-detail",
+                query: ["language": lang]
+            )
+            weeklySummaryText = result.summaryText
+        } catch {
+            weeklySummaryText = "Error: \(error.localizedDescription)"
+        }
+    }
+
+    // MARK: - Existing Cards
 
     private func calorieCard(current: Double, target: Double) -> some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -263,6 +455,7 @@ struct DashboardView: View {
         async let w: () = weightStore.load()
         async let p: () = profileStore.load()
         async let g: () = workoutStore.loadWorkouts()
-        _ = await (m, w, p, g)
+        async let s: () = loadSummaries()
+        _ = await (m, w, p, g, s)
     }
 }

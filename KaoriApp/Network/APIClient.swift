@@ -76,8 +76,8 @@ class APIClient {
 
     // MARK: - POST (no body)
 
-    func post<T: Decodable>(_ path: String) async throws -> T {
-        let url = try buildURL(path: path)
+    func post<T: Decodable>(_ path: String, query: [String: String] = [:]) async throws -> T {
+        let url = try buildURL(path: path, query: query)
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("Bearer \(config.token)", forHTTPHeaderField: "Authorization")

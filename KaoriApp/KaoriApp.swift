@@ -2,6 +2,7 @@ import SwiftUI
 
 @main
 struct KaoriApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @State private var config = AppConfig()
     @State private var localizer = Localizer()
     @State private var api: APIClient
@@ -11,6 +12,8 @@ struct KaoriApp: App {
     @State private var workoutStore: WorkoutStore
     @State private var timerEngine = TimerEngine()
     @State private var healthKit = HealthKitManager()
+    @State private var notificationManager = NotificationManager()
+    @State private var notificationSettings = NotificationSettings()
 
     init() {
         let config = AppConfig()
@@ -35,6 +38,8 @@ struct KaoriApp: App {
                 .environment(workoutStore)
                 .environment(timerEngine)
                 .environment(healthKit)
+                .environment(notificationManager)
+                .environment(notificationSettings)
         }
     }
 }
@@ -45,8 +50,11 @@ struct ContentView: View {
     @Environment(APIClient.self) private var api
     @Environment(WorkoutStore.self) private var workoutStore
     @Environment(HealthKitManager.self) private var healthKit
+    @Environment(NotificationManager.self) private var notificationManager
+    @Environment(NotificationSettings.self) private var notificationSettings
     @State private var showImportPrompt = false
     @State private var importExistingWorkouts: [Workout] = []
+    @State private var selectedTab = 0
 
     var body: some View {
         VStack(spacing: 0) {
@@ -57,8 +65,9 @@ struct ContentView: View {
                     SettingsView()
                 }
             } else {
-                TabView {
+                TabView(selection: $selectedTab) {
                     DashboardView()
+                        .tag(0)
                         .tabItem { Label(L.t("tab.home"), systemImage: "house") }
                     NavigationStack {
                         MealListView()
@@ -78,6 +87,11 @@ struct ContentView: View {
         .task {
             if config.isConfigured {
                 _ = await api.healthCheck()
+                await notificationManager.checkPermission()
+                if notificationSettings.notificationsEnabled {
+                    notificationManager.rescheduleAll(settings: notificationSettings)
+                    BackgroundTaskManager.scheduleDailySummaryFetch()
+                }
                 await workoutStore.checkForNewHealthKitWorkouts(healthKit: healthKit)
                 if !workoutStore.pendingImportWorkouts.isEmpty {
                     let dateFormatter = DateFormatter()
@@ -90,6 +104,12 @@ struct ContentView: View {
         }
         .sheet(isPresented: $showImportPrompt) {
             WorkoutImportView(workouts: workoutStore.pendingImportWorkouts, existingWorkouts: importExistingWorkouts)
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+            if NotificationRouter.shared.pendingDestination != nil {
+                selectedTab = 0  // Switch to Home tab — summary is inline
+                NotificationRouter.shared.pendingDestination = nil
+            }
         }
     }
 }

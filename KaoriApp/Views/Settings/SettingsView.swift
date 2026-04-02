@@ -9,6 +9,7 @@ struct SettingsView: View {
     @Environment(WeightStore.self) private var weightStore
     @Environment(WorkoutStore.self) private var workoutStore
     @Environment(HealthKitManager.self) private var healthKit
+    @Environment(NotificationSettings.self) private var notificationSettings
     @State private var serverURL = ""
     @State private var token = ""
     @State private var testResult: String?
@@ -100,6 +101,24 @@ struct SettingsView: View {
                     Text(L.t("settings.llmBackend"))
                 } footer: {
                     Text(L.t("settings.llmFooter"))
+                }
+            }
+
+            // MARK: - Notifications
+            if config.isConfigured {
+                Section(L.t("settings.notifications")) {
+                    NavigationLink {
+                        NotificationSettingsView()
+                    } label: {
+                        HStack {
+                            Label(L.t("settings.manageNotifications"), systemImage: "bell")
+                            Spacer()
+                            Text(notificationSettings.hasAnyEnabled
+                                ? L.t("notification.on") : L.t("notification.off"))
+                                .foregroundStyle(.secondary)
+                                .font(.subheadline)
+                        }
+                    }
                 }
             }
 

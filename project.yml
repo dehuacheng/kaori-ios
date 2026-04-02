@@ -24,6 +24,10 @@ targets:
         NSHealthShareUsageDescription: "Kaori reads your weight history from Apple Health to track trends"
         NSHealthUpdateUsageDescription: "Kaori saves weight and workout data to Apple Health"
         NSSupportsLiveActivities: true
+        BGTaskSchedulerPermittedIdentifiers:
+          - com.dehuacheng.kaori.app.daily-summary
+        UIBackgroundModes:
+          - fetch
         UIApplicationSupportsIndirectInputEvents: true
         UILaunchScreen: {}
         UISupportedInterfaceOrientations:

@@ -22,6 +22,18 @@ class Localizer {
         return args.isEmpty ? template : String(format: template, arguments: args)
     }
 
+    /// Static lookup for non-view contexts (notifications, background tasks).
+    /// Reads the current language from UserDefaults and loads the JSON file.
+    static func localized(_ key: String) -> String {
+        let saved = UserDefaults.standard.string(forKey: "appLanguage") ?? "en"
+        let lang = AppLanguage(rawValue: saved) ?? .english
+        guard let url = Bundle.main.url(forResource: lang.rawValue, withExtension: "json"),
+              let data = try? Data(contentsOf: url),
+              let dict = try? JSONDecoder().decode([String: String].self, from: data)
+        else { return key }
+        return dict[key] ?? key
+    }
+
     private func loadStrings() {
         guard let url = Bundle.main.url(forResource: language.rawValue, withExtension: "json"),
               let data = try? Data(contentsOf: url),
