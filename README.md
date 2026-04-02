@@ -16,6 +16,7 @@ SwiftUI iOS client for [Kaori](https://github.com/dehuacheng/kaori) — a person
 - **Workout timer** — Rest/work interval timer with Dynamic Island and Live Activity support
 - **Apple Health** — Sync weight and workouts with HealthKit
 - **LLM backend picker** — Choose between Claude CLI, Anthropic API, or Codex CLI
+- **Notifications & AI summaries** — Configurable meal/weight reminders. Inline AI-generated daily and weekly health summaries on the dashboard with collapsible sections.
 
 ### Requirements
 
@@ -79,6 +80,7 @@ The Python backend is at [kaori](https://github.com/dehuacheng/kaori).
 - **健身计时器** — 休息/训练间歇计时器，支持灵动岛和实时活动
 - **Apple Health** — 同步体重和健身数据到 HealthKit
 - **LLM 后端选择** — 可选 Claude CLI、Anthropic API 或 Codex CLI
+- **通知与 AI 总结** — 可配置的饮食/体重提醒。仪表盘内嵌 AI 生成的每日和每周健康总结，支持折叠展开。
 
 ### 环境要求
 
