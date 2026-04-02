@@ -1,0 +1,728 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		076770AAF9ABECC2B6D9D9E8 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E73336FBC606B1432E7C480 /* ProfileView.swift */; };
+		118F9C5C63927AA39AB79459 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22A995323B78C5991EF12CB /* DashboardView.swift */; };
+		1592819803EA1FB2DBA66D98 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E305087E896AFBA0AFB4DBF /* PhotoPicker.swift */; };
+		1BD326F61B192FF000E13F56 /* ExercisePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39346F4668E4F3EAC87B32D /* ExercisePickerView.swift */; };
+		205EF93C84D2E5265CDDFD5E /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF2A2F8F4116DAFA93C2CDC /* APIClient.swift */; };
+		2B75B47F07B3BA6886F7B93A /* Meal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC45B434D316B99DB578F96 /* Meal.swift */; };
+		2D68CF261AF3C6BAE4B300DC /* ImportedWorkoutMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C24199376F64DF38580BBC /* ImportedWorkoutMeta.swift */; };
+		2F5A63776F5FBFC7CCA4F8C0 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE7B77F17ABBAAEEFFC88FB /* Profile.swift */; };
+		323EC25C79164DB3C06F59C6 /* WorkoutAnalysisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBD7792B31965E0769399AE /* WorkoutAnalysisView.swift */; };
+		33291EF7B2FCE4F256B06444 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CB71162C96FD59B8B31A1D /* APIError.swift */; };
+		3F05B819ACD2BD58A39F2DD4 /* TimerPresetPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BADA41A1B2E732E0BE810DE /* TimerPresetPickerView.swift */; };
+		45A8B0596303F4256533472E /* KaoriTimerLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1841399B6EBD1A804EB3E20 /* KaoriTimerLiveActivity.swift */; };
+		4608389648507B3BBB4C8387 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F9883054F13D3EB695B476 /* SettingsView.swift */; };
+		4A37A72996217DD57F4776EF /* MealCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0A06BF94F3C800F35D2560 /* MealCreateView.swift */; };
+		4D6849DE5A98ADA51DF02CBC /* ImportedWorkoutDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553174ED05FBF6A0DC71BC23 /* ImportedWorkoutDetailView.swift */; };
+		4F27A73B29E952033757C8E9 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DF9B688A1041D6787EE0A9 /* HealthKitManager.swift */; };
+		532E5973BB1D7FBB50FD1AD1 /* MealStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9AB8A03863BD0C08D6697D /* MealStore.swift */; };
+		57426DE756EB6B38EE9AE615 /* KaoriTimerWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4FCEC9FEE75376F1773C6EE7 /* KaoriTimerWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		5B0BB6FB6685C7FB87C713E2 /* Weight.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEA26FF04B554F7679A7B4C0 /* Weight.swift */; };
+		5DC04D439AAB2B2E4FEF3342 /* AnalysisStatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29118F7D393B2E6A21E2FB6C /* AnalysisStatusBadge.swift */; };
+		652DACF32CB255993621EF35 /* WeightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647C6A152720E00B28A55515 /* WeightView.swift */; };
+		6DEA6E7611A31F4BDAFE4E69 /* WorkoutListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA605630E157E285492955F /* WorkoutListView.swift */; };
+		6E5E05F6A94D0E9B26B1740B /* MealRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4088294A4BCBA4D82EF459A4 /* MealRowView.swift */; };
+		7735EBC883D5CD034BADCCEF /* MealEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071BF34F3746B40727AB45DC /* MealEditView.swift */; };
+		7BDCAA5060ABF3D66F3E3C5A /* TimerActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB167B3D5954D349D6D17C4 /* TimerActivity.swift */; };
+		7D7162632F4C79E076C408E6 /* WorkoutImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579BBB648E4BF2D44F83F677 /* WorkoutImportView.swift */; };
+		8357443E39F499DD8F0B8550 /* WorkoutRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99AD8BBFFF23F562B463C20 /* WorkoutRowView.swift */; };
+		89C41CD87949AC96B1E3F2FA /* WeightChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D5656813267E1EEA4F21326 /* WeightChartView.swift */; };
+		89FB08D4F71F7897215587EA /* SetRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10D833F5F69DE4D7B8D1CC5 /* SetRowView.swift */; };
+		8D5792E195EA08099719C2B3 /* KaoriApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192D6936A510F1EC2A651FFE /* KaoriApp.swift */; };
+		9260A82D2DE266B501F60BF7 /* WeightStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A18D6133200360913819606 /* WeightStore.swift */; };
+		9405433C46DB2468CA014AD7 /* TimerActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB167B3D5954D349D6D17C4 /* TimerActivity.swift */; };
+		98F64E3441459FDCB7645D51 /* ConnectionBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D956B57C133B098D2E75EE /* ConnectionBanner.swift */; };
+		9EE50008E94ECD5927BACBB8 /* NutritionBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CB4AEA8759F64F3F83D1C0 /* NutritionBar.swift */; };
+		A391DB5ADC4D916395C8CEEF /* KaoriTimerWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56EFC258D8FFDCEA908209C /* KaoriTimerWidgetBundle.swift */; };
+		A5F3319DB0A131CCC7074954 /* WorkoutStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB276F331D4A58B1AB64302 /* WorkoutStore.swift */; };
+		A9E80973719AA82394FF66BE /* MealDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D085BBC8CB56BB2B218B390 /* MealDetailView.swift */; };
+		BAF10AD71D665307A22FF127 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE357CF3AA96BDB1CB1FD477 /* TimerView.swift */; };
+		BBE49675447E4CB29B8C426C /* ExerciseManageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9C34474157CEDBC2DC2532 /* ExerciseManageView.swift */; };
+		BD943E644F42AF40BD058C73 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCD339C8B5D5941E4356EC91 /* Assets.xcassets */; };
+		C0B0D4BBFD239E20CC177682 /* TimerEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4CBC90D3E2E1018B6D94CC /* TimerEngine.swift */; };
+		CA042426C17B3F1EFF66222B /* MealListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F18C3AE2E1127D37CE8361 /* MealListView.swift */; };
+		D29BF20514F12E285C4C7E01 /* WorkoutDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AACBF7DA1F496716056BA0C9 /* WorkoutDetailView.swift */; };
+		D8FFD7F8540EB146677E5F34 /* WeightCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC6BB4FC53852C40426E13C /* WeightCreateView.swift */; };
+		E0EA4FC30388DD90D1A5E151 /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7147A8679F3CFC8352E161CF /* Workout.swift */; };
+		F41F741B60D2F3B0A09DE1B2 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4BDBC4B40373E7CAFA954D /* AppConfig.swift */; };
+		F89D28B8F2ABFD6EB279ABC3 /* WeightMiniChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576503C22041ADD79BA88998 /* WeightMiniChartView.swift */; };
+		FF244A6182756391D9F8AF69 /* ProfileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303B1E52034AEBB719445463 /* ProfileStore.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AD606EEDD89D98D8E6E0FD71 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E6102C4C9318222F07E28140 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 54EEF084510FB63898F94E5E;
+			remoteInfo = KaoriTimerWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		34BDE11E95084F456341D351 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				57426DE756EB6B38EE9AE615 /* KaoriTimerWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		071BF34F3746B40727AB45DC /* MealEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealEditView.swift; sourceTree = "<group>"; };
+		0D5656813267E1EEA4F21326 /* WeightChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightChartView.swift; sourceTree = "<group>"; };
+		192D6936A510F1EC2A651FFE /* KaoriApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KaoriApp.swift; sourceTree = "<group>"; };
+		1BADA41A1B2E732E0BE810DE /* TimerPresetPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPresetPickerView.swift; sourceTree = "<group>"; };
+		29118F7D393B2E6A21E2FB6C /* AnalysisStatusBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisStatusBadge.swift; sourceTree = "<group>"; };
+		303B1E52034AEBB719445463 /* ProfileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStore.swift; sourceTree = "<group>"; };
+		37F18C3AE2E1127D37CE8361 /* MealListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealListView.swift; sourceTree = "<group>"; };
+		3E305087E896AFBA0AFB4DBF /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
+		4088294A4BCBA4D82EF459A4 /* MealRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealRowView.swift; sourceTree = "<group>"; };
+		45D956B57C133B098D2E75EE /* ConnectionBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionBanner.swift; sourceTree = "<group>"; };
+		4A18D6133200360913819606 /* WeightStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightStore.swift; sourceTree = "<group>"; };
+		4A9C34474157CEDBC2DC2532 /* ExerciseManageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseManageView.swift; sourceTree = "<group>"; };
+		4FCEC9FEE75376F1773C6EE7 /* KaoriTimerWidgetExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = KaoriTimerWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		53F9883054F13D3EB695B476 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		553174ED05FBF6A0DC71BC23 /* ImportedWorkoutDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportedWorkoutDetailView.swift; sourceTree = "<group>"; };
+		576503C22041ADD79BA88998 /* WeightMiniChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightMiniChartView.swift; sourceTree = "<group>"; };
+		579BBB648E4BF2D44F83F677 /* WorkoutImportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutImportView.swift; sourceTree = "<group>"; };
+		647C6A152720E00B28A55515 /* WeightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightView.swift; sourceTree = "<group>"; };
+		6CC6BB4FC53852C40426E13C /* WeightCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightCreateView.swift; sourceTree = "<group>"; };
+		7147A8679F3CFC8352E161CF /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
+		76C24199376F64DF38580BBC /* ImportedWorkoutMeta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportedWorkoutMeta.swift; sourceTree = "<group>"; };
+		7CB167B3D5954D349D6D17C4 /* TimerActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerActivity.swift; sourceTree = "<group>"; };
+		87957F71691258B26CDA92FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		88107ACB573A08C68773FDF8 /* KaoriApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KaoriApp.entitlements; sourceTree = "<group>"; };
+		89CB4AEA8759F64F3F83D1C0 /* NutritionBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionBar.swift; sourceTree = "<group>"; };
+		8E6B8A88C6BBC610BD2F01C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		8F4CBC90D3E2E1018B6D94CC /* TimerEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerEngine.swift; sourceTree = "<group>"; };
+		99DF9B688A1041D6787EE0A9 /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
+		9D085BBC8CB56BB2B218B390 /* MealDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDetailView.swift; sourceTree = "<group>"; };
+		9E73336FBC606B1432E7C480 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		9F0A06BF94F3C800F35D2560 /* MealCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealCreateView.swift; sourceTree = "<group>"; };
+		9FA605630E157E285492955F /* WorkoutListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListView.swift; sourceTree = "<group>"; };
+		9FE7B77F17ABBAAEEFFC88FB /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		9FF2A2F8F4116DAFA93C2CDC /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		AACBF7DA1F496716056BA0C9 /* WorkoutDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDetailView.swift; sourceTree = "<group>"; };
+		AB4BDBC4B40373E7CAFA954D /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
+		AEA26FF04B554F7679A7B4C0 /* Weight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weight.swift; sourceTree = "<group>"; };
+		B39346F4668E4F3EAC87B32D /* ExercisePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisePickerView.swift; sourceTree = "<group>"; };
+		C10D833F5F69DE4D7B8D1CC5 /* SetRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetRowView.swift; sourceTree = "<group>"; };
+		C22A995323B78C5991EF12CB /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		C56EFC258D8FFDCEA908209C /* KaoriTimerWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KaoriTimerWidgetBundle.swift; sourceTree = "<group>"; };
+		D13D1111C4EBEDC3AF4FA747 /* KaoriApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = KaoriApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D99AD8BBFFF23F562B463C20 /* WorkoutRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutRowView.swift; sourceTree = "<group>"; };
+		DCD339C8B5D5941E4356EC91 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DD9AB8A03863BD0C08D6697D /* MealStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealStore.swift; sourceTree = "<group>"; };
+		E1841399B6EBD1A804EB3E20 /* KaoriTimerLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KaoriTimerLiveActivity.swift; sourceTree = "<group>"; };
+		F8CB71162C96FD59B8B31A1D /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		FBBD7792B31965E0769399AE /* WorkoutAnalysisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutAnalysisView.swift; sourceTree = "<group>"; };
+		FCC45B434D316B99DB578F96 /* Meal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meal.swift; sourceTree = "<group>"; };
+		FE357CF3AA96BDB1CB1FD477 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
+		FEB276F331D4A58B1AB64302 /* WorkoutStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutStore.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		03C7469DC61842EF253C3E97 /* Workout */ = {
+			isa = PBXGroup;
+			children = (
+				4A9C34474157CEDBC2DC2532 /* ExerciseManageView.swift */,
+				B39346F4668E4F3EAC87B32D /* ExercisePickerView.swift */,
+				553174ED05FBF6A0DC71BC23 /* ImportedWorkoutDetailView.swift */,
+				C10D833F5F69DE4D7B8D1CC5 /* SetRowView.swift */,
+				8F4CBC90D3E2E1018B6D94CC /* TimerEngine.swift */,
+				1BADA41A1B2E732E0BE810DE /* TimerPresetPickerView.swift */,
+				FE357CF3AA96BDB1CB1FD477 /* TimerView.swift */,
+				FBBD7792B31965E0769399AE /* WorkoutAnalysisView.swift */,
+				AACBF7DA1F496716056BA0C9 /* WorkoutDetailView.swift */,
+				579BBB648E4BF2D44F83F677 /* WorkoutImportView.swift */,
+				9FA605630E157E285492955F /* WorkoutListView.swift */,
+				D99AD8BBFFF23F562B463C20 /* WorkoutRowView.swift */,
+			);
+			path = Workout;
+			sourceTree = "<group>";
+		};
+		04194A8AFB049765BD7B69AD /* Health */ = {
+			isa = PBXGroup;
+			children = (
+				99DF9B688A1041D6787EE0A9 /* HealthKitManager.swift */,
+			);
+			path = Health;
+			sourceTree = "<group>";
+		};
+		15EDAA3023E68B2C7FAA7B4B /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				29118F7D393B2E6A21E2FB6C /* AnalysisStatusBadge.swift */,
+				45D956B57C133B098D2E75EE /* ConnectionBanner.swift */,
+				89CB4AEA8759F64F3F83D1C0 /* NutritionBar.swift */,
+				3E305087E896AFBA0AFB4DBF /* PhotoPicker.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		16F4B12B47CD59290E1AA18F /* KaoriApp */ = {
+			isa = PBXGroup;
+			children = (
+				DCD339C8B5D5941E4356EC91 /* Assets.xcassets */,
+				87957F71691258B26CDA92FE /* Info.plist */,
+				88107ACB573A08C68773FDF8 /* KaoriApp.entitlements */,
+				192D6936A510F1EC2A651FFE /* KaoriApp.swift */,
+				5DA83CAE575D41B54D146133 /* Config */,
+				04194A8AFB049765BD7B69AD /* Health */,
+				F08331818F18B68E3917C49B /* Models */,
+				30A3A709AD4D79D40A8A26A3 /* Network */,
+				C05CD9878B69967530772BBA /* Stores */,
+				3BAF2E41ACE5EBA60AFFF416 /* Views */,
+			);
+			path = KaoriApp;
+			sourceTree = "<group>";
+		};
+		29C269B3174AAEA25C4ED89D /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				53F9883054F13D3EB695B476 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		30A3A709AD4D79D40A8A26A3 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				9FF2A2F8F4116DAFA93C2CDC /* APIClient.swift */,
+				F8CB71162C96FD59B8B31A1D /* APIError.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		34D1D7AE9F248DB3A2D0B5D8 /* Meals */ = {
+			isa = PBXGroup;
+			children = (
+				9F0A06BF94F3C800F35D2560 /* MealCreateView.swift */,
+				9D085BBC8CB56BB2B218B390 /* MealDetailView.swift */,
+				071BF34F3746B40727AB45DC /* MealEditView.swift */,
+				37F18C3AE2E1127D37CE8361 /* MealListView.swift */,
+				4088294A4BCBA4D82EF459A4 /* MealRowView.swift */,
+			);
+			path = Meals;
+			sourceTree = "<group>";
+		};
+		3BAF2E41ACE5EBA60AFFF416 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F894C72CA030F10CB0DB25C8 /* Dashboard */,
+				34D1D7AE9F248DB3A2D0B5D8 /* Meals */,
+				3E4AE7121ED2FC4AD67E3534 /* Profile */,
+				29C269B3174AAEA25C4ED89D /* Settings */,
+				15EDAA3023E68B2C7FAA7B4B /* Shared */,
+				9211173922DAB0218DFE918A /* Weight */,
+				03C7469DC61842EF253C3E97 /* Workout */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		3E4AE7121ED2FC4AD67E3534 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				9E73336FBC606B1432E7C480 /* ProfileView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		5DA83CAE575D41B54D146133 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				AB4BDBC4B40373E7CAFA954D /* AppConfig.swift */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		7A29CA4EDA5595EBDF979EE8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D13D1111C4EBEDC3AF4FA747 /* KaoriApp.app */,
+				4FCEC9FEE75376F1773C6EE7 /* KaoriTimerWidgetExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9211173922DAB0218DFE918A /* Weight */ = {
+			isa = PBXGroup;
+			children = (
+				0D5656813267E1EEA4F21326 /* WeightChartView.swift */,
+				6CC6BB4FC53852C40426E13C /* WeightCreateView.swift */,
+				576503C22041ADD79BA88998 /* WeightMiniChartView.swift */,
+				647C6A152720E00B28A55515 /* WeightView.swift */,
+			);
+			path = Weight;
+			sourceTree = "<group>";
+		};
+		AC05EDD211670F36A9A92900 /* KaoriTimerWidget */ = {
+			isa = PBXGroup;
+			children = (
+				8E6B8A88C6BBC610BD2F01C2 /* Info.plist */,
+				E1841399B6EBD1A804EB3E20 /* KaoriTimerLiveActivity.swift */,
+				C56EFC258D8FFDCEA908209C /* KaoriTimerWidgetBundle.swift */,
+			);
+			path = KaoriTimerWidget;
+			sourceTree = "<group>";
+		};
+		C05CD9878B69967530772BBA /* Stores */ = {
+			isa = PBXGroup;
+			children = (
+				DD9AB8A03863BD0C08D6697D /* MealStore.swift */,
+				303B1E52034AEBB719445463 /* ProfileStore.swift */,
+				4A18D6133200360913819606 /* WeightStore.swift */,
+				FEB276F331D4A58B1AB64302 /* WorkoutStore.swift */,
+			);
+			path = Stores;
+			sourceTree = "<group>";
+		};
+		DA9E4523F10EC2CDA5F3CC01 = {
+			isa = PBXGroup;
+			children = (
+				16F4B12B47CD59290E1AA18F /* KaoriApp */,
+				AC05EDD211670F36A9A92900 /* KaoriTimerWidget */,
+				7A29CA4EDA5595EBDF979EE8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F08331818F18B68E3917C49B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				76C24199376F64DF38580BBC /* ImportedWorkoutMeta.swift */,
+				FCC45B434D316B99DB578F96 /* Meal.swift */,
+				9FE7B77F17ABBAAEEFFC88FB /* Profile.swift */,
+				7CB167B3D5954D349D6D17C4 /* TimerActivity.swift */,
+				AEA26FF04B554F7679A7B4C0 /* Weight.swift */,
+				7147A8679F3CFC8352E161CF /* Workout.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F894C72CA030F10CB0DB25C8 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				C22A995323B78C5991EF12CB /* DashboardView.swift */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		05871629EED4B62B1C037E6F /* KaoriApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 17CADE983C562DAF67C68BE2 /* Build configuration list for PBXNativeTarget "KaoriApp" */;
+			buildPhases = (
+				F94F522772C4ED413EA8E69B /* Sources */,
+				CC87D4D23AE4DF2DB2738EA2 /* Resources */,
+				34BDE11E95084F456341D351 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				752E8FBEEBDC796AAE0F4B4F /* PBXTargetDependency */,
+			);
+			name = KaoriApp;
+			packageProductDependencies = (
+			);
+			productName = KaoriApp;
+			productReference = D13D1111C4EBEDC3AF4FA747 /* KaoriApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		54EEF084510FB63898F94E5E /* KaoriTimerWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4EA09A708A341CCAD30B504E /* Build configuration list for PBXNativeTarget "KaoriTimerWidgetExtension" */;
+			buildPhases = (
+				60AEC1C65B99A624E4FE2C4E /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KaoriTimerWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = KaoriTimerWidgetExtension;
+			productReference = 4FCEC9FEE75376F1773C6EE7 /* KaoriTimerWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E6102C4C9318222F07E28140 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					05871629EED4B62B1C037E6F = {
+						DevelopmentTeam = VEHZLU88DS;
+						ProvisioningStyle = Automatic;
+					};
+					54EEF084510FB63898F94E5E = {
+						DevelopmentTeam = VEHZLU88DS;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 1AC1CC46A11CF469C051B89A /* Build configuration list for PBXProject "KaoriApp" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = DA9E4523F10EC2CDA5F3CC01;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 7A29CA4EDA5595EBDF979EE8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				05871629EED4B62B1C037E6F /* KaoriApp */,
+				54EEF084510FB63898F94E5E /* KaoriTimerWidgetExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CC87D4D23AE4DF2DB2738EA2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD943E644F42AF40BD058C73 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		60AEC1C65B99A624E4FE2C4E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				45A8B0596303F4256533472E /* KaoriTimerLiveActivity.swift in Sources */,
+				A391DB5ADC4D916395C8CEEF /* KaoriTimerWidgetBundle.swift in Sources */,
+				7BDCAA5060ABF3D66F3E3C5A /* TimerActivity.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F94F522772C4ED413EA8E69B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				205EF93C84D2E5265CDDFD5E /* APIClient.swift in Sources */,
+				33291EF7B2FCE4F256B06444 /* APIError.swift in Sources */,
+				5DC04D439AAB2B2E4FEF3342 /* AnalysisStatusBadge.swift in Sources */,
+				F41F741B60D2F3B0A09DE1B2 /* AppConfig.swift in Sources */,
+				98F64E3441459FDCB7645D51 /* ConnectionBanner.swift in Sources */,
+				118F9C5C63927AA39AB79459 /* DashboardView.swift in Sources */,
+				BBE49675447E4CB29B8C426C /* ExerciseManageView.swift in Sources */,
+				1BD326F61B192FF000E13F56 /* ExercisePickerView.swift in Sources */,
+				4F27A73B29E952033757C8E9 /* HealthKitManager.swift in Sources */,
+				4D6849DE5A98ADA51DF02CBC /* ImportedWorkoutDetailView.swift in Sources */,
+				2D68CF261AF3C6BAE4B300DC /* ImportedWorkoutMeta.swift in Sources */,
+				8D5792E195EA08099719C2B3 /* KaoriApp.swift in Sources */,
+				2B75B47F07B3BA6886F7B93A /* Meal.swift in Sources */,
+				4A37A72996217DD57F4776EF /* MealCreateView.swift in Sources */,
+				A9E80973719AA82394FF66BE /* MealDetailView.swift in Sources */,
+				7735EBC883D5CD034BADCCEF /* MealEditView.swift in Sources */,
+				CA042426C17B3F1EFF66222B /* MealListView.swift in Sources */,
+				6E5E05F6A94D0E9B26B1740B /* MealRowView.swift in Sources */,
+				532E5973BB1D7FBB50FD1AD1 /* MealStore.swift in Sources */,
+				9EE50008E94ECD5927BACBB8 /* NutritionBar.swift in Sources */,
+				1592819803EA1FB2DBA66D98 /* PhotoPicker.swift in Sources */,
+				2F5A63776F5FBFC7CCA4F8C0 /* Profile.swift in Sources */,
+				FF244A6182756391D9F8AF69 /* ProfileStore.swift in Sources */,
+				076770AAF9ABECC2B6D9D9E8 /* ProfileView.swift in Sources */,
+				89FB08D4F71F7897215587EA /* SetRowView.swift in Sources */,
+				4608389648507B3BBB4C8387 /* SettingsView.swift in Sources */,
+				9405433C46DB2468CA014AD7 /* TimerActivity.swift in Sources */,
+				C0B0D4BBFD239E20CC177682 /* TimerEngine.swift in Sources */,
+				3F05B819ACD2BD58A39F2DD4 /* TimerPresetPickerView.swift in Sources */,
+				BAF10AD71D665307A22FF127 /* TimerView.swift in Sources */,
+				5B0BB6FB6685C7FB87C713E2 /* Weight.swift in Sources */,
+				89C41CD87949AC96B1E3F2FA /* WeightChartView.swift in Sources */,
+				D8FFD7F8540EB146677E5F34 /* WeightCreateView.swift in Sources */,
+				F89D28B8F2ABFD6EB279ABC3 /* WeightMiniChartView.swift in Sources */,
+				9260A82D2DE266B501F60BF7 /* WeightStore.swift in Sources */,
+				652DACF32CB255993621EF35 /* WeightView.swift in Sources */,
+				E0EA4FC30388DD90D1A5E151 /* Workout.swift in Sources */,
+				323EC25C79164DB3C06F59C6 /* WorkoutAnalysisView.swift in Sources */,
+				D29BF20514F12E285C4C7E01 /* WorkoutDetailView.swift in Sources */,
+				7D7162632F4C79E076C408E6 /* WorkoutImportView.swift in Sources */,
+				6DEA6E7611A31F4BDAFE4E69 /* WorkoutListView.swift in Sources */,
+				8357443E39F499DD8F0B8550 /* WorkoutRowView.swift in Sources */,
+				A5F3319DB0A131CCC7074954 /* WorkoutStore.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		752E8FBEEBDC796AAE0F4B4F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 54EEF084510FB63898F94E5E /* KaoriTimerWidgetExtension */;
+			targetProxy = AD606EEDD89D98D8E6E0FD71 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0331B341F914690D41C3D3C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = KaoriApp/KaoriApp.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VEHZLU88DS;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = KaoriApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dehuacheng.kaori.app;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		165CECA802A443147D012287 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VEHZLU88DS;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = KaoriTimerWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.dehuacheng.kaori.app.timer-widget";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		4A15EB75E27547823A81B7EC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VEHZLU88DS;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = KaoriTimerWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.dehuacheng.kaori.app.timer-widget";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8B7C99F8670F5521D1FA8A99 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = KaoriApp/KaoriApp.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VEHZLU88DS;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = KaoriApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dehuacheng.kaori.app;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		ACADE67621DD9305CB64B7D5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		D3F60463116BBAE188721282 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		17CADE983C562DAF67C68BE2 /* Build configuration list for PBXNativeTarget "KaoriApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0331B341F914690D41C3D3C9 /* Debug */,
+				8B7C99F8670F5521D1FA8A99 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		1AC1CC46A11CF469C051B89A /* Build configuration list for PBXProject "KaoriApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ACADE67621DD9305CB64B7D5 /* Debug */,
+				D3F60463116BBAE188721282 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		4EA09A708A341CCAD30B504E /* Build configuration list for PBXNativeTarget "KaoriTimerWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4A15EB75E27547823A81B7EC /* Debug */,
+				165CECA802A443147D012287 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E6102C4C9318222F07E28140 /* Project object */;
+}

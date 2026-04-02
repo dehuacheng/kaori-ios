@@ -1,0 +1,267 @@
+import SwiftUI
+
+struct DashboardView: View {
+    @Environment(APIClient.self) private var api
+    @Environment(MealStore.self) private var mealStore
+    @Environment(WeightStore.self) private var weightStore
+    @Environment(ProfileStore.self) private var profileStore
+    @Environment(WorkoutStore.self) private var workoutStore
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(spacing: 16) {
+                    // Calorie progress
+                    if let profile = profileStore.profile,
+                       let target = profile.targetCalories,
+                       let totals = mealStore.totals {
+                        calorieCard(current: Double(totals.totalCal), target: Double(target))
+                    }
+
+                    // Macros
+                    if let totals = mealStore.totals, let profile = profileStore.profile {
+                        macroCard(totals: totals, profile: profile)
+                    }
+
+                    // Today's workout
+                    workoutCard
+
+                    // Recent meals
+                    recentMealsCard
+
+                    // Weight
+                    weightCard
+                }
+                .padding()
+            }
+            .navigationTitle("Kaori")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    HStack {
+                        NavigationLink(destination: ProfileView()) {
+                            Image(systemName: "person.crop.circle")
+                        }
+                        NavigationLink(destination: SettingsView()) {
+                            Image(systemName: "gear")
+                        }
+                    }
+                }
+            }
+            .refreshable {
+                await loadAll()
+            }
+            .task {
+                await loadAll()
+            }
+        }
+    }
+
+    private func calorieCard(current: Double, target: Double) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Today")
+                .font(.headline)
+            NutritionBar(
+                label: "Calories",
+                current: current,
+                target: target,
+                unit: " kcal",
+                color: .blue
+            )
+        }
+        .padding()
+        .background(.regularMaterial)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+    }
+
+    private func macroCard(totals: NutritionTotals, profile: Profile) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            NutritionBar(
+                label: "Protein",
+                current: totals.totalProtein,
+                target: Double(profile.targetProteinG ?? 0),
+                unit: "g",
+                color: .orange
+            )
+            NutritionBar(
+                label: "Carbs",
+                current: totals.totalCarbs,
+                target: Double(profile.targetCarbsG ?? 0),
+                unit: "g",
+                color: .green
+            )
+            NutritionBar(
+                label: "Fat",
+                current: totals.totalFat,
+                target: 0,
+                unit: "g",
+                color: .purple
+            )
+        }
+        .padding()
+        .background(.regularMaterial)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+    }
+
+    private var workoutCard: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Text("Workout")
+                    .font(.headline)
+                Spacer()
+                NavigationLink("Go to Gym") {
+                    WorkoutListView()
+                }
+                .font(.caption)
+            }
+
+            if workoutStore.workouts.isEmpty {
+                Text("No workouts today")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .padding(.vertical, 8)
+            } else {
+                ForEach(workoutStore.workouts) { workout in
+                    let meta = WorkoutStore.importedMeta(forWorkoutId: workout.id)
+                    HStack {
+                        Image(systemName: activityIconName(workout.activityType))
+                            .foregroundStyle(.orange)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(meta?.activityDisplayName ?? workoutDisplayLabel(workout))
+                                .font(.subheadline.bold())
+
+                            HStack(spacing: 12) {
+                                if let dur = workout.durationMinutes, dur > 0 {
+                                    Label("\(Int(dur)) min", systemImage: "clock")
+                                }
+                                if let cal = workout.caloriesBurned ?? meta?.caloriesBurned, cal > 0 {
+                                    Label("\(Int(cal)) kcal", systemImage: "flame")
+                                }
+                                if let dist = meta?.distanceMeters, dist > 0 {
+                                    Label(dist >= 1000 ? String(format: "%.1f km", dist / 1000) : String(format: "%.0f m", dist), systemImage: "location")
+                                }
+                            }
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+
+                            if let summary = workout.summary, !summary.isEmpty {
+                                Text(summary)
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                                    .lineLimit(2)
+                            }
+                        }
+                        Spacer()
+                    }
+                }
+            }
+        }
+        .padding()
+        .background(.regularMaterial)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+    }
+
+    private var recentMealsCard: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Text("Meals")
+                    .font(.headline)
+                Spacer()
+                NavigationLink("See All") {
+                    MealListView()
+                }
+                .font(.caption)
+            }
+
+            if mealStore.meals.isEmpty {
+                Text("No meals logged today")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .padding(.vertical, 8)
+            } else {
+                ForEach(mealStore.meals.prefix(3)) { meal in
+                    NavigationLink(destination: MealDetailView(mealId: meal.id)) {
+                        MealRowView(meal: meal)
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+        }
+        .padding()
+        .background(.regularMaterial)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+    }
+
+    private var weightCard: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Text("Weight")
+                    .font(.headline)
+                Spacer()
+                NavigationLink("Details") {
+                    WeightView()
+                }
+                .font(.caption)
+            }
+
+            HStack(spacing: 24) {
+                if let latest = weightStore.latest {
+                    VStack {
+                        Text(String(format: "%.1f", latest))
+                            .font(.title2.bold())
+                        Text("kg")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                if let avg = weightStore.avg7d {
+                    VStack {
+                        Text(String(format: "%.1f", avg))
+                            .font(.title3)
+                        Text("7d avg")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                if let delta = weightStore.deltaWeek {
+                    VStack {
+                        Text(String(format: "%+.1f", delta))
+                            .font(.title3)
+                            .foregroundStyle(delta < 0 ? .green : delta > 0 ? .red : .primary)
+                        Text("week")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+            }
+
+            if weightStore.weights.count >= 2 {
+                WeightMiniChartView(weights: weightStore.weights)
+                    .frame(height: 120)
+            }
+        }
+        .padding()
+        .background(.regularMaterial)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+    }
+
+    private func workoutDisplayLabel(_ workout: Workout) -> String {
+        if let summary = workout.summary, !summary.isEmpty {
+            return summary
+        }
+        let name = activityDisplayName(workout.activityType)
+        if let count = workout.exerciseCount, count > 0 {
+            return "\(name) · \(count) exercise\(count == 1 ? "" : "s")"
+        }
+        return name
+    }
+
+    private func loadAll() async {
+        mealStore.currentDate = MealStore.todayString()
+        workoutStore.currentDate = WorkoutStore.todayString()
+        async let m: () = mealStore.loadMeals()
+        async let w: () = weightStore.load()
+        async let p: () = profileStore.load()
+        async let g: () = workoutStore.loadWorkouts()
+        _ = await (m, w, p, g)
+    }
+}

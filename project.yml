@@ -1,0 +1,69 @@
+name: KaoriApp
+options:
+  bundleIdPrefix: com.kaori
+  deploymentTarget:
+    iOS: "17.0"
+  xcodeVersion: "16.0"
+  generateEmptyDirectories: true
+
+targets:
+  KaoriApp:
+    type: application
+    platform: iOS
+    sources:
+      - KaoriApp
+    entitlements:
+      path: KaoriApp/KaoriApp.entitlements
+      properties:
+        com.apple.developer.healthkit: true
+    info:
+      path: KaoriApp/Info.plist
+      properties:
+        NSCameraUsageDescription: "Kaori needs camera access to photograph your meals"
+        NSPhotoLibraryUsageDescription: "Kaori needs photo library access to add meal photos"
+        NSHealthShareUsageDescription: "Kaori reads your weight history from Apple Health to track trends"
+        NSHealthUpdateUsageDescription: "Kaori saves weight and workout data to Apple Health"
+        NSSupportsLiveActivities: true
+        UIApplicationSupportsIndirectInputEvents: true
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+    dependencies:
+      - target: KaoriTimerWidgetExtension
+        embed: true
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: false
+        CURRENT_PROJECT_VERSION: "1"
+        MARKETING_VERSION: "0.1.0"
+        PRODUCT_BUNDLE_IDENTIFIER: com.dehuacheng.kaori.app
+        SWIFT_EMIT_LOC_STRINGS: true
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: VEHZLU88DS
+
+  KaoriTimerWidgetExtension:
+    type: app-extension
+    platform: iOS
+    sources:
+      - KaoriTimerWidget
+      - path: KaoriApp/Models/TimerActivity.swift
+        type: file
+    info:
+      path: KaoriTimerWidget/Info.plist
+      properties:
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+        CFBundleDisplayName: Kaori Timer
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: false
+        CURRENT_PROJECT_VERSION: "1"
+        MARKETING_VERSION: "0.1.0"
+        PRODUCT_BUNDLE_IDENTIFIER: com.dehuacheng.kaori.app.timer-widget
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: VEHZLU88DS
+        SWIFT_EMIT_LOC_STRINGS: true
