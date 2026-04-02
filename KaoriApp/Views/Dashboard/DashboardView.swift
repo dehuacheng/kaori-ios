@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct DashboardView: View {
+    @Environment(Localizer.self) private var L
     @Environment(APIClient.self) private var api
     @Environment(MealStore.self) private var mealStore
     @Environment(WeightStore.self) private var weightStore
@@ -34,7 +35,7 @@ struct DashboardView: View {
                 }
                 .padding()
             }
-            .navigationTitle("Kaori")
+            .navigationTitle(L.t("dashboard.title"))
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     HStack {
@@ -58,10 +59,10 @@ struct DashboardView: View {
 
     private func calorieCard(current: Double, target: Double) -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Today")
+            Text(L.t("dashboard.today"))
                 .font(.headline)
             NutritionBar(
-                label: "Calories",
+                label: L.t("dashboard.calories"),
                 current: current,
                 target: target,
                 unit: " kcal",
@@ -76,21 +77,21 @@ struct DashboardView: View {
     private func macroCard(totals: NutritionTotals, profile: Profile) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             NutritionBar(
-                label: "Protein",
+                label: L.t("dashboard.protein"),
                 current: totals.totalProtein,
                 target: Double(profile.targetProteinG ?? 0),
                 unit: "g",
                 color: .orange
             )
             NutritionBar(
-                label: "Carbs",
+                label: L.t("dashboard.carbs"),
                 current: totals.totalCarbs,
                 target: Double(profile.targetCarbsG ?? 0),
                 unit: "g",
                 color: .green
             )
             NutritionBar(
-                label: "Fat",
+                label: L.t("dashboard.fat"),
                 current: totals.totalFat,
                 target: 0,
                 unit: "g",
@@ -105,17 +106,17 @@ struct DashboardView: View {
     private var workoutCard: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Text("Workout")
+                Text(L.t("dashboard.workout"))
                     .font(.headline)
                 Spacer()
-                NavigationLink("Go to Gym") {
+                NavigationLink(L.t("dashboard.goToGym")) {
                     WorkoutListView()
                 }
                 .font(.caption)
             }
 
             if workoutStore.workouts.isEmpty {
-                Text("No workouts today")
+                Text(L.t("dashboard.noWorkoutsToday"))
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .padding(.vertical, 8)
@@ -126,7 +127,7 @@ struct DashboardView: View {
                         Image(systemName: activityIconName(workout.activityType))
                             .foregroundStyle(.orange)
                         VStack(alignment: .leading, spacing: 2) {
-                            Text(meta?.activityDisplayName ?? workoutDisplayLabel(workout))
+                            Text(meta != nil ? L.t("activity.\(meta!.activityType)") : workoutDisplayLabel(workout))
                                 .font(.subheadline.bold())
 
                             HStack(spacing: 12) {
@@ -163,17 +164,17 @@ struct DashboardView: View {
     private var recentMealsCard: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Text("Meals")
+                Text(L.t("dashboard.meals"))
                     .font(.headline)
                 Spacer()
-                NavigationLink("See All") {
+                NavigationLink(L.t("dashboard.seeAll")) {
                     MealListView()
                 }
                 .font(.caption)
             }
 
             if mealStore.meals.isEmpty {
-                Text("No meals logged today")
+                Text(L.t("dashboard.noMealsToday"))
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .padding(.vertical, 8)
@@ -194,10 +195,10 @@ struct DashboardView: View {
     private var weightCard: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Text("Weight")
+                Text(L.t("dashboard.weight"))
                     .font(.headline)
                 Spacer()
-                NavigationLink("Details") {
+                NavigationLink(L.t("dashboard.details")) {
                     WeightView()
                 }
                 .font(.caption)
@@ -217,7 +218,7 @@ struct DashboardView: View {
                     VStack {
                         Text(String(format: "%.1f", avg))
                             .font(.title3)
-                        Text("7d avg")
+                        Text(L.t("dashboard.7dAvg"))
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
@@ -227,7 +228,7 @@ struct DashboardView: View {
                         Text(String(format: "%+.1f", delta))
                             .font(.title3)
                             .foregroundStyle(delta < 0 ? .green : delta > 0 ? .red : .primary)
-                        Text("week")
+                        Text(L.t("dashboard.week"))
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
@@ -248,9 +249,9 @@ struct DashboardView: View {
         if let summary = workout.summary, !summary.isEmpty {
             return summary
         }
-        let name = activityDisplayName(workout.activityType)
+        let name = L.t("activity.\(workout.activityType ?? "workout")")
         if let count = workout.exerciseCount, count > 0 {
-            return "\(name) · \(count) exercise\(count == 1 ? "" : "s")"
+            return "\(name) · \(L.t("workout.exerciseCount", count))"
         }
         return name
     }

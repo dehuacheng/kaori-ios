@@ -48,12 +48,13 @@ struct MacroRow: View {
     let fat: Double
     let targetProtein: Double
     let targetCarbs: Double
+    @Environment(Localizer.self) private var L
 
     var body: some View {
         HStack(spacing: 16) {
-            MacroPill(label: "P", value: protein, target: targetProtein, color: .orange)
-            MacroPill(label: "C", value: carbs, target: targetCarbs, color: .green)
-            MacroPill(label: "F", value: fat, target: 0, color: .purple)
+            MacroPill(label: L.t("meal.p"), value: protein, target: targetProtein, color: .orange)
+            MacroPill(label: L.t("meal.c"), value: carbs, target: targetCarbs, color: .green)
+            MacroPill(label: L.t("meal.f"), value: fat, target: 0, color: .purple)
         }
     }
 }

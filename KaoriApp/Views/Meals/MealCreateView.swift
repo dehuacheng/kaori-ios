@@ -2,6 +2,7 @@ import SwiftUI
 
 struct MealCreateView: View {
     @Environment(MealStore.self) private var store
+    @Environment(Localizer.self) private var L
     @Environment(\.dismiss) private var dismiss
 
     @State private var description = ""
@@ -16,19 +17,19 @@ struct MealCreateView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("Photo") {
+                Section(L.t("meal.photo")) {
                     PhotoPickerButton(imageData: $imageData)
                 }
 
-                Section("Details") {
-                    Picker("Meal Type", selection: $mealType) {
+                Section(L.t("meal.details")) {
+                    Picker(L.t("meal.mealType"), selection: $mealType) {
                         ForEach(mealTypes, id: \.self) { type in
-                            Text(type.capitalized).tag(type)
+                            Text(L.t("mealType.\(type)")).tag(type)
                         }
                     }
-                    TextField("Description", text: $description, axis: .vertical)
+                    TextField(L.t("meal.description"), text: $description, axis: .vertical)
                         .lineLimit(2...4)
-                    TextField("Notes", text: $notes, axis: .vertical)
+                    TextField(L.t("meal.notes"), text: $notes, axis: .vertical)
                         .lineLimit(1...3)
                 }
 
@@ -38,14 +39,14 @@ struct MealCreateView: View {
                     }
                 }
             }
-            .navigationTitle("Log Meal")
+            .navigationTitle(L.t("meal.logMeal"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { dismiss() }
+                    Button(L.t("common.cancel")) { dismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") {
+                    Button(L.t("common.save")) {
                         Task { await submit() }
                     }
                     .disabled(isSubmitting || (description.isEmpty && imageData == nil))
@@ -54,7 +55,7 @@ struct MealCreateView: View {
             .disabled(isSubmitting)
             .overlay {
                 if isSubmitting {
-                    ProgressView("Saving...")
+                    ProgressView(L.t("meal.saving"))
                         .padding()
                         .background(.regularMaterial)
                         .clipShape(RoundedRectangle(cornerRadius: 8))

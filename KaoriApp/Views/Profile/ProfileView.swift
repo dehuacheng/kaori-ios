@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ProfileView: View {
     @Environment(ProfileStore.self) private var store
+    @Environment(Localizer.self) private var L
     @State private var isEditing = false
     @State private var draft = ProfileUpdate()
     @State private var isSaving = false
@@ -20,22 +21,22 @@ struct ProfileView: View {
             } else if store.isLoading {
                 ProgressView()
             } else {
-                ContentUnavailableView("No Profile", systemImage: "person.crop.circle")
+                ContentUnavailableView(L.t("common.noProfile"), systemImage: "person.crop.circle")
             }
         }
-        .navigationTitle("Profile")
+        .navigationTitle(L.t("profile.title"))
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 if isEditing {
-                    Button("Save") { Task { await save() } }
+                    Button(L.t("common.save")) { Task { await save() } }
                         .disabled(isSaving)
                 } else {
-                    Button("Edit") { startEditing() }
+                    Button(L.t("common.edit")) { startEditing() }
                 }
             }
             if isEditing {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("Cancel") { isEditing = false }
+                    Button(L.t("common.cancel")) { isEditing = false }
                 }
             }
         }
@@ -49,45 +50,45 @@ struct ProfileView: View {
 
     private func readOnlyView(_ profile: Profile) -> some View {
         Group {
-            Section("Personal") {
-                row("Name", profile.displayName ?? "—")
-                row("Height", profile.heightCm.map { "\(Int($0)) cm" } ?? "—")
-                row("Gender", profile.gender?.capitalized ?? "—")
-                row("Birth Date", profile.birthDate ?? "—")
+            Section(L.t("profile.personal")) {
+                row(L.t("profile.name"), profile.displayName ?? "—")
+                row(L.t("profile.height"), profile.heightCm.map { "\(Int($0)) cm" } ?? "—")
+                row(L.t("profile.gender"), profile.gender.map { L.t("gender.\($0)") } ?? "—")
+                row(L.t("profile.birthDate"), profile.birthDate ?? "—")
                 if let age = profile.age {
-                    row("Age", "\(age)")
+                    row(L.t("profile.age"), "\(age)")
                 }
             }
 
-            Section("Nutrition Settings") {
-                row("Protein", profile.proteinPerKg.map { "\($0) g/kg" } ?? "—")
-                row("Carbs", profile.carbsPerKg.map { "\($0) g/kg" } ?? "—")
-                row("Calorie Adj.", profile.calorieAdjustmentPct.map { "\($0 >= 0 ? "+" : "")\($0)%" } ?? "—")
+            Section(L.t("profile.nutritionSettings")) {
+                row(L.t("profile.protein"), profile.proteinPerKg.map { "\($0) g/kg" } ?? "—")
+                row(L.t("profile.carbs"), profile.carbsPerKg.map { "\($0) g/kg" } ?? "—")
+                row(L.t("profile.calorieAdj"), profile.calorieAdjustmentPct.map { "\($0 >= 0 ? "+" : "")\($0)%" } ?? "—")
             }
 
-            Section("Computed Targets") {
+            Section(L.t("profile.computedTargets")) {
                 if let weight = profile.latestWeightKg {
-                    row("Current Weight", String(format: "%.1f kg", weight))
+                    row(L.t("profile.currentWeight"), String(format: "%.1f kg", weight))
                 }
                 if let bmr = profile.bmr {
-                    row("BMR", "\(bmr) kcal")
+                    row(L.t("profile.bmr"), "\(bmr) kcal")
                 }
                 if let tdee = profile.estimatedTdee {
-                    row("Est. TDEE", "\(tdee) kcal")
+                    row(L.t("profile.estTdee"), "\(tdee) kcal")
                 }
                 if let cal = profile.targetCalories {
-                    row("Target Calories", "\(cal) kcal")
+                    row(L.t("profile.targetCalories"), "\(cal) kcal")
                 }
                 if let p = profile.targetProteinG {
-                    row("Target Protein", "\(p) g")
+                    row(L.t("profile.targetProtein"), "\(p) g")
                 }
                 if let c = profile.targetCarbsG {
-                    row("Target Carbs", "\(c) g")
+                    row(L.t("profile.targetCarbs"), "\(c) g")
                 }
             }
 
             if let notes = profile.notes, !notes.isEmpty {
-                Section("Notes") {
+                Section(L.t("profile.notesSection")) {
                     Text(notes)
                         .font(.subheadline)
                 }
@@ -97,28 +98,28 @@ struct ProfileView: View {
 
     private func editView(_ profile: Profile) -> some View {
         Group {
-            Section("Personal") {
-                TextField("Name", text: binding(\.displayName, default: ""))
+            Section(L.t("profile.personal")) {
+                TextField(L.t("profile.name"), text: binding(\.displayName, default: ""))
                 HStack {
-                    Text("Height (cm)")
+                    Text(L.t("profile.heightCm"))
                     Spacer()
                     TextField("cm", value: binding(\.heightCm), format: .number)
                         .keyboardType(.decimalPad)
                         .multilineTextAlignment(.trailing)
                         .frame(width: 80)
                 }
-                Picker("Gender", selection: binding(\.gender, default: "")) {
-                    Text("Male").tag("male")
-                    Text("Female").tag("female")
-                    Text("Other").tag("other")
+                Picker(L.t("profile.gender"), selection: binding(\.gender, default: "")) {
+                    Text(L.t("profile.male")).tag("male")
+                    Text(L.t("profile.female")).tag("female")
+                    Text(L.t("profile.other")).tag("other")
                 }
-                TextField("Birth Date (YYYY-MM-DD)", text: binding(\.birthDate, default: ""))
+                TextField(L.t("profile.birthDateFormat"), text: binding(\.birthDate, default: ""))
                     .keyboardType(.numbersAndPunctuation)
             }
 
-            Section("Nutrition Settings") {
+            Section(L.t("profile.nutritionSettings")) {
                 HStack {
-                    Text("Protein (g/kg)")
+                    Text(L.t("profile.proteinGKg"))
                     Spacer()
                     TextField("g/kg", value: binding(\.proteinPerKg), format: .number)
                         .keyboardType(.decimalPad)
@@ -126,7 +127,7 @@ struct ProfileView: View {
                         .frame(width: 80)
                 }
                 HStack {
-                    Text("Carbs (g/kg)")
+                    Text(L.t("profile.carbsGKg"))
                     Spacer()
                     TextField("g/kg", value: binding(\.carbsPerKg), format: .number)
                         .keyboardType(.decimalPad)
@@ -134,7 +135,7 @@ struct ProfileView: View {
                         .frame(width: 80)
                 }
                 HStack {
-                    Text("Calorie Adj. (%)")
+                    Text(L.t("profile.calorieAdjPct"))
                     Spacer()
                     TextField("%", value: binding(\.calorieAdjustmentPct), format: .number)
                         .keyboardType(.numbersAndPunctuation)
@@ -143,8 +144,8 @@ struct ProfileView: View {
                 }
             }
 
-            Section("Notes (LLM Context)") {
-                TextField("Free-form notes for AI context", text: binding(\.notes, default: ""), axis: .vertical)
+            Section(L.t("profile.notesLLM")) {
+                TextField(L.t("profile.notesPlaceholder"), text: binding(\.notes, default: ""), axis: .vertical)
                     .lineLimit(3...6)
             }
 

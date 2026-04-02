@@ -3,6 +3,7 @@ import HealthKit
 
 struct WorkoutImportView: View {
     @Environment(WorkoutStore.self) private var store
+    @Environment(Localizer.self) private var L
     @Environment(\.dismiss) private var dismiss
 
     @State var workouts: [HKWorkout]
@@ -21,13 +22,13 @@ struct WorkoutImportView: View {
             List {
                 if workouts.isEmpty {
                     Section {
-                        Text("No workouts found")
+                        Text(L.t("workoutImport.noWorkouts"))
                             .foregroundStyle(.secondary)
                     }
                 } else {
                     if importedCount > 0 {
                         Section {
-                            Label("\(importedCount) workout\(importedCount == 1 ? "" : "s") imported", systemImage: "checkmark.circle")
+                            Label(L.t("workoutImport.importedCount", importedCount), systemImage: "checkmark.circle")
                                 .foregroundStyle(.green)
                         }
                     }
@@ -37,7 +38,7 @@ struct WorkoutImportView: View {
                             workoutRow(workout)
                                 .swipeActions(edge: .trailing) {
                                     if !isDuplicate(workout) {
-                                        Button("Skip") {
+                                        Button(L.t("workoutImport.skip")) {
                                             skip(workout)
                                         }
                                         .tint(.gray)
@@ -45,15 +46,15 @@ struct WorkoutImportView: View {
                                 }
                         }
                     } footer: {
-                        Text("Swipe left to skip. Skipped workouts won't appear in the auto-prompt.")
+                        Text(L.t("workoutImport.footer"))
                     }
                 }
             }
-            .navigationTitle("Import Workouts")
+            .navigationTitle(L.t("workoutImport.title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Done") { dismiss() }
+                    Button(L.t("common.done")) { dismiss() }
                 }
             }
         }
@@ -83,10 +84,10 @@ struct WorkoutImportView: View {
 
             VStack(alignment: .leading, spacing: 4) {
                 HStack(spacing: 6) {
-                    Text(HealthKitManager.activityDisplayName(from: workout.workoutActivityType))
+                    Text(L.t("activity.\(HealthKitManager.activityTypeString(from: workout.workoutActivityType))"))
                         .font(.subheadline.bold())
                     if dup {
-                        Text("Imported")
+                        Text(L.t("workoutImport.imported"))
                             .font(.caption2)
                             .padding(.horizontal, 6)
                             .padding(.vertical, 2)
@@ -128,7 +129,7 @@ struct WorkoutImportView: View {
                 ProgressView()
                     .controlSize(.small)
             } else {
-                Button("Import") {
+                Button(L.t("workoutImport.import")) {
                     Task { await importWorkout(workout) }
                 }
                 .buttonStyle(.borderedProminent)

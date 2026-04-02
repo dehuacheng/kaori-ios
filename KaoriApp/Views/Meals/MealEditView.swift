@@ -4,6 +4,7 @@ struct MealEditView: View {
     let meal: Meal
     let onSave: () -> Void
     @Environment(MealStore.self) private var store
+    @Environment(Localizer.self) private var L
     @Environment(\.dismiss) private var dismiss
 
     @State private var description: String
@@ -33,21 +34,21 @@ struct MealEditView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("Details") {
-                    Picker("Meal Type", selection: $mealType) {
+                Section(L.t("meal.details")) {
+                    Picker(L.t("meal.mealType"), selection: $mealType) {
                         ForEach(mealTypes, id: \.self) { type in
-                            Text(type.capitalized).tag(type)
+                            Text(L.t("mealType.\(type)")).tag(type)
                         }
                     }
-                    TextField("Description", text: $description, axis: .vertical)
+                    TextField(L.t("meal.description"), text: $description, axis: .vertical)
                         .lineLimit(2...4)
-                    TextField("Notes", text: $notes, axis: .vertical)
+                    TextField(L.t("meal.notes"), text: $notes, axis: .vertical)
                         .lineLimit(1...3)
                 }
 
-                Section("Nutrition Override") {
+                Section(L.t("meal.nutritionOverride")) {
                     HStack {
-                        Text("Calories")
+                        Text(L.t("dashboard.calories"))
                         Spacer()
                         TextField("kcal", text: $calories)
                             .keyboardType(.numberPad)
@@ -55,7 +56,7 @@ struct MealEditView: View {
                             .frame(width: 80)
                     }
                     HStack {
-                        Text("Protein")
+                        Text(L.t("dashboard.protein"))
                         Spacer()
                         TextField("g", text: $protein)
                             .keyboardType(.decimalPad)
@@ -63,7 +64,7 @@ struct MealEditView: View {
                             .frame(width: 80)
                     }
                     HStack {
-                        Text("Carbs")
+                        Text(L.t("dashboard.carbs"))
                         Spacer()
                         TextField("g", text: $carbs)
                             .keyboardType(.decimalPad)
@@ -71,7 +72,7 @@ struct MealEditView: View {
                             .frame(width: 80)
                     }
                     HStack {
-                        Text("Fat")
+                        Text(L.t("dashboard.fat"))
                         Spacer()
                         TextField("g", text: $fat)
                             .keyboardType(.decimalPad)
@@ -86,14 +87,14 @@ struct MealEditView: View {
                     }
                 }
             }
-            .navigationTitle("Edit Meal")
+            .navigationTitle(L.t("meal.editMeal"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { dismiss() }
+                    Button(L.t("common.cancel")) { dismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") { Task { await submit() } }
+                    Button(L.t("common.save")) { Task { await submit() } }
                         .disabled(isSubmitting)
                 }
             }

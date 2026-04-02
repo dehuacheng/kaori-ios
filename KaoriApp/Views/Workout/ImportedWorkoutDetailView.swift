@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct ImportedWorkoutDetailView: View {
+    @Environment(Localizer.self) private var L
     let workoutId: Int
     let meta: ImportedWorkoutMeta
 
@@ -12,7 +13,7 @@ struct ImportedWorkoutDetailView: View {
                     Image(systemName: activityIcon)
                         .font(.system(size: 40))
                         .foregroundStyle(.orange)
-                    Text(meta.activityDisplayName)
+                    Text(L.t("activity.\(meta.activityType)"))
                         .font(.title2.bold())
                     Text(meta.startDate, style: .date)
                         .font(.subheadline)
@@ -29,14 +30,14 @@ struct ImportedWorkoutDetailView: View {
                     metricCard(
                         icon: "clock",
                         value: formatDuration(meta.durationSeconds),
-                        label: "Duration"
+                        label: L.t("importedWorkout.duration")
                     )
 
                     if let cal = meta.caloriesBurned, cal > 0 {
                         metricCard(
                             icon: "flame.fill",
                             value: "\(Int(cal))",
-                            label: "Calories",
+                            label: L.t("importedWorkout.calories"),
                             color: .orange
                         )
                     }
@@ -45,7 +46,7 @@ struct ImportedWorkoutDetailView: View {
                         metricCard(
                             icon: "location.fill",
                             value: formatDistance(dist),
-                            label: "Distance",
+                            label: L.t("importedWorkout.distance"),
                             color: .blue
                         )
                     }
@@ -55,7 +56,7 @@ struct ImportedWorkoutDetailView: View {
                         metricCard(
                             icon: "speedometer",
                             value: formatPace(paceMinPerKm),
-                            label: "Avg Pace",
+                            label: L.t("importedWorkout.avgPace"),
                             color: .green
                         )
                     }
@@ -64,15 +65,15 @@ struct ImportedWorkoutDetailView: View {
             }
 
             // Time
-            Section("Time") {
+            Section(L.t("importedWorkout.time")) {
                 HStack {
-                    Label("Start", systemImage: "play.circle")
+                    Label(L.t("importedWorkout.start"), systemImage: "play.circle")
                         .foregroundStyle(.secondary)
                     Spacer()
                     Text(meta.startDate, style: .time)
                 }
                 HStack {
-                    Label("End", systemImage: "stop.circle")
+                    Label(L.t("importedWorkout.end"), systemImage: "stop.circle")
                         .foregroundStyle(.secondary)
                     Spacer()
                     Text(meta.endDate, style: .time)
@@ -81,16 +82,16 @@ struct ImportedWorkoutDetailView: View {
 
             // Speed (for cycling, running, etc.)
             if let dist = meta.distanceMeters, dist > 0, meta.durationSeconds > 0 {
-                Section("Details") {
+                Section(L.t("importedWorkout.details")) {
                     let speedKmh = (dist / 1000) / (meta.durationSeconds / 3600)
                     HStack {
-                        Label("Avg Speed", systemImage: "gauge.with.needle")
+                        Label(L.t("importedWorkout.avgSpeed"), systemImage: "gauge.with.needle")
                             .foregroundStyle(.secondary)
                         Spacer()
                         Text(String(format: "%.1f km/h", speedKmh))
                     }
                     HStack {
-                        Label("Distance", systemImage: "point.topleft.down.to.point.bottomright.curvepath")
+                        Label(L.t("importedWorkout.distance"), systemImage: "point.topleft.down.to.point.bottomright.curvepath")
                             .foregroundStyle(.secondary)
                         Spacer()
                         Text(String(format: "%.0f m", dist))
@@ -100,12 +101,12 @@ struct ImportedWorkoutDetailView: View {
 
             // Source
             Section {
-                Label("Imported from Apple Health", systemImage: "heart.fill")
+                Label(L.t("importedWorkout.importedFromAppleHealth"), systemImage: "heart.fill")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
         }
-        .navigationTitle(meta.activityDisplayName)
+        .navigationTitle(L.t("activity.\(meta.activityType)"))
         .navigationBarTitleDisplayMode(.inline)
     }
 

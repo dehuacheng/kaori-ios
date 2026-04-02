@@ -4,6 +4,7 @@ struct WorkoutDetailView: View {
     @Environment(WorkoutStore.self) private var store
     @Environment(APIClient.self) private var api
     @Environment(HealthKitManager.self) private var healthKit
+    @Environment(Localizer.self) private var L
 
     let workoutId: Int
 
@@ -21,13 +22,13 @@ struct WorkoutDetailView: View {
             if let workout {
                 workoutContent(workout)
             } else if isLoading {
-                ProgressView("Loading...")
+                ProgressView(L.t("workout.loading"))
             } else {
-                Text("Workout not found")
+                Text(L.t("workout.notFound"))
                     .foregroundStyle(.secondary)
             }
         }
-        .navigationTitle("Workout")
+        .navigationTitle(L.t("workout.title"))
         .task { await loadWorkout() }
     }
 
@@ -37,7 +38,7 @@ struct WorkoutDetailView: View {
             List {
                 // Analysis section
                 if let analysis {
-                    Section("AI Analysis") {
+                    Section(L.t("workout.aiAnalysis")) {
                         WorkoutAnalysisView(analysis: analysis)
                     }
                 }
@@ -68,7 +69,7 @@ struct WorkoutDetailView: View {
                             }
                         }
 
-                        Button("+ Set") {
+                        Button(L.t("workout.addSet")) {
                             Task { await addSet(to: exercise, in: workout) }
                         }
                         .font(.subheadline)
@@ -106,7 +107,7 @@ struct WorkoutDetailView: View {
                     Button {
                         showExercisePicker = true
                     } label: {
-                        Label("Add Exercise", systemImage: "plus.circle")
+                        Label(L.t("workout.addExercise"), systemImage: "plus.circle")
                     }
 
                     if !workout.exercises.isEmpty {
@@ -117,10 +118,10 @@ struct WorkoutDetailView: View {
                                 HStack {
                                     ProgressView()
                                         .controlSize(.small)
-                                    Text("Analyzing...")
+                                    Text(L.t("workout.analyzingWorkout"))
                                 }
                             } else {
-                                Label("Finish & Summarize", systemImage: "checkmark.circle")
+                                Label(L.t("workout.finishSummarize"), systemImage: "checkmark.circle")
                             }
                         }
                         .disabled(isSummarizing)
@@ -135,7 +136,7 @@ struct WorkoutDetailView: View {
                             await store.loadWorkouts()
                         }
                     } label: {
-                        Label("Delete Workout", systemImage: "trash")
+                        Label(L.t("workout.deleteWorkout"), systemImage: "trash")
                     }
                 }
             }

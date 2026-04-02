@@ -3,6 +3,7 @@ import SwiftUI
 struct TimerView: View {
     @Environment(WorkoutStore.self) private var store
     @Environment(TimerEngine.self) private var engine
+    @Environment(Localizer.self) private var L
     @Environment(\.dismiss) private var dismiss
     @State private var showPresetPicker = false
 
@@ -45,7 +46,7 @@ struct TimerView: View {
                 Spacer()
 
                 // Phase label
-                Text(engine.phase.rawValue)
+                Text(L.t("timer.phase.\(engine.phase.rawValue.lowercased())"))
                     .font(.title3.bold())
                     .foregroundStyle(phaseColor)
 
@@ -61,7 +62,7 @@ struct TimerView: View {
                     VStack(spacing: 4) {
                         Text(engine.displayTime)
                             .font(.system(size: 64, weight: .bold, design: .monospaced))
-                        Text("Set \(engine.currentSet) / \(engine.totalSets)")
+                        Text(L.t("timer.setOf", engine.currentSet, engine.totalSets))
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                     }
@@ -121,11 +122,11 @@ struct TimerView: View {
                 Spacer()
             }
             .padding()
-            .navigationTitle("Timer")
+            .navigationTitle(L.t("timer.title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("Stop") {
+                    Button(L.t("timer.stop")) {
                         engine.reset()
                         dismiss()
                     }

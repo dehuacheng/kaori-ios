@@ -2,12 +2,13 @@ import SwiftUI
 
 struct ConnectionBanner: View {
     let isConnected: Bool
+    @Environment(Localizer.self) private var L
 
     var body: some View {
         if !isConnected {
             HStack {
                 Image(systemName: "wifi.slash")
-                Text("Server unreachable")
+                Text(L.t("shared.serverUnreachable"))
                     .font(.caption)
             }
             .foregroundStyle(.white)

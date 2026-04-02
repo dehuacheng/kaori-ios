@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ExercisePickerView: View {
     @Environment(WorkoutStore.self) private var store
+    @Environment(Localizer.self) private var L
     @Environment(\.dismiss) private var dismiss
 
     let workoutId: Int
@@ -26,7 +27,7 @@ struct ExercisePickerView: View {
         NavigationStack {
             List {
                 ForEach(grouped, id: \.0) { category, types in
-                    Section(category.capitalized) {
+                    Section(L.t("exerciseCategory.\(category)")) {
                         ForEach(types) { et in
                             Button {
                                 Task { await selectExercise(et) }
@@ -42,12 +43,12 @@ struct ExercisePickerView: View {
                     }
                 }
             }
-            .searchable(text: $searchText, prompt: "Search exercises")
-            .navigationTitle("Add Exercise")
+            .searchable(text: $searchText, prompt: L.t("exercise.searchExercises"))
+            .navigationTitle(L.t("exercise.addExercise"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { dismiss() }
+                    Button(L.t("common.cancel")) { dismiss() }
                 }
             }
             .task {

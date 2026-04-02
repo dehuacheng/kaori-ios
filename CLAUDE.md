@@ -43,5 +43,14 @@ KaoriApp/
 - **When updating the README, always update both language sections to keep them in sync.**
 - English is open by default; Chinese is collapsed.
 
+## Localization (In-App EN/CN)
+- The app supports English and Simplified Chinese via an in-app language toggle in Settings.
+- Translation files: `KaoriApp/Localization/en.json` and `KaoriApp/Localization/zh-Hans.json` (flat key-value JSON).
+- **When adding new user-facing strings, add keys to BOTH `en.json` and `zh-Hans.json`. Never hardcode strings in views.**
+- Use `@Environment(Localizer.self) private var L` in views, then `L.t("key")` or `L.t("key", arg1, arg2)` for interpolation.
+- Key naming convention: `{feature}.{element}` (e.g., `dashboard.today`, `meal.logMeal`, `common.save`).
+- Units (kg, kcal, g, cm) are NOT localized — they are international.
+- The widget extension (`KaoriTimerWidget`) is not localized (separate target, minimal text).
+
 ## Backend Repo
 GitHub: https://github.com/dehuacheng/kaori

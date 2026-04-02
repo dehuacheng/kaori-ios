@@ -4,6 +4,7 @@ import Charts
 struct WeightChartView: View {
     let weights: [WeightEntry]
 
+    @Environment(Localizer.self) private var L
     @State private var visibleDays: Double = 30
     @State private var baseVisibleDays: Double = 30
 
@@ -85,7 +86,7 @@ struct WeightChartView: View {
             // Range preset buttons
             HStack(spacing: 8) {
                 ForEach(RangePreset.allCases, id: \.self) { preset in
-                    Button(preset.rawValue) {
+                    Button(localizedLabel(preset)) {
                         withAnimation {
                             visibleDays = preset.days
                             baseVisibleDays = preset.days
@@ -153,5 +154,17 @@ struct WeightChartView: View {
     private func isActive(_ preset: RangePreset) -> Bool {
         if preset == .all { return visibleDays >= 9999 }
         return abs(visibleDays - preset.days) < 1
+    }
+
+    private func localizedLabel(_ preset: RangePreset) -> String {
+        switch preset {
+        case .week: return L.t("weight.range.1W")
+        case .month: return L.t("weight.range.1M")
+        case .threeMonths: return L.t("weight.range.3M")
+        case .sixMonths: return L.t("weight.range.6M")
+        case .year: return L.t("weight.range.1Y")
+        case .twoYears: return L.t("weight.range.2Y")
+        case .all: return L.t("weight.range.all")
+        }
     }
 }

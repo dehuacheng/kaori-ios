@@ -8,15 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		076770AAF9ABECC2B6D9D9E8 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E73336FBC606B1432E7C480 /* ProfileView.swift */; };
+		0C7D78FF8414F51BC0F8712A /* en.json in Resources */ = {isa = PBXBuildFile; fileRef = FB7D98DCD9C2AED3E0D3DEDB /* en.json */; };
 		118F9C5C63927AA39AB79459 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C22A995323B78C5991EF12CB /* DashboardView.swift */; };
 		1592819803EA1FB2DBA66D98 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E305087E896AFBA0AFB4DBF /* PhotoPicker.swift */; };
 		1BD326F61B192FF000E13F56 /* ExercisePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39346F4668E4F3EAC87B32D /* ExercisePickerView.swift */; };
 		205EF93C84D2E5265CDDFD5E /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF2A2F8F4116DAFA93C2CDC /* APIClient.swift */; };
+		24809FEB7DB2E1D611DAFF99 /* zh-Hans.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E5E0F9ED1381B9AC4ED6D20 /* zh-Hans.json */; };
 		2B75B47F07B3BA6886F7B93A /* Meal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC45B434D316B99DB578F96 /* Meal.swift */; };
 		2D68CF261AF3C6BAE4B300DC /* ImportedWorkoutMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C24199376F64DF38580BBC /* ImportedWorkoutMeta.swift */; };
 		2F5A63776F5FBFC7CCA4F8C0 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE7B77F17ABBAAEEFFC88FB /* Profile.swift */; };
 		323EC25C79164DB3C06F59C6 /* WorkoutAnalysisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBD7792B31965E0769399AE /* WorkoutAnalysisView.swift */; };
 		33291EF7B2FCE4F256B06444 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CB71162C96FD59B8B31A1D /* APIError.swift */; };
+		36CB5CD95180E847E2B62C74 /* AppLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AFEDFB821A71709EE98DC76 /* AppLanguage.swift */; };
 		3F05B819ACD2BD58A39F2DD4 /* TimerPresetPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BADA41A1B2E732E0BE810DE /* TimerPresetPickerView.swift */; };
 		45A8B0596303F4256533472E /* KaoriTimerLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1841399B6EBD1A804EB3E20 /* KaoriTimerLiveActivity.swift */; };
 		4608389648507B3BBB4C8387 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F9883054F13D3EB695B476 /* SettingsView.swift */; };
@@ -33,6 +36,7 @@
 		7735EBC883D5CD034BADCCEF /* MealEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071BF34F3746B40727AB45DC /* MealEditView.swift */; };
 		7BDCAA5060ABF3D66F3E3C5A /* TimerActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB167B3D5954D349D6D17C4 /* TimerActivity.swift */; };
 		7D7162632F4C79E076C408E6 /* WorkoutImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579BBB648E4BF2D44F83F677 /* WorkoutImportView.swift */; };
+		806AA7E11EF4399BDCE4C7CB /* Localizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7E3A3F17C47614255F34BA /* Localizer.swift */; };
 		8357443E39F499DD8F0B8550 /* WorkoutRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99AD8BBFFF23F562B463C20 /* WorkoutRowView.swift */; };
 		89C41CD87949AC96B1E3F2FA /* WeightChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D5656813267E1EEA4F21326 /* WeightChartView.swift */; };
 		89FB08D4F71F7897215587EA /* SetRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10D833F5F69DE4D7B8D1CC5 /* SetRowView.swift */; };
@@ -86,7 +90,9 @@
 		0D5656813267E1EEA4F21326 /* WeightChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightChartView.swift; sourceTree = "<group>"; };
 		192D6936A510F1EC2A651FFE /* KaoriApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KaoriApp.swift; sourceTree = "<group>"; };
 		1BADA41A1B2E732E0BE810DE /* TimerPresetPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPresetPickerView.swift; sourceTree = "<group>"; };
+		1C7E3A3F17C47614255F34BA /* Localizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizer.swift; sourceTree = "<group>"; };
 		29118F7D393B2E6A21E2FB6C /* AnalysisStatusBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisStatusBadge.swift; sourceTree = "<group>"; };
+		2E5E0F9ED1381B9AC4ED6D20 /* zh-Hans.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "zh-Hans.json"; sourceTree = "<group>"; };
 		303B1E52034AEBB719445463 /* ProfileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStore.swift; sourceTree = "<group>"; };
 		37F18C3AE2E1127D37CE8361 /* MealListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealListView.swift; sourceTree = "<group>"; };
 		3E305087E896AFBA0AFB4DBF /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
@@ -100,6 +106,7 @@
 		576503C22041ADD79BA88998 /* WeightMiniChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightMiniChartView.swift; sourceTree = "<group>"; };
 		579BBB648E4BF2D44F83F677 /* WorkoutImportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutImportView.swift; sourceTree = "<group>"; };
 		647C6A152720E00B28A55515 /* WeightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightView.swift; sourceTree = "<group>"; };
+		6AFEDFB821A71709EE98DC76 /* AppLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLanguage.swift; sourceTree = "<group>"; };
 		6CC6BB4FC53852C40426E13C /* WeightCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightCreateView.swift; sourceTree = "<group>"; };
 		7147A8679F3CFC8352E161CF /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
 		76C24199376F64DF38580BBC /* ImportedWorkoutMeta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportedWorkoutMeta.swift; sourceTree = "<group>"; };
@@ -129,6 +136,7 @@
 		DD9AB8A03863BD0C08D6697D /* MealStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealStore.swift; sourceTree = "<group>"; };
 		E1841399B6EBD1A804EB3E20 /* KaoriTimerLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KaoriTimerLiveActivity.swift; sourceTree = "<group>"; };
 		F8CB71162C96FD59B8B31A1D /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		FB7D98DCD9C2AED3E0D3DEDB /* en.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = en.json; sourceTree = "<group>"; };
 		FBBD7792B31965E0769399AE /* WorkoutAnalysisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutAnalysisView.swift; sourceTree = "<group>"; };
 		FCC45B434D316B99DB578F96 /* Meal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meal.swift; sourceTree = "<group>"; };
 		FE357CF3AA96BDB1CB1FD477 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
@@ -183,6 +191,7 @@
 				192D6936A510F1EC2A651FFE /* KaoriApp.swift */,
 				5DA83CAE575D41B54D146133 /* Config */,
 				04194A8AFB049765BD7B69AD /* Health */,
+				F8B07C8E4586FE569B026C2D /* Localization */,
 				F08331818F18B68E3917C49B /* Models */,
 				30A3A709AD4D79D40A8A26A3 /* Network */,
 				C05CD9878B69967530772BBA /* Stores */,
@@ -321,6 +330,17 @@
 			path = Dashboard;
 			sourceTree = "<group>";
 		};
+		F8B07C8E4586FE569B026C2D /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				6AFEDFB821A71709EE98DC76 /* AppLanguage.swift */,
+				FB7D98DCD9C2AED3E0D3DEDB /* en.json */,
+				1C7E3A3F17C47614255F34BA /* Localizer.swift */,
+				2E5E0F9ED1381B9AC4ED6D20 /* zh-Hans.json */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -406,6 +426,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD943E644F42AF40BD058C73 /* Assets.xcassets in Resources */,
+				0C7D78FF8414F51BC0F8712A /* en.json in Resources */,
+				24809FEB7DB2E1D611DAFF99 /* zh-Hans.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,6 +452,7 @@
 				33291EF7B2FCE4F256B06444 /* APIError.swift in Sources */,
 				5DC04D439AAB2B2E4FEF3342 /* AnalysisStatusBadge.swift in Sources */,
 				F41F741B60D2F3B0A09DE1B2 /* AppConfig.swift in Sources */,
+				36CB5CD95180E847E2B62C74 /* AppLanguage.swift in Sources */,
 				98F64E3441459FDCB7645D51 /* ConnectionBanner.swift in Sources */,
 				118F9C5C63927AA39AB79459 /* DashboardView.swift in Sources */,
 				BBE49675447E4CB29B8C426C /* ExerciseManageView.swift in Sources */,
@@ -438,6 +461,7 @@
 				4D6849DE5A98ADA51DF02CBC /* ImportedWorkoutDetailView.swift in Sources */,
 				2D68CF261AF3C6BAE4B300DC /* ImportedWorkoutMeta.swift in Sources */,
 				8D5792E195EA08099719C2B3 /* KaoriApp.swift in Sources */,
+				806AA7E11EF4399BDCE4C7CB /* Localizer.swift in Sources */,
 				2B75B47F07B3BA6886F7B93A /* Meal.swift in Sources */,
 				4A37A72996217DD57F4776EF /* MealCreateView.swift in Sources */,
 				A9E80973719AA82394FF66BE /* MealDetailView.swift in Sources */,

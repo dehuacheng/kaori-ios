@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct WorkoutRowView: View {
+    @Environment(Localizer.self) private var L
     let workout: Workout
 
     var body: some View {
@@ -15,7 +16,7 @@ struct WorkoutRowView: View {
                     Text(activityLabel)
                         .font(.subheadline.bold())
                     if let count = workout.exerciseCount, count > 0 {
-                        Text("\(count) exercise\(count == 1 ? "" : "s")")
+                        Text(L.t("workout.exerciseCount", count))
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
@@ -46,7 +47,7 @@ struct WorkoutRowView: View {
     }
 
     private var activityLabel: String {
-        activityDisplayName(workout.activityType)
+        L.t("activity.\(workout.activityType ?? "workout")")
     }
 
     private var iconName: String {

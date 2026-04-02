@@ -3,11 +3,12 @@ import SwiftUI
 struct AnalysisStatusBadge: View {
     let status: String?
     let isEstimated: Int?
+    @Environment(Localizer.self) private var L
 
     var body: some View {
         switch status {
         case "pending", "analyzing":
-            Label("Analyzing", systemImage: "sparkles")
+            Label(L.t("shared.analyzing"), systemImage: "sparkles")
                 .font(.caption2)
                 .padding(.horizontal, 6)
                 .padding(.vertical, 2)
@@ -15,7 +16,7 @@ struct AnalysisStatusBadge: View {
                 .foregroundStyle(.orange)
                 .clipShape(Capsule())
         case "failed":
-            Label("Failed", systemImage: "exclamationmark.triangle")
+            Label(L.t("shared.failed"), systemImage: "exclamationmark.triangle")
                 .font(.caption2)
                 .padding(.horizontal, 6)
                 .padding(.vertical, 2)
@@ -24,7 +25,7 @@ struct AnalysisStatusBadge: View {
                 .clipShape(Capsule())
         default:
             if isEstimated == 1 {
-                Label("AI", systemImage: "sparkles")
+                Label(L.t("shared.ai"), systemImage: "sparkles")
                     .font(.caption2)
                     .padding(.horizontal, 6)
                     .padding(.vertical, 2)
@@ -32,7 +33,7 @@ struct AnalysisStatusBadge: View {
                     .foregroundStyle(.blue)
                     .clipShape(Capsule())
             } else if isEstimated == 0 {
-                Label("Manual", systemImage: "pencil")
+                Label(L.t("shared.manual"), systemImage: "pencil")
                     .font(.caption2)
                     .padding(.horizontal, 6)
                     .padding(.vertical, 2)

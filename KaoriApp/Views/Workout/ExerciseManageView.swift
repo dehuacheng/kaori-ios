@@ -3,6 +3,7 @@ import PhotosUI
 
 struct ExerciseManageView: View {
     @Environment(WorkoutStore.self) private var store
+    @Environment(Localizer.self) private var L
 
     @State private var allTypes: [ExerciseType] = []
     @State private var isLoading = true
@@ -26,16 +27,16 @@ struct ExerciseManageView: View {
     var body: some View {
         List {
             // Photo identify section
-            Section("Identify by Photo") {
+            Section(L.t("exercise.identifyByPhoto")) {
                 PhotosPicker(selection: $selectedPhoto, matching: .images) {
                     if isIdentifying {
                         HStack {
                             ProgressView()
                                 .controlSize(.small)
-                            Text("Identifying...")
+                            Text(L.t("exercise.identifying"))
                         }
                     } else {
-                        Label("Take or Choose Photo", systemImage: "camera")
+                        Label(L.t("exercise.takeOrChoosePhoto"), systemImage: "camera")
                     }
                 }
                 .disabled(isIdentifying)
@@ -48,15 +49,15 @@ struct ExerciseManageView: View {
             }
 
             // Create custom
-            Section("Create Custom") {
+            Section(L.t("exercise.createCustom")) {
                 if showCreate {
-                    TextField("Exercise Name", text: $newName)
-                    Picker("Category", selection: $newCategory) {
+                    TextField(L.t("exercise.exerciseName"), text: $newName)
+                    Picker(L.t("exercise.category"), selection: $newCategory) {
                         ForEach(categories, id: \.self) { cat in
-                            Text(cat.capitalized).tag(cat)
+                            Text(L.t("exerciseCategory.\(cat)")).tag(cat)
                         }
                     }
-                    Button("Save") {
+                    Button(L.t("common.save")) {
                         Task { await createExercise() }
                     }
                     .disabled(newName.isEmpty)
@@ -64,20 +65,20 @@ struct ExerciseManageView: View {
                     Button {
                         showCreate = true
                     } label: {
-                        Label("New Exercise Type", systemImage: "plus.circle")
+                        Label(L.t("exercise.newExerciseType"), systemImage: "plus.circle")
                     }
                 }
             }
 
             // All exercise types
-            Section("Exercise Types") {
+            Section(L.t("exercise.exerciseTypes")) {
                 ForEach(filtered) { et in
                     HStack {
                         VStack(alignment: .leading, spacing: 2) {
                             Text(et.name)
                                 .font(.subheadline)
                             if let cat = et.category {
-                                Text(cat.capitalized)
+                                Text(L.t("exerciseCategory.\(cat)"))
                                     .font(.caption2)
                                     .foregroundStyle(.secondary)
                             }
@@ -106,15 +107,15 @@ struct ExerciseManageView: View {
                                     await reload()
                                 }
                             } label: {
-                                Label("Delete", systemImage: "trash")
+                                Label(L.t("common.delete"), systemImage: "trash")
                             }
                         }
                     }
                 }
             }
         }
-        .searchable(text: $searchText, prompt: "Filter exercises")
-        .navigationTitle("Manage Exercises")
+        .searchable(text: $searchText, prompt: L.t("exercise.filterExercises"))
+        .navigationTitle(L.t("exercise.manageExercises"))
         .navigationBarTitleDisplayMode(.inline)
         .task { await reload() }
         .onChange(of: selectedPhoto) {
@@ -146,15 +147,15 @@ struct ExerciseManageView: View {
             selectedPhoto = nil
         }
         guard let data = try? await item.loadTransferable(type: Data.self) else {
-            identifyResult = "Failed to load photo"
+            identifyResult = L.t("exercise.failedToLoadPhoto")
             return
         }
         do {
             let result = try await store.identifyExercise(photo: data, hint: nil)
-            identifyResult = "Identified: \(result.name)"
+            identifyResult = L.t("exercise.identified", result.name)
             await reload()
         } catch {
-            identifyResult = "Identification failed"
+            identifyResult = L.t("exercise.identificationFailed")
         }
     }
 }

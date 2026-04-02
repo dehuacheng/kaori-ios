@@ -2,6 +2,7 @@ import SwiftUI
 
 struct MealListView: View {
     @Environment(MealStore.self) private var store
+    @Environment(Localizer.self) private var L
     @State private var showCreate = false
 
     var body: some View {
@@ -12,10 +13,10 @@ struct MealListView: View {
             if let totals = store.totals {
                 Section {
                     HStack {
-                        StatPill(label: "Cal", value: "\(totals.totalCal)")
-                        StatPill(label: "P", value: "\(Int(totals.totalProtein))g")
-                        StatPill(label: "C", value: "\(Int(totals.totalCarbs))g")
-                        StatPill(label: "F", value: "\(Int(totals.totalFat))g")
+                        StatPill(label: L.t("meal.cal"), value: "\(totals.totalCal)")
+                        StatPill(label: L.t("meal.p"), value: "\(Int(totals.totalProtein))g")
+                        StatPill(label: L.t("meal.c"), value: "\(Int(totals.totalCarbs))g")
+                        StatPill(label: L.t("meal.f"), value: "\(Int(totals.totalFat))g")
                     }
                 }
             }
@@ -23,7 +24,7 @@ struct MealListView: View {
             // Meals
             Section {
                 if store.meals.isEmpty && !store.isLoading {
-                    Text("No meals logged")
+                    Text(L.t("meal.noMealsLogged"))
                         .foregroundStyle(.secondary)
                 } else {
                     ForEach(store.meals) { meal in
@@ -49,7 +50,7 @@ struct MealListView: View {
                         Image(systemName: "chevron.right")
                     }
                     if !store.isToday {
-                        Button("Today") {
+                        Button(L.t("common.today")) {
                             store.currentDate = MealStore.todayString()
                         }
                         .font(.caption)

@@ -2,6 +2,7 @@ import SwiftUI
 
 struct TimerPresetPickerView: View {
     @Environment(WorkoutStore.self) private var store
+    @Environment(Localizer.self) private var L
     @Environment(\.dismiss) private var dismiss
 
     let onSelect: (TimerPreset) -> Void
@@ -26,11 +27,11 @@ struct TimerPresetPickerView: View {
                                         .font(.subheadline.bold())
                                         .foregroundStyle(.primary)
                                     HStack(spacing: 8) {
-                                        Label("\(preset.restSeconds)s rest", systemImage: "pause.circle")
+                                        Label("\(preset.restSeconds)s \(L.t("timerPreset.rest"))", systemImage: "pause.circle")
                                         if preset.workSeconds > 0 {
-                                            Label("\(preset.workSeconds)s work", systemImage: "play.circle")
+                                            Label("\(preset.workSeconds)s \(L.t("timerPreset.work"))", systemImage: "play.circle")
                                         }
-                                        Label("\(preset.sets) sets", systemImage: "repeat")
+                                        Label("\(preset.sets) \(L.t("timerPreset.sets"))", systemImage: "repeat")
                                     }
                                     .font(.caption)
                                     .foregroundStyle(.secondary)
@@ -48,22 +49,22 @@ struct TimerPresetPickerView: View {
                                     await store.loadTimerPresets()
                                 }
                             } label: {
-                                Label("Delete", systemImage: "trash")
+                                Label(L.t("common.delete"), systemImage: "trash")
                             }
                         }
                     }
 
                     if store.timerPresets.isEmpty {
-                        Text("No presets yet")
+                        Text(L.t("timerPreset.noPresets"))
                             .foregroundStyle(.secondary)
                     }
                 }
 
                 Section {
                     if showCreate {
-                        TextField("Name", text: $newName)
+                        TextField(L.t("timerPreset.name"), text: $newName)
                         HStack {
-                            Text("Rest (sec)")
+                            Text(L.t("timerPreset.restSec"))
                             Spacer()
                             TextField("60", text: $newRest)
                                 .keyboardType(.numberPad)
@@ -71,7 +72,7 @@ struct TimerPresetPickerView: View {
                                 .frame(width: 60)
                         }
                         HStack {
-                            Text("Work (sec)")
+                            Text(L.t("timerPreset.workSec"))
                             Spacer()
                             TextField("0", text: $newWork)
                                 .keyboardType(.numberPad)
@@ -79,14 +80,14 @@ struct TimerPresetPickerView: View {
                                 .frame(width: 60)
                         }
                         HStack {
-                            Text("Sets")
+                            Text(L.t("timerPreset.sets"))
                             Spacer()
                             TextField("3", text: $newSets)
                                 .keyboardType(.numberPad)
                                 .multilineTextAlignment(.trailing)
                                 .frame(width: 60)
                         }
-                        Button("Save Preset") {
+                        Button(L.t("timerPreset.savePreset")) {
                             Task { await savePreset() }
                         }
                         .disabled(newName.isEmpty)
@@ -94,16 +95,16 @@ struct TimerPresetPickerView: View {
                         Button {
                             showCreate = true
                         } label: {
-                            Label("Create Preset", systemImage: "plus.circle")
+                            Label(L.t("timerPreset.createPreset"), systemImage: "plus.circle")
                         }
                     }
                 }
             }
-            .navigationTitle("Timer Presets")
+            .navigationTitle(L.t("timerPreset.title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { dismiss() }
+                    Button(L.t("common.cancel")) { dismiss() }
                 }
             }
             .task {

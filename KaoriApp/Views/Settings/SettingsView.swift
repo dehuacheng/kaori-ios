@@ -3,6 +3,7 @@ import HealthKit
 
 struct SettingsView: View {
     @Environment(AppConfig.self) private var config
+    @Environment(Localizer.self) private var L
     @Environment(APIClient.self) private var api
     @Environment(ProfileStore.self) private var profileStore
     @Environment(WeightStore.self) private var weightStore
@@ -23,15 +24,27 @@ struct SettingsView: View {
 
     var body: some View {
         @Bindable var config = config
+        @Bindable var L = L
 
         Form {
+            // MARK: - Language
+            Section {
+                Picker(L.t("settings.language"), selection: $L.language) {
+                    ForEach(AppLanguage.allCases) { lang in
+                        Text(lang.displayName).tag(lang)
+                    }
+                }
+            } header: {
+                Text(L.t("settings.languageHeader"))
+            }
+
             // MARK: - Server connection
-            Section("Server") {
-                TextField("URL (e.g. http://100.x.y.z:8000)", text: $serverURL)
+            Section(L.t("settings.server")) {
+                TextField(L.t("settings.serverUrl"), text: $serverURL)
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled()
                     .keyboardType(.URL)
-                SecureField("Bearer Token", text: $token)
+                SecureField(L.t("settings.bearerToken"), text: $token)
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled()
 
@@ -39,7 +52,7 @@ struct SettingsView: View {
                     Task { await testConnection() }
                 } label: {
                     HStack {
-                        Text("Test Connection")
+                        Text(L.t("settings.testConnection"))
                         Spacer()
                         if isTesting {
                             ProgressView()
@@ -51,7 +64,7 @@ struct SettingsView: View {
                 }
                 .disabled(serverURL.isEmpty || token.isEmpty || isTesting)
 
-                Button("Save") {
+                Button(L.t("common.save")) {
                     config.serverURL = serverURL
                     config.token = token
                 }
@@ -69,11 +82,11 @@ struct SettingsView: View {
             // MARK: - LLM Backend
             if config.isConfigured {
                 Section {
-                    Picker("Analysis Engine", selection: $selectedLLMMode) {
+                    Picker(L.t("settings.analysisEngine"), selection: $selectedLLMMode) {
                         ForEach(LLMMode.allCases) { mode in
                             VStack(alignment: .leading) {
-                                Text(mode.label)
-                                Text(mode.description)
+                                Text(L.t("llm.\(mode.rawValue).label"))
+                                Text(L.t("llm.\(mode.rawValue).description"))
                                     .font(.caption)
                                     .foregroundStyle(.secondary)
                             }
@@ -84,33 +97,33 @@ struct SettingsView: View {
                         Task { await saveLLMMode(newValue) }
                     }
                 } header: {
-                    Text("LLM Backend")
+                    Text(L.t("settings.llmBackend"))
                 } footer: {
-                    Text("Which AI model to use for meal analysis")
+                    Text(L.t("settings.llmFooter"))
                 }
             }
 
             // MARK: - Workout
             if config.isConfigured {
-                Section("Workout") {
+                Section(L.t("settings.workout")) {
                     NavigationLink {
                         ExerciseManageView()
                     } label: {
-                        Label("Manage Exercises", systemImage: "dumbbell")
+                        Label(L.t("settings.manageExercises"), systemImage: "dumbbell")
                     }
                 }
             }
 
             // MARK: - Apple Health
             if healthKit.isAvailable && config.isConfigured {
-                Section("Apple Health") {
+                Section(L.t("settings.appleHealth")) {
                     Button {
                         Task { await importFromHealth() }
                     } label: {
                         HStack {
                             Image(systemName: "heart.fill")
                                 .foregroundStyle(.red)
-                            Text("Import Weight from Apple Health")
+                            Text(L.t("settings.importWeight"))
                             Spacer()
                             if isImporting {
                                 ProgressView()
@@ -129,7 +142,7 @@ struct SettingsView: View {
                         HStack {
                             Image(systemName: "figure.run")
                                 .foregroundStyle(.orange)
-                            Text("Import Workouts (Past Week)")
+                            Text(L.t("settings.importWorkouts"))
                             Spacer()
                             if isFetchingWorkouts {
                                 ProgressView()
@@ -140,7 +153,7 @@ struct SettingsView: View {
                 }
             }
         }
-        .navigationTitle("Settings")
+        .navigationTitle(L.t("settings.title"))
         .sheet(isPresented: $showWorkoutImport) {
             WorkoutImportView(workouts: workoutImportList, existingWorkouts: existingWorkouts)
         }
@@ -159,7 +172,7 @@ struct SettingsView: View {
 
         let authorized = await healthKit.requestAuthorization()
         guard authorized else {
-            importResult = "Access denied"
+            importResult = L.t("settings.accessDenied")
             isImporting = false
             return
         }
@@ -181,9 +194,9 @@ struct SettingsView: View {
             await weightStore.load(force: true)
 
             if result.imported > 0 {
-                importResult = "\(result.imported) imported, \(result.skipped) skipped"
+                importResult = L.t("settings.importResult", result.imported, result.skipped)
             } else {
-                importResult = "Up to date"
+                importResult = L.t("settings.upToDate")
             }
         } catch {
             importResult = "Error: \(error.localizedDescription)"

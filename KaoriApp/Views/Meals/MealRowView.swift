@@ -3,6 +3,7 @@ import SwiftUI
 struct MealRowView: View {
     let meal: Meal
     @Environment(APIClient.self) private var api
+    @Environment(Localizer.self) private var L
 
     var body: some View {
         HStack(spacing: 12) {
@@ -20,7 +21,7 @@ struct MealRowView: View {
             // Content
             VStack(alignment: .leading, spacing: 2) {
                 HStack {
-                    Text((meal.mealType ?? "snack").capitalized)
+                    Text(L.t("mealType.\(meal.mealType ?? "snack")"))
                         .font(.subheadline.bold())
                     AnalysisStatusBadge(status: meal.analysisStatus, isEstimated: meal.isEstimated)
                 }
@@ -43,7 +44,7 @@ struct MealRowView: View {
                     Text("\(cal) kcal")
                         .font(.subheadline.bold())
                     if let p = meal.proteinG {
-                        Text("P:\(Int(p))g")
+                        Text("\(L.t("meal.p")):\(Int(p))g")
                             .font(.caption2)
                             .foregroundStyle(.secondary)
                     }

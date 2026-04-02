@@ -3,6 +3,7 @@ import SwiftUI
 struct MealDetailView: View {
     let mealId: Int
     @Environment(MealStore.self) private var store
+    @Environment(Localizer.self) private var L
     @Environment(APIClient.self) private var api
     @Environment(\.dismiss) private var dismiss
 
@@ -36,7 +37,7 @@ struct MealDetailView: View {
 
                         // Header
                         HStack {
-                            Text((meal.mealType ?? "snack").capitalized)
+                            Text(L.t("mealType.\(meal.mealType ?? "snack")"))
                                 .font(.title2.bold())
                             AnalysisStatusBadge(status: meal.analysisStatus, isEstimated: meal.isEstimated)
                             if let confidence = meal.confidence {
@@ -65,7 +66,7 @@ struct MealDetailView: View {
                         if isPending {
                             HStack {
                                 ProgressView()
-                                Text("Analyzing nutrition...")
+                                Text(L.t("meal.analyzingNutrition"))
                                     .foregroundStyle(.secondary)
                             }
                             .padding()
@@ -95,13 +96,13 @@ struct MealDetailView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Menu {
-                    Button("Edit", systemImage: "pencil") { showEdit = true }
-                    Button("Re-analyze", systemImage: "sparkles") {
+                    Button(L.t("common.edit"), systemImage: "pencil") { showEdit = true }
+                    Button(L.t("meal.reanalyze"), systemImage: "sparkles") {
                         Task { await reprocess() }
                     }
                     .disabled(isReprocessing)
                     Divider()
-                    Button("Delete", systemImage: "trash", role: .destructive) {
+                    Button(L.t("common.delete"), systemImage: "trash", role: .destructive) {
                         showDeleteConfirm = true
                     }
                 } label: {
@@ -109,11 +110,11 @@ struct MealDetailView: View {
                 }
             }
         }
-        .alert("Delete Meal?", isPresented: $showDeleteConfirm) {
-            Button("Delete", role: .destructive) {
+        .alert(L.t("meal.deleteMeal"), isPresented: $showDeleteConfirm) {
+            Button(L.t("common.delete"), role: .destructive) {
                 Task { await deleteMeal() }
             }
-            Button("Cancel", role: .cancel) {}
+            Button(L.t("common.cancel"), role: .cancel) {}
         }
         .sheet(isPresented: $showEdit) {
             if let meal {
@@ -144,13 +145,13 @@ struct MealDetailView: View {
     private func nutritionCard(_ meal: Meal) -> some View {
         VStack(spacing: 12) {
             HStack {
-                NutritionStat(label: "Calories", value: "\(meal.calories ?? 0)", unit: "kcal")
+                NutritionStat(label: L.t("dashboard.calories"), value: "\(meal.calories ?? 0)", unit: "kcal")
                 Divider().frame(height: 40)
-                NutritionStat(label: "Protein", value: String(format: "%.0f", meal.proteinG ?? 0), unit: "g")
+                NutritionStat(label: L.t("dashboard.protein"), value: String(format: "%.0f", meal.proteinG ?? 0), unit: "g")
                 Divider().frame(height: 40)
-                NutritionStat(label: "Carbs", value: String(format: "%.0f", meal.carbsG ?? 0), unit: "g")
+                NutritionStat(label: L.t("dashboard.carbs"), value: String(format: "%.0f", meal.carbsG ?? 0), unit: "g")
                 Divider().frame(height: 40)
-                NutritionStat(label: "Fat", value: String(format: "%.0f", meal.fatG ?? 0), unit: "g")
+                NutritionStat(label: L.t("dashboard.fat"), value: String(format: "%.0f", meal.fatG ?? 0), unit: "g")
             }
         }
         .padding()
@@ -163,7 +164,7 @@ struct MealDetailView: View {
             Button {
                 Task { await reprocess() }
             } label: {
-                Label("Re-analyze", systemImage: "sparkles")
+                Label(L.t("meal.reanalyze"), systemImage: "sparkles")
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(.bordered)
@@ -173,7 +174,7 @@ struct MealDetailView: View {
 
     private var analysisHistory: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Analysis History")
+            Text(L.t("meal.analysisHistory"))
                 .font(.headline)
 
             ForEach(analyses) { a in
@@ -183,7 +184,7 @@ struct MealDetailView: View {
                             Text("\(a.calories ?? 0) kcal")
                                 .font(.subheadline.bold())
                             if a.isActive == 1 {
-                                Text("Active")
+                                Text(L.t("meal.active"))
                                     .font(.caption2)
                                     .padding(.horizontal, 6)
                                     .padding(.vertical, 1)
@@ -198,7 +199,7 @@ struct MealDetailView: View {
                     }
                     Spacer()
                     if a.isActive == 0 {
-                        Button("Activate") {
+                        Button(L.t("meal.activate")) {
                             Task {
                                 try? await store.activateAnalysis(mealId: mealId, analysisId: a.id)
                                 await loadMeal()

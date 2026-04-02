@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct WorkoutAnalysisView: View {
+    @Environment(Localizer.self) private var L
     let analysis: WorkoutAnalysis
 
     var body: some View {
@@ -13,16 +14,16 @@ struct WorkoutAnalysisView: View {
             // Metrics
             HStack(spacing: 0) {
                 if let cal = analysis.estimatedCalories {
-                    MetricTile(value: "\(Int(cal))", label: "kcal")
+                    MetricTile(value: "\(Int(cal))", label: L.t("workoutAnalysis.kcal"))
                 }
                 if let vol = analysis.totalVolumeKg {
-                    MetricTile(value: "\(Int(vol))", label: "kg vol")
+                    MetricTile(value: "\(Int(vol))", label: L.t("workoutAnalysis.kgVol"))
                 }
                 if let sets = analysis.totalSets {
-                    MetricTile(value: "\(sets)", label: "sets")
+                    MetricTile(value: "\(sets)", label: L.t("workoutAnalysis.sets"))
                 }
                 if let intensity = analysis.intensity {
-                    MetricTile(value: intensity.replacingOccurrences(of: "_", with: " ").capitalized, label: "intensity")
+                    MetricTile(value: intensity.replacingOccurrences(of: "_", with: " ").capitalized, label: L.t("workoutAnalysis.intensity"))
                 }
             }
 
@@ -42,13 +43,13 @@ struct WorkoutAnalysisView: View {
 
             // Trainer sections
             if let notes = analysis.trainerNotes, !notes.isEmpty {
-                AnalysisSection(title: "Trainer Notes", icon: "figure.strengthtraining.traditional", color: .yellow, text: notes)
+                AnalysisSection(title: L.t("workoutAnalysis.trainerNotes"), icon: "figure.strengthtraining.traditional", color: .yellow, text: notes)
             }
             if let progress = analysis.progressNotes, !progress.isEmpty {
-                AnalysisSection(title: "Progress", icon: "chart.line.uptrend.xyaxis", color: .green, text: progress)
+                AnalysisSection(title: L.t("workoutAnalysis.progress"), icon: "chart.line.uptrend.xyaxis", color: .green, text: progress)
             }
             if let recs = analysis.recommendations, !recs.isEmpty {
-                AnalysisSection(title: "Recommendations", icon: "lightbulb", color: .blue, text: recs)
+                AnalysisSection(title: L.t("workoutAnalysis.recommendations"), icon: "lightbulb", color: .blue, text: recs)
             }
         }
     }

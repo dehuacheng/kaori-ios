@@ -3,6 +3,7 @@ import PhotosUI
 
 struct PhotoPickerButton: View {
     @Binding var imageData: Data?
+    @Environment(Localizer.self) private var L
     @State private var showCamera = false
     @State private var showLibrary = false
     @State private var selectedItem: PhotosPickerItem?
@@ -21,13 +22,13 @@ struct PhotoPickerButton: View {
                 Button {
                     showCamera = true
                 } label: {
-                    Label("Camera", systemImage: "camera")
+                    Label(L.t("shared.camera"), systemImage: "camera")
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.bordered)
 
                 PhotosPicker(selection: $selectedItem, matching: .images) {
-                    Label("Library", systemImage: "photo.on.rectangle")
+                    Label(L.t("shared.library"), systemImage: "photo.on.rectangle")
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.bordered)

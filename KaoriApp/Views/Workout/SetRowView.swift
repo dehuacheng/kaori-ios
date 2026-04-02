@@ -2,6 +2,7 @@ import SwiftUI
 
 struct SetRowView: View {
     @Environment(WorkoutStore.self) private var store
+    @Environment(Localizer.self) private var L
     let exerciseSet: ExerciseSet
     let workoutId: Int
     let exerciseId: Int
@@ -37,7 +38,7 @@ struct SetRowView: View {
 
     private var displayView: some View {
         HStack {
-            Text("Set \(exerciseSet.setNumber)")
+            Text(L.t("set.setNumber", exerciseSet.setNumber))
                 .font(.subheadline.bold())
                 .frame(width: 50, alignment: .leading)
 
@@ -78,17 +79,17 @@ struct SetRowView: View {
                 .font(.subheadline.bold())
                 .frame(width: 24)
 
-            TextField("Reps", text: $reps)
+            TextField(L.t("set.reps"), text: $reps)
                 .keyboardType(.numberPad)
                 .textFieldStyle(.roundedBorder)
                 .frame(width: 60)
 
-            TextField("kg", text: $weight)
+            TextField(L.t("set.kg"), text: $weight)
                 .keyboardType(.decimalPad)
                 .textFieldStyle(.roundedBorder)
                 .frame(width: 70)
 
-            TextField("sec", text: $duration)
+            TextField(L.t("set.sec"), text: $duration)
                 .keyboardType(.numberPad)
                 .textFieldStyle(.roundedBorder)
                 .frame(width: 50)

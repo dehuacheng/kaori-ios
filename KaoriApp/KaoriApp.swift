@@ -3,6 +3,7 @@ import SwiftUI
 @main
 struct KaoriApp: App {
     @State private var config = AppConfig()
+    @State private var localizer = Localizer()
     @State private var api: APIClient
     @State private var mealStore: MealStore
     @State private var weightStore: WeightStore
@@ -26,6 +27,7 @@ struct KaoriApp: App {
         WindowGroup {
             ContentView()
                 .environment(config)
+                .environment(localizer)
                 .environment(api)
                 .environment(mealStore)
                 .environment(weightStore)
@@ -39,6 +41,7 @@ struct KaoriApp: App {
 
 struct ContentView: View {
     @Environment(AppConfig.self) private var config
+    @Environment(Localizer.self) private var L
     @Environment(APIClient.self) private var api
     @Environment(WorkoutStore.self) private var workoutStore
     @Environment(HealthKitManager.self) private var healthKit
@@ -56,19 +59,19 @@ struct ContentView: View {
             } else {
                 TabView {
                     DashboardView()
-                        .tabItem { Label("Home", systemImage: "house") }
+                        .tabItem { Label(L.t("tab.home"), systemImage: "house") }
                     NavigationStack {
                         MealListView()
                     }
-                    .tabItem { Label("Meals", systemImage: "fork.knife") }
+                    .tabItem { Label(L.t("tab.meals"), systemImage: "fork.knife") }
                     NavigationStack {
                         WeightView()
                     }
-                    .tabItem { Label("Weight", systemImage: "scalemass") }
+                    .tabItem { Label(L.t("tab.weight"), systemImage: "scalemass") }
                     NavigationStack {
                         WorkoutListView()
                     }
-                    .tabItem { Label("Gym", systemImage: "dumbbell") }
+                    .tabItem { Label(L.t("tab.gym"), systemImage: "dumbbell") }
                 }
             }
         }

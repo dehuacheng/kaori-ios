@@ -2,6 +2,7 @@ import SwiftUI
 
 struct WorkoutListView: View {
     @Environment(WorkoutStore.self) private var store
+    @Environment(Localizer.self) private var L
     @State private var navigateToWorkout: Int?
     @State private var showTimer = false
 
@@ -12,7 +13,7 @@ struct WorkoutListView: View {
         List {
             Section {
                 if store.workouts.isEmpty && !store.isLoading {
-                    Text("No workouts")
+                    Text(L.t("workout.noWorkouts"))
                         .foregroundStyle(.secondary)
                 } else {
                     ForEach(store.workouts) { workout in
@@ -26,7 +27,7 @@ struct WorkoutListView: View {
                                     await store.loadWorkouts()
                                 }
                             } label: {
-                                Label("Delete", systemImage: "trash")
+                                Label(L.t("common.delete"), systemImage: "trash")
                             }
                         }
                     }
@@ -55,7 +56,7 @@ struct WorkoutListView: View {
                         Image(systemName: "chevron.right")
                     }
                     if !store.isToday {
-                        Button("Today") {
+                        Button(L.t("common.today")) {
                             store.currentDate = WorkoutStore.todayString()
                         }
                         .font(.caption)

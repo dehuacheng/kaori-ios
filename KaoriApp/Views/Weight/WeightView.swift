@@ -2,6 +2,7 @@ import SwiftUI
 
 struct WeightView: View {
     @Environment(WeightStore.self) private var store
+    @Environment(Localizer.self) private var L
     @State private var showCreate = false
     @State private var editingId: Int?
     @State private var editWeight = ""
@@ -28,17 +29,17 @@ struct WeightView: View {
     var body: some View {
         List {
             // Stats
-            Section("Trends") {
+            Section(L.t("weight.trends")) {
                 HStack(spacing: 24) {
                     if let latest = store.latest {
-                        StatBox(label: "Latest", value: String(format: "%.1f", latest), unit: "kg")
+                        StatBox(label: L.t("weight.latest"), value: String(format: "%.1f", latest), unit: "kg")
                     }
                     if let avg = store.avg7d {
-                        StatBox(label: "7d Avg", value: String(format: "%.1f", avg), unit: "kg")
+                        StatBox(label: L.t("weight.7dAvg"), value: String(format: "%.1f", avg), unit: "kg")
                     }
                     if let delta = store.deltaWeek {
                         StatBox(
-                            label: "Week",
+                            label: L.t("weight.weekChange"),
                             value: String(format: "%+.1f", delta),
                             unit: "kg",
                             color: delta < 0 ? .green : delta > 0 ? .red : .primary
@@ -50,14 +51,14 @@ struct WeightView: View {
 
             // Chart
             if store.weights.count >= 2 {
-                Section("Chart") {
+                Section(L.t("weight.chart")) {
                     WeightChartView(weights: store.weights)
                         .frame(height: 180)
                 }
             }
 
             // History — last 7 days
-            Section("This Week") {
+            Section(L.t("weight.thisWeek")) {
                 ForEach(recentWeights) { entry in
                     if editingId == entry.id {
                         editRow(entry: entry)
@@ -69,7 +70,7 @@ struct WeightView: View {
 
             // Older entries — collapsed by default
             if !olderWeights.isEmpty {
-                DisclosureGroup("Older (\(olderWeights.count))", isExpanded: $showOlder) {
+                DisclosureGroup(L.t("weight.older", olderWeights.count), isExpanded: $showOlder) {
                     ForEach(olderWeights) { entry in
                         if editingId == entry.id {
                             editRow(entry: entry)
@@ -81,7 +82,7 @@ struct WeightView: View {
             }
         }
         .scrollDismissesKeyboard(.interactively)
-        .navigationTitle("Weight")
+        .navigationTitle(L.t("weight.title"))
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
@@ -92,7 +93,7 @@ struct WeightView: View {
             }
             ToolbarItemGroup(placement: .keyboard) {
                 Spacer()
-                Button("Done") {
+                Button(L.t("common.done")) {
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                 }
             }
@@ -151,16 +152,16 @@ struct WeightView: View {
     private func editRow(entry: WeightEntry) -> some View {
         VStack(spacing: 8) {
             HStack {
-                TextField("kg", text: $editWeight)
+                TextField(L.t("set.kg"), text: $editWeight)
                     .keyboardType(.decimalPad)
-                TextField("Notes", text: $editNotes)
+                TextField(L.t("meal.notes"), text: $editNotes)
             }
             HStack {
-                Button("Cancel") {
+                Button(L.t("common.cancel")) {
                     editingId = nil
                 }
                 .buttonStyle(.bordered)
-                Button("Save") {
+                Button(L.t("common.save")) {
                     Task {
                         if let kg = Double(editWeight) {
                             try? await store.update(
