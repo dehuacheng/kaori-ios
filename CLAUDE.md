@@ -38,5 +38,10 @@ KaoriApp/
 - Certificate expires every 7 days — re-sign by hitting Run in Xcode
 - App data persists across re-signings
 
+## README — Bilingual (EN/CN)
+- `README.md` contains both English and Chinese versions using `<details>` toggles.
+- **When updating the README, always update both language sections to keep them in sync.**
+- English is open by default; Chinese is collapsed.
+
 ## Backend Repo
 GitHub: https://github.com/dehuacheng/kaori
