@@ -80,6 +80,9 @@ struct WorkoutListView: View {
         .task {
             await store.loadWorkouts()
         }
+        .navigationDestination(item: $navigateToWorkout) { workoutId in
+            WorkoutDetailView(workoutId: workoutId)
+        }
         .sheet(isPresented: $showTimer) {
             TimerView()
         }

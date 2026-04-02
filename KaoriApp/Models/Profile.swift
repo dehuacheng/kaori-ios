@@ -11,6 +11,9 @@ struct Profile: Codable {
     let calorieAdjustmentPct: Double?
     let llmMode: String?
     let notes: String?
+    let unitBodyWeight: String?
+    let unitHeight: String?
+    let unitExerciseWeight: String?
     let updatedAt: String?
     // Computed by server
     let age: Int?
@@ -20,6 +23,17 @@ struct Profile: Codable {
     let targetCalories: Int?
     let targetProteinG: Int?
     let targetCarbsG: Int?
+
+    // Convenience accessors with defaults
+    var bodyWeightUnit: WeightUnit {
+        WeightUnit(rawValue: unitBodyWeight ?? "kg") ?? .kg
+    }
+    var heightUnit: HeightUnit {
+        HeightUnit(rawValue: unitHeight ?? "cm") ?? .cm
+    }
+    var exerciseWeightUnit: WeightUnit {
+        WeightUnit(rawValue: unitExerciseWeight ?? "kg") ?? .kg
+    }
 }
 
 struct ProfileUpdate: Codable {
@@ -32,6 +46,9 @@ struct ProfileUpdate: Codable {
     var calorieAdjustmentPct: Double?
     var llmMode: String?
     var notes: String?
+    var unitBodyWeight: String?
+    var unitHeight: String?
+    var unitExerciseWeight: String?
 }
 
 enum LLMMode: String, CaseIterable, Identifiable {

@@ -2,7 +2,9 @@ import SwiftUI
 
 struct SetRowView: View {
     @Environment(WorkoutStore.self) private var store
+    @Environment(ProfileStore.self) private var profileStore
     @Environment(Localizer.self) private var L
+    private var ewu: WeightUnit { profileStore.profile?.exerciseWeightUnit ?? .kg }
     let exerciseSet: ExerciseSet
     let workoutId: Int
     let exerciseId: Int
@@ -15,10 +17,17 @@ struct SetRowView: View {
     @State private var duration: String = ""
 
     var body: some View {
-        if isEditing {
-            editView
-        } else {
-            displayView
+        Group {
+            if isEditing {
+                editView
+            } else {
+                displayView
+            }
+        }
+        .onAppear {
+            if startInEditMode, let kg = exerciseSet.weightKg {
+                weight = UnitConverter.displayWeightString(kg, unit: ewu)
+            }
         }
     }
 
@@ -31,6 +40,7 @@ struct SetRowView: View {
         _isEditing = State(initialValue: startInEditMode)
         if startInEditMode {
             _reps = State(initialValue: exerciseSet.reps.map(String.init) ?? "")
+            // Note: cannot access @Environment in init, so display conversion happens in onAppear
             _weight = State(initialValue: exerciseSet.weightKg.map { String(format: "%.1f", $0) } ?? "")
             _duration = State(initialValue: exerciseSet.durationSeconds.map(String.init) ?? "")
         }
@@ -47,7 +57,7 @@ struct SetRowView: View {
                     .font(.subheadline)
             }
             if let w = exerciseSet.weightKg {
-                Text("@ \(w, specifier: "%.1f") kg")
+                Text("@ \(UnitConverter.displayWeight(w, unit: ewu), specifier: "%.1f") \(ewu.label)")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
             }
@@ -61,7 +71,7 @@ struct SetRowView: View {
 
             Button {
                 reps = exerciseSet.reps.map(String.init) ?? ""
-                weight = exerciseSet.weightKg.map { String(format: "%.1f", $0) } ?? ""
+                weight = exerciseSet.weightKg.map { UnitConverter.displayWeightString($0, unit: ewu) } ?? ""
                 duration = exerciseSet.durationSeconds.map(String.init) ?? ""
                 isEditing = true
             } label: {
@@ -84,7 +94,7 @@ struct SetRowView: View {
                 .textFieldStyle(.roundedBorder)
                 .frame(width: 60)
 
-            TextField(L.t("set.kg"), text: $weight)
+            TextField(ewu.label, text: $weight)
                 .keyboardType(.decimalPad)
                 .textFieldStyle(.roundedBorder)
                 .frame(width: 70)
@@ -116,7 +126,7 @@ struct SetRowView: View {
     private func saveEdit() async {
         let body = SetUpdate(
             reps: Int(reps),
-            weightKg: Double(weight),
+            weightKg: Double(weight).map { UnitConverter.toMetricWeight($0, unit: ewu) },
             durationSeconds: Int(duration),
             notes: nil
         )

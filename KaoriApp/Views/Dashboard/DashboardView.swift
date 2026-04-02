@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct DashboardView: View {
+    @Binding var selectedTab: Int
+
     @Environment(Localizer.self) private var L
     @Environment(APIClient.self) private var api
     @Environment(MealStore.self) private var mealStore
@@ -301,8 +303,8 @@ struct DashboardView: View {
                 Text(L.t("dashboard.workout"))
                     .font(.headline)
                 Spacer()
-                NavigationLink(L.t("dashboard.goToGym")) {
-                    WorkoutListView()
+                Button(L.t("dashboard.goToGym")) {
+                    selectedTab = 3
                 }
                 .font(.caption)
             }
@@ -359,8 +361,8 @@ struct DashboardView: View {
                 Text(L.t("dashboard.meals"))
                     .font(.headline)
                 Spacer()
-                NavigationLink(L.t("dashboard.seeAll")) {
-                    MealListView()
+                Button(L.t("dashboard.seeAll")) {
+                    selectedTab = 1
                 }
                 .font(.caption)
             }
@@ -390,25 +392,26 @@ struct DashboardView: View {
                 Text(L.t("dashboard.weight"))
                     .font(.headline)
                 Spacer()
-                NavigationLink(L.t("dashboard.details")) {
-                    WeightView()
+                Button(L.t("dashboard.details")) {
+                    selectedTab = 2
                 }
                 .font(.caption)
             }
 
             HStack(spacing: 24) {
+                let wu = profileStore.profile?.bodyWeightUnit ?? .kg
                 if let latest = weightStore.latest {
                     VStack {
-                        Text(String(format: "%.1f", latest))
+                        Text(String(format: "%.1f", UnitConverter.displayWeight(latest, unit: wu)))
                             .font(.title2.bold())
-                        Text("kg")
+                        Text(wu.label)
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
                 }
                 if let avg = weightStore.avg7d {
                     VStack {
-                        Text(String(format: "%.1f", avg))
+                        Text(String(format: "%.1f", UnitConverter.displayWeight(avg, unit: wu)))
                             .font(.title3)
                         Text(L.t("dashboard.7dAvg"))
                             .font(.caption)
@@ -417,7 +420,7 @@ struct DashboardView: View {
                 }
                 if let delta = weightStore.deltaWeek {
                     VStack {
-                        Text(String(format: "%+.1f", delta))
+                        Text(UnitConverter.formatWeightDelta(delta, unit: wu))
                             .font(.title3)
                             .foregroundStyle(delta < 0 ? .green : delta > 0 ? .red : .primary)
                         Text(L.t("dashboard.week"))

@@ -66,20 +66,23 @@ struct ContentView: View {
                 }
             } else {
                 TabView(selection: $selectedTab) {
-                    DashboardView()
+                    DashboardView(selectedTab: $selectedTab)
                         .tag(0)
                         .tabItem { Label(L.t("tab.home"), systemImage: "house") }
                     NavigationStack {
                         MealListView()
                     }
+                    .tag(1)
                     .tabItem { Label(L.t("tab.meals"), systemImage: "fork.knife") }
                     NavigationStack {
                         WeightView()
                     }
+                    .tag(2)
                     .tabItem { Label(L.t("tab.weight"), systemImage: "scalemass") }
                     NavigationStack {
                         WorkoutListView()
                     }
+                    .tag(3)
                     .tabItem { Label(L.t("tab.gym"), systemImage: "dumbbell") }
                 }
             }

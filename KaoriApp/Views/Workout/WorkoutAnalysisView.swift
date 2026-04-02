@@ -1,8 +1,10 @@
 import SwiftUI
 
 struct WorkoutAnalysisView: View {
+    @Environment(ProfileStore.self) private var profileStore
     @Environment(Localizer.self) private var L
     let analysis: WorkoutAnalysis
+    private var ewu: WeightUnit { profileStore.profile?.exerciseWeightUnit ?? .kg }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -17,7 +19,7 @@ struct WorkoutAnalysisView: View {
                     MetricTile(value: "\(Int(cal))", label: L.t("workoutAnalysis.kcal"))
                 }
                 if let vol = analysis.totalVolumeKg {
-                    MetricTile(value: "\(Int(vol))", label: L.t("workoutAnalysis.kgVol"))
+                    MetricTile(value: "\(Int(UnitConverter.displayWeight(vol, unit: ewu)))", label: "\(ewu.label) vol")
                 }
                 if let sets = analysis.totalSets {
                     MetricTile(value: "\(sets)", label: L.t("workoutAnalysis.sets"))

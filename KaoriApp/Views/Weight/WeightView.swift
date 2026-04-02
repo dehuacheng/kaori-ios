@@ -2,12 +2,15 @@ import SwiftUI
 
 struct WeightView: View {
     @Environment(WeightStore.self) private var store
+    @Environment(ProfileStore.self) private var profileStore
     @Environment(Localizer.self) private var L
     @State private var showCreate = false
     @State private var editingId: Int?
     @State private var editWeight = ""
     @State private var editNotes = ""
     @State private var showOlder = false
+
+    private var wu: WeightUnit { profileStore.profile?.bodyWeightUnit ?? .kg }
 
     private var oneWeekAgo: String {
         let date = Calendar.current.date(byAdding: .day, value: -7, to: Date()) ?? Date()
@@ -32,16 +35,16 @@ struct WeightView: View {
             Section(L.t("weight.trends")) {
                 HStack(spacing: 24) {
                     if let latest = store.latest {
-                        StatBox(label: L.t("weight.latest"), value: String(format: "%.1f", latest), unit: "kg")
+                        StatBox(label: L.t("weight.latest"), value: String(format: "%.1f", UnitConverter.displayWeight(latest, unit: wu)), unit: wu.label)
                     }
                     if let avg = store.avg7d {
-                        StatBox(label: L.t("weight.7dAvg"), value: String(format: "%.1f", avg), unit: "kg")
+                        StatBox(label: L.t("weight.7dAvg"), value: String(format: "%.1f", UnitConverter.displayWeight(avg, unit: wu)), unit: wu.label)
                     }
                     if let delta = store.deltaWeek {
                         StatBox(
                             label: L.t("weight.weekChange"),
-                            value: String(format: "%+.1f", delta),
-                            unit: "kg",
+                            value: String(format: "%+.1f", UnitConverter.displayWeight(delta, unit: wu)),
+                            unit: wu.label,
                             color: delta < 0 ? .green : delta > 0 ? .red : .primary
                         )
                     }
@@ -114,7 +117,7 @@ struct WeightView: View {
     private func weightRow(entry: WeightEntry) -> some View {
         HStack {
             VStack(alignment: .leading, spacing: 2) {
-                Text(String(format: "%.1f kg", entry.weightKg))
+                Text(UnitConverter.formatBodyWeight(entry.weightKg, unit: wu))
                     .font(.subheadline.bold())
                 Text(entry.date)
                     .font(.caption)
@@ -128,7 +131,7 @@ struct WeightView: View {
             Spacer()
             Button {
                 editingId = entry.id
-                editWeight = String(format: "%.1f", entry.weightKg)
+                editWeight = UnitConverter.displayWeightString(entry.weightKg, unit: wu)
                 editNotes = entry.notes ?? ""
             } label: {
                 Image(systemName: "pencil")
@@ -152,7 +155,7 @@ struct WeightView: View {
     private func editRow(entry: WeightEntry) -> some View {
         VStack(spacing: 8) {
             HStack {
-                TextField(L.t("set.kg"), text: $editWeight)
+                TextField(wu.label, text: $editWeight)
                     .keyboardType(.decimalPad)
                 TextField(L.t("meal.notes"), text: $editNotes)
             }
@@ -163,7 +166,8 @@ struct WeightView: View {
                 .buttonStyle(.bordered)
                 Button(L.t("common.save")) {
                     Task {
-                        if let kg = Double(editWeight) {
+                        if let value = Double(editWeight) {
+                            let kg = UnitConverter.toMetricWeight(value, unit: wu)
                             try? await store.update(
                                 id: entry.id,
                                 weightKg: kg,

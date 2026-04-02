@@ -7,6 +7,8 @@ struct ProfileView: View {
     @State private var draft = ProfileUpdate()
     @State private var isSaving = false
     @State private var error: String?
+    @State private var heightFeet = ""
+    @State private var heightInches = ""
 
     var body: some View {
         Group {
@@ -52,7 +54,7 @@ struct ProfileView: View {
         Group {
             Section(L.t("profile.personal")) {
                 row(L.t("profile.name"), profile.displayName ?? "—")
-                row(L.t("profile.height"), profile.heightCm.map { "\(Int($0)) cm" } ?? "—")
+                row(L.t("profile.height"), profile.heightCm.map { UnitConverter.formatHeight($0, unit: profile.heightUnit) } ?? "—")
                 row(L.t("profile.gender"), profile.gender.map { L.t("gender.\($0)") } ?? "—")
                 row(L.t("profile.birthDate"), profile.birthDate ?? "—")
                 if let age = profile.age {
@@ -68,7 +70,7 @@ struct ProfileView: View {
 
             Section(L.t("profile.computedTargets")) {
                 if let weight = profile.latestWeightKg {
-                    row(L.t("profile.currentWeight"), String(format: "%.1f kg", weight))
+                    row(L.t("profile.currentWeight"), UnitConverter.formatBodyWeight(weight, unit: profile.bodyWeightUnit))
                 }
                 if let bmr = profile.bmr {
                     row(L.t("profile.bmr"), "\(bmr) kcal")
@@ -100,13 +102,30 @@ struct ProfileView: View {
         Group {
             Section(L.t("profile.personal")) {
                 TextField(L.t("profile.name"), text: binding(\.displayName, default: ""))
-                HStack {
-                    Text(L.t("profile.heightCm"))
-                    Spacer()
-                    TextField("cm", value: binding(\.heightCm), format: .number)
-                        .keyboardType(.decimalPad)
-                        .multilineTextAlignment(.trailing)
-                        .frame(width: 80)
+                if profile.heightUnit == .in {
+                    HStack {
+                        Text(L.t("profile.height"))
+                        Spacer()
+                        TextField("ft", text: $heightFeet)
+                            .keyboardType(.numberPad)
+                            .multilineTextAlignment(.trailing)
+                            .frame(width: 40)
+                        Text("'")
+                        TextField("in", text: $heightInches)
+                            .keyboardType(.numberPad)
+                            .multilineTextAlignment(.trailing)
+                            .frame(width: 40)
+                        Text("\"")
+                    }
+                } else {
+                    HStack {
+                        Text(L.t("profile.heightCm"))
+                        Spacer()
+                        TextField("cm", value: binding(\.heightCm), format: .number)
+                            .keyboardType(.decimalPad)
+                            .multilineTextAlignment(.trailing)
+                            .frame(width: 80)
+                    }
                 }
                 Picker(L.t("profile.gender"), selection: binding(\.gender, default: "")) {
                     Text(L.t("profile.male")).tag("male")
@@ -178,10 +197,20 @@ struct ProfileView: View {
             calorieAdjustmentPct: p.calorieAdjustmentPct,
             notes: p.notes
         )
+        if p.heightUnit == .in, let cm = p.heightCm {
+            let (ft, inc) = UnitConverter.cmToFeetInches(cm)
+            heightFeet = "\(ft)"
+            heightInches = "\(inc)"
+        }
         isEditing = true
     }
 
     private func save() async {
+        // Convert ft/in to cm if using imperial height
+        if store.profile?.heightUnit == .in,
+           let ft = Int(heightFeet), let inc = Int(heightInches) {
+            draft.heightCm = UnitConverter.feetInchesToCm(feet: ft, inches: inc)
+        }
         isSaving = true
         error = nil
         do {

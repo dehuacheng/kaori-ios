@@ -22,6 +22,9 @@ struct SettingsView: View {
     @State private var isFetchingWorkouts = false
     @State private var selectedLLMMode: LLMMode = .claudeCli
     @State private var isSavingLLM = false
+    @State private var bodyWeightUnit: WeightUnit = .kg
+    @State private var heightUnit: HeightUnit = .cm
+    @State private var exerciseWeightUnit: WeightUnit = .kg
 
     var body: some View {
         @Bindable var config = config
@@ -37,6 +40,40 @@ struct SettingsView: View {
                 }
             } header: {
                 Text(L.t("settings.languageHeader"))
+            }
+
+            // MARK: - Units
+            if config.isConfigured {
+                Section {
+                    Picker(L.t("settings.bodyWeightUnit"), selection: $bodyWeightUnit) {
+                        ForEach(WeightUnit.allCases) { unit in
+                            Text(unit.label).tag(unit)
+                        }
+                    }
+                    .onChange(of: bodyWeightUnit) { _, newValue in
+                        Task { await saveUnit(unitBodyWeight: newValue.rawValue) }
+                    }
+
+                    Picker(L.t("settings.heightUnit"), selection: $heightUnit) {
+                        ForEach(HeightUnit.allCases) { unit in
+                            Text(unit.label).tag(unit)
+                        }
+                    }
+                    .onChange(of: heightUnit) { _, newValue in
+                        Task { await saveUnit(unitHeight: newValue.rawValue) }
+                    }
+
+                    Picker(L.t("settings.exerciseWeightUnit"), selection: $exerciseWeightUnit) {
+                        ForEach(WeightUnit.allCases) { unit in
+                            Text(unit.label).tag(unit)
+                        }
+                    }
+                    .onChange(of: exerciseWeightUnit) { _, newValue in
+                        Task { await saveUnit(unitExerciseWeight: newValue.rawValue) }
+                    }
+                } header: {
+                    Text(L.t("settings.units"))
+                }
             }
 
             // MARK: - Server connection
@@ -182,6 +219,11 @@ struct SettingsView: View {
             if let mode = profileStore.profile?.llmMode, let llm = LLMMode(rawValue: mode) {
                 selectedLLMMode = llm
             }
+            if let profile = profileStore.profile {
+                bodyWeightUnit = profile.bodyWeightUnit
+                heightUnit = profile.heightUnit
+                exerciseWeightUnit = profile.exerciseWeightUnit
+            }
         }
     }
 
@@ -251,6 +293,27 @@ struct SettingsView: View {
             }
         }
         isSavingLLM = false
+    }
+
+    private func saveUnit(
+        unitBodyWeight: String? = nil,
+        unitHeight: String? = nil,
+        unitExerciseWeight: String? = nil
+    ) async {
+        var update = ProfileUpdate()
+        update.unitBodyWeight = unitBodyWeight
+        update.unitHeight = unitHeight
+        update.unitExerciseWeight = unitExerciseWeight
+        do {
+            try await profileStore.update(update)
+        } catch {
+            // Revert on failure
+            if let profile = profileStore.profile {
+                bodyWeightUnit = profile.bodyWeightUnit
+                heightUnit = profile.heightUnit
+                exerciseWeightUnit = profile.exerciseWeightUnit
+            }
+        }
     }
 
     private func testConnection() async {

@@ -5,6 +5,9 @@ import Charts
 struct WeightMiniChartView: View {
     let weights: [WeightEntry]
 
+    @Environment(ProfileStore.self) private var profileStore
+    private var wu: WeightUnit { profileStore.profile?.bodyWeightUnit ?? .kg }
+
     private static let dateFormatter: DateFormatter = {
         let f = DateFormatter()
         f.dateFormat = "yyyy-MM-dd"
@@ -22,7 +25,7 @@ struct WeightMiniChartView: View {
     private var chartPoints: [ChartPoint] {
         let sorted = weights.compactMap { entry -> (date: Date, weight: Double)? in
             guard let date = Self.dateFormatter.date(from: entry.date) else { return nil }
-            return (date, entry.weightKg)
+            return (date, UnitConverter.displayWeight(entry.weightKg, unit: wu))
         }.sorted { $0.date < $1.date }
 
         // Assign segments

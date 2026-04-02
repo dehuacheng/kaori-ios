@@ -2,9 +2,12 @@ import SwiftUI
 
 struct WeightCreateView: View {
     @Environment(WeightStore.self) private var store
+    @Environment(ProfileStore.self) private var profileStore
     @Environment(HealthKitManager.self) private var healthKit
     @Environment(Localizer.self) private var L
     @Environment(\.dismiss) private var dismiss
+
+    private var wu: WeightUnit { profileStore.profile?.bodyWeightUnit ?? .kg }
 
     @State private var weightKg = ""
     @State private var weightDate = Date()
@@ -23,7 +26,7 @@ struct WeightCreateView: View {
             Form {
                 Section(L.t("weight.title")) {
                     DatePicker(L.t("weight.date"), selection: $weightDate, displayedComponents: .date)
-                    TextField(L.t("weight.weightKg"), text: $weightKg)
+                    TextField(L.t("weight.weightInput", wu.label), text: $weightKg)
                         .keyboardType(.decimalPad)
                     TextField(L.t("weight.notesOptional"), text: $notes)
                 }
@@ -51,10 +54,11 @@ struct WeightCreateView: View {
     }
 
     private func submit() async {
-        guard let kg = Double(weightKg) else {
+        guard let value = Double(weightKg) else {
             error = L.t("weight.invalidWeight")
             return
         }
+        let kg = UnitConverter.toMetricWeight(value, unit: wu)
         isSubmitting = true
         error = nil
         do {

@@ -5,6 +5,7 @@ struct WorkoutDetailView: View {
     @Environment(APIClient.self) private var api
     @Environment(HealthKitManager.self) private var healthKit
     @Environment(Localizer.self) private var L
+    @Environment(\.dismiss) private var dismiss
 
     let workoutId: Int
 
@@ -134,6 +135,7 @@ struct WorkoutDetailView: View {
                         Task {
                             try? await store.deleteWorkout(workout.id)
                             await store.loadWorkouts()
+                            dismiss()
                         }
                     } label: {
                         Label(L.t("workout.deleteWorkout"), systemImage: "trash")

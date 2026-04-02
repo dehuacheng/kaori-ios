@@ -76,6 +76,7 @@
   "weight.older": "更早 (%d)",
   "weight.date": "日期",
   "weight.weightKg": "体重 (kg)",
+  "weight.weightInput": "体重 (%@)",
   "weight.notesOptional": "备注（可选）",
   "weight.invalidWeight": "体重数据无效",
 
@@ -128,6 +129,11 @@
   "settings.serverUrl": "URL（例 http://100.x.y.z:8000）",
   "settings.bearerToken": "Bearer Token",
   "settings.testConnection": "测试连接",
+  "settings.units": "单位",
+  "settings.bodyWeightUnit": "体重",
+  "settings.heightUnit": "身高",
+  "settings.exerciseWeightUnit": "训练重量",
+
   "settings.llmBackend": "LLM 后端",
   "settings.analysisEngine": "分析引擎",
   "settings.llmFooter": "选择用于饮食分析的 AI 模型",

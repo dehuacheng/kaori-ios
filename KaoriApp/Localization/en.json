@@ -76,6 +76,7 @@
   "weight.older": "Older (%d)",
   "weight.date": "Date",
   "weight.weightKg": "Weight (kg)",
+  "weight.weightInput": "Weight (%@)",
   "weight.notesOptional": "Notes (optional)",
   "weight.invalidWeight": "Invalid weight",
 
@@ -128,6 +129,11 @@
   "settings.serverUrl": "URL (e.g. http://100.x.y.z:8000)",
   "settings.bearerToken": "Bearer Token",
   "settings.testConnection": "Test Connection",
+  "settings.units": "Units",
+  "settings.bodyWeightUnit": "Body Weight",
+  "settings.heightUnit": "Height",
+  "settings.exerciseWeightUnit": "Exercise Weight",
+
   "settings.llmBackend": "LLM Backend",
   "settings.analysisEngine": "Analysis Engine",
   "settings.llmFooter": "Which AI model to use for meal analysis",

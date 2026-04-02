@@ -69,6 +69,7 @@
 		E0EA4FC30388DD90D1A5E151 /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7147A8679F3CFC8352E161CF /* Workout.swift */; };
 		F41F741B60D2F3B0A09DE1B2 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4BDBC4B40373E7CAFA954D /* AppConfig.swift */; };
 		F89D28B8F2ABFD6EB279ABC3 /* WeightMiniChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576503C22041ADD79BA88998 /* WeightMiniChartView.swift */; };
+		F978CEACEB3F2E4587010B32 /* UnitConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A59685F569247784B5D75E /* UnitConverter.swift */; };
 		FF244A6182756391D9F8AF69 /* ProfileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303B1E52034AEBB719445463 /* ProfileStore.swift */; };
 /* End PBXBuildFile section */
 
@@ -148,6 +149,7 @@
 		B39346F4668E4F3EAC87B32D /* ExercisePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisePickerView.swift; sourceTree = "<group>"; };
 		C10D833F5F69DE4D7B8D1CC5 /* SetRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetRowView.swift; sourceTree = "<group>"; };
 		C22A995323B78C5991EF12CB /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		C4A59685F569247784B5D75E /* UnitConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitConverter.swift; sourceTree = "<group>"; };
 		C56EFC258D8FFDCEA908209C /* KaoriTimerWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KaoriTimerWidgetBundle.swift; sourceTree = "<group>"; };
 		CC039E0635E1BE6BD28D5E22 /* SummarySectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummarySectionsView.swift; sourceTree = "<group>"; };
 		D13D1111C4EBEDC3AF4FA747 /* KaoriApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = KaoriApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -193,6 +195,14 @@
 			path = Health;
 			sourceTree = "<group>";
 		};
+		06DD7EE98F122917C8FFB4B3 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				C4A59685F569247784B5D75E /* UnitConverter.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		092FAD55310621A30C970B01 /* Summary */ = {
 			isa = PBXGroup;
 			children = (
@@ -230,6 +240,7 @@
 				30A3A709AD4D79D40A8A26A3 /* Network */,
 				7580E6E1568313998DCA67FD /* Notifications */,
 				C05CD9878B69967530772BBA /* Stores */,
+				06DD7EE98F122917C8FFB4B3 /* Utils */,
 				3BAF2E41ACE5EBA60AFFF416 /* Views */,
 			);
 			path = KaoriApp;
@@ -540,6 +551,7 @@
 				C0B0D4BBFD239E20CC177682 /* TimerEngine.swift in Sources */,
 				3F05B819ACD2BD58A39F2DD4 /* TimerPresetPickerView.swift in Sources */,
 				BAF10AD71D665307A22FF127 /* TimerView.swift in Sources */,
+				F978CEACEB3F2E4587010B32 /* UnitConverter.swift in Sources */,
 				5B0BB6FB6685C7FB87C713E2 /* Weight.swift in Sources */,
 				89C41CD87949AC96B1E3F2FA /* WeightChartView.swift in Sources */,
 				D8FFD7F8540EB146677E5F34 /* WeightCreateView.swift in Sources */,
