@@ -35,15 +35,18 @@ class WeightStore {
     func log(date: String?, weightKg: Double, notes: String?) async throws {
         let body = WeightCreate(weightDate: date, weightKg: weightKg, notes: notes)
         let _: WeightCreateResponse = try await api.post("/api/weight", body: body)
+        await load(force: true)
     }
 
     func update(id: Int, weightKg: Double, notes: String?) async throws {
         let body = WeightUpdateBody(weightKg: weightKg, notes: notes)
         let _: WeightUpdateResponse = try await api.put("/api/weight/\(id)", body: body)
+        await load(force: true)
     }
 
     func delete(id: Int) async throws {
         let _: WeightDeleteResponse = try await api.delete("/api/weight/\(id)")
+        await load(force: true)
     }
 
     func bulkImport(entries: [BulkImportEntry]) async throws -> BulkImportResponse {

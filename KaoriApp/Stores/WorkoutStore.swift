@@ -84,7 +84,9 @@ class WorkoutStore {
 
     func createWorkout(date: String? = nil, notes: String? = nil, activityType: String = "traditionalStrengthTraining") async throws -> WorkoutDetail {
         let body = WorkoutCreate(date: date ?? currentDate, notes: notes, activityType: activityType)
-        return try await api.post("/api/workouts", body: body)
+        let response: WorkoutDetail = try await api.post("/api/workouts", body: body)
+        await loadWorkouts()
+        return response
     }
 
     func getWorkout(_ id: Int) async throws -> WorkoutDetail {
@@ -105,6 +107,7 @@ class WorkoutStore {
             Self.importedUUIDs = imported
         }
         Self.removeImportedMeta(forWorkoutId: id)
+        await loadWorkouts()
     }
 
     // MARK: - Exercises within a workout

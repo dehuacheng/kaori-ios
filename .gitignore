@@ -28,5 +28,8 @@ asset/
 # Local config (private URLs, tokens)
 KaoriApp/defaults.json
 
+# Bug tracking (local only)
+docs/BUGS.md
+
 # OS
 .DS_Store

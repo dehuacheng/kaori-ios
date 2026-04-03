@@ -72,6 +72,7 @@ class MealStore {
         let response: CreateMealResponse = try await api.postMultipart(
             "/api/meals", fields: fields, imageData: photo
         )
+        await loadMeals()
         return response
     }
 
@@ -81,11 +82,15 @@ class MealStore {
     }
 
     func updateMeal(_ id: Int, body: MealUpdate) async throws -> UpdateMealResponse {
-        try await api.put("/api/meals/\(id)", body: body)
+        let response: UpdateMealResponse = try await api.put("/api/meals/\(id)", body: body)
+        await loadMeals()
+        return response
     }
 
     func deleteMeal(_ id: Int) async throws -> DeleteMealResponse {
-        try await api.delete("/api/meals/\(id)")
+        let response: DeleteMealResponse = try await api.delete("/api/meals/\(id)")
+        await loadMeals()
+        return response
     }
 
     func getAnalyses(_ mealId: Int) async throws -> AnalysesResponse {
