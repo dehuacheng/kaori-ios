@@ -70,6 +70,20 @@ struct WorkoutDetailView: View {
     private func workoutContent(_ workout: WorkoutDetail) -> some View {
         ZStack(alignment: .bottomTrailing) {
             List {
+                // Summarizing indicator
+                if isSummarizing {
+                    Section {
+                        HStack(spacing: 10) {
+                            ProgressView()
+                                .controlSize(.small)
+                            Text(L.t("workout.analyzingWorkout"))
+                                .foregroundStyle(.secondary)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.vertical, 4)
+                    }
+                }
+
                 // Analysis section
                 if let analysis {
                     Section(L.t("workout.aiAnalysis")) {

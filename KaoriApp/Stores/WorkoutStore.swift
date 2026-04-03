@@ -168,25 +168,32 @@ class WorkoutStore {
 
     func createExerciseType(name: String, category: String?, notes: String?) async throws -> ExerciseType {
         let body = ExerciseTypeCreate(name: name, category: category, notes: notes)
-        return try await api.post("/api/exercise-types", body: body)
+        let result: ExerciseType = try await api.post("/api/exercise-types", body: body)
+        exerciseTypesLoaded = false
+        return result
     }
 
     func identifyExercise(photo: Data, hint: String?) async throws -> ExerciseType {
         var fields: [String: String] = [:]
         if let hint, !hint.isEmpty { fields["hint"] = hint }
-        return try await api.postMultipart("/api/exercise-types/identify", fields: fields, imageData: photo)
+        let result: ExerciseType = try await api.postMultipart("/api/exercise-types/identify", fields: fields, imageData: photo)
+        exerciseTypesLoaded = false
+        return result
     }
 
     func enableExerciseType(_ id: Int) async throws {
         let _: EnableDisableResponse = try await api.post("/api/exercise-types/\(id)/enable")
+        exerciseTypesLoaded = false
     }
 
     func disableExerciseType(_ id: Int) async throws {
         let _: EnableDisableResponse = try await api.post("/api/exercise-types/\(id)/disable")
+        exerciseTypesLoaded = false
     }
 
     func deleteExerciseType(_ id: Int) async throws {
         let _: DeleteResponse = try await api.delete("/api/exercise-types/\(id)")
+        exerciseTypesLoaded = false
     }
 
     // MARK: - Timer Presets

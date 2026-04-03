@@ -16,6 +16,10 @@ struct ExerciseManageView: View {
     @State private var selectedPhoto: PhotosPickerItem?
     @State private var isIdentifying = false
     @State private var identifyResult: String?
+    @State private var photoHint = ""
+
+    // Create custom notes
+    @State private var newNotes = ""
 
     private let categories = ["chest", "back", "legs", "shoulders", "arms", "core", "cardio", "full_body", "other"]
 
@@ -28,6 +32,8 @@ struct ExerciseManageView: View {
         List {
             // Photo identify section
             Section(L.t("exercise.identifyByPhoto")) {
+                TextField(L.t("exercise.photoHint"), text: $photoHint)
+
                 PhotosPicker(selection: $selectedPhoto, matching: .images) {
                     if isIdentifying {
                         HStack {
@@ -57,6 +63,7 @@ struct ExerciseManageView: View {
                             Text(L.t("exerciseCategory.\(cat)")).tag(cat)
                         }
                     }
+                    TextField(L.t("exercise.notesOptional"), text: $newNotes)
                     Button(L.t("common.save")) {
                         Task { await createExercise() }
                     }
@@ -132,8 +139,9 @@ struct ExerciseManageView: View {
     }
 
     private func createExercise() async {
-        _ = try? await store.createExerciseType(name: newName, category: newCategory, notes: nil)
+        _ = try? await store.createExerciseType(name: newName, category: newCategory, notes: newNotes.isEmpty ? nil : newNotes)
         newName = ""
+        newNotes = ""
         showCreate = false
         await reload()
     }
@@ -151,8 +159,9 @@ struct ExerciseManageView: View {
             return
         }
         do {
-            let result = try await store.identifyExercise(photo: data, hint: nil)
+            let result = try await store.identifyExercise(photo: data, hint: photoHint.isEmpty ? nil : photoHint)
             identifyResult = L.t("exercise.identified", result.name)
+            photoHint = ""
             await reload()
         } catch {
             identifyResult = L.t("exercise.identificationFailed")

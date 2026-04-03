@@ -2,6 +2,7 @@ import Foundation
 import Combine
 import UIKit
 import ActivityKit
+import UserNotifications
 
 enum TimerPhase: String {
     case idle = "Ready"
@@ -82,6 +83,7 @@ class TimerEngine {
         isRunning = false
         cancellable?.cancel()
         cancellable = nil
+        cancelAllPhaseNotifications()
         updateLiveActivity()
     }
 
@@ -90,6 +92,7 @@ class TimerEngine {
         isRunning = true
         phaseEndTime = Date().addingTimeInterval(Double(remainingSeconds))
         startTicking()
+        scheduleAllPhaseNotifications()
         updateLiveActivity()
     }
 
@@ -142,6 +145,7 @@ class TimerEngine {
                     isRunning = false
                     remainingSeconds = 0
                     phaseEndTime = nil
+                    cancelAllPhaseNotifications()
                     endLiveActivity()
                     return
                 }
@@ -161,6 +165,7 @@ class TimerEngine {
         isRunning = true
         phaseEndTime = Date().addingTimeInterval(Double(seconds))
         startTicking()
+        scheduleAllPhaseNotifications()
     }
 
     private func startTicking() {
@@ -210,6 +215,7 @@ class TimerEngine {
                 notification.notificationOccurred(.warning)
                 phase = .done
                 remainingSeconds = 0
+                cancelAllPhaseNotifications()
                 endLiveActivity()
             }
 
@@ -260,5 +266,68 @@ class TimerEngine {
             isPaused: !isRunning,
             remainingSeconds: remainingSeconds
         )
+    }
+
+    // MARK: - Background Phase Notifications
+
+    private func scheduleAllPhaseNotifications() {
+        cancelAllPhaseNotifications()
+        guard isRunning, phase == .work || phase == .rest else { return }
+
+        var timeOffset = TimeInterval(remainingSeconds)
+        var simPhase = phase
+        var simSet = currentSet
+        var index = 0
+
+        while index < 60 {
+            let content = UNMutableNotificationContent()
+            content.sound = .default
+            var isDone = false
+
+            switch simPhase {
+            case .work:
+                content.title = "Work Complete"
+                content.body = "Time to rest (Set \(simSet)/\(totalSets))"
+                simPhase = .rest
+            case .rest:
+                if simSet < totalSets {
+                    simSet += 1
+                    if workSeconds > 0 {
+                        content.title = "Rest Complete"
+                        content.body = "Start set \(simSet)/\(totalSets)"
+                        simPhase = .work
+                    } else {
+                        content.title = "Rest Complete"
+                        content.body = "Set \(simSet)/\(totalSets)"
+                    }
+                } else {
+                    content.title = "Timer Complete"
+                    content.body = "All \(totalSets) sets done!"
+                    isDone = true
+                }
+            default:
+                return
+            }
+
+            guard timeOffset >= 1 else { return }
+
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timeOffset, repeats: false)
+            let request = UNNotificationRequest(identifier: "kaoriTimer\(index)", content: content, trigger: trigger)
+            UNUserNotificationCenter.current().add(request)
+            index += 1
+
+            if isDone { return }
+
+            switch simPhase {
+            case .work: timeOffset += TimeInterval(workSeconds)
+            case .rest: timeOffset += TimeInterval(restSeconds)
+            default: return
+            }
+        }
+    }
+
+    private func cancelAllPhaseNotifications() {
+        let ids = (0..<64).map { "kaoriTimer\($0)" }
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ids)
     }
 }

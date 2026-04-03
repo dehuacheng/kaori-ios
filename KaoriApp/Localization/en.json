@@ -197,6 +197,8 @@
   "exercise.failedToLoadPhoto": "Failed to load photo",
   "exercise.identified": "Identified: %@",
   "exercise.identificationFailed": "Identification failed",
+  "exercise.photoHint": "Description hint (optional)",
+  "exercise.notesOptional": "Notes (optional)",
 
   "exerciseCategory.chest": "Chest",
   "exerciseCategory.back": "Back",

@@ -144,6 +144,7 @@ struct FeedView: View {
                 }
             }
             .listStyle(.plain)
+            .toolbar(.visible, for: .tabBar)
             .refreshable {
                 await refreshFeed()
             }

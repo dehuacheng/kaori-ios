@@ -197,6 +197,8 @@
   "exercise.failedToLoadPhoto": "无法加载照片",
   "exercise.identified": "识别结果：%@",
   "exercise.identificationFailed": "识别失败",
+  "exercise.photoHint": "描述提示（可选）",
+  "exercise.notesOptional": "备注（可选）",
 
   "exerciseCategory.chest": "胸部",
   "exerciseCategory.back": "背部",
