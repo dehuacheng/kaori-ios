@@ -1,5 +1,10 @@
 import SwiftUI
 
+struct IdentifiableInt: Identifiable {
+    let value: Int
+    var id: Int { value }
+}
+
 @main
 struct KaoriApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
@@ -55,36 +60,85 @@ struct ContentView: View {
     @State private var showImportPrompt = false
     @State private var importExistingWorkouts: [Workout] = []
     @State private var selectedTab = 0
+    @State private var showAddMenu = false
+    @State private var showMealCreate = false
+    @State private var showWeightCreate = false
+    @State private var newWorkoutId: IdentifiableInt?
+    @State private var dismissedWorkoutId: Int?
+    @State private var feedRefreshToken = UUID()
 
     var body: some View {
-        VStack(spacing: 0) {
-            ConnectionBanner(isConnected: api.isConnected)
+        ZStack(alignment: .bottom) {
+            VStack(spacing: 0) {
+                ConnectionBanner(isConnected: api.isConnected)
 
-            if !config.isConfigured {
-                NavigationStack {
-                    SettingsView()
+                if !config.isConfigured {
+                    NavigationStack {
+                        SettingsView()
+                    }
+                } else {
+                    TabView(selection: $selectedTab) {
+                        FeedView(showMealCreate: $showMealCreate, showWeightCreate: $showWeightCreate, refreshToken: feedRefreshToken)
+                            .tag(0)
+                            .tabItem { Label(L.t("tab.home"), systemImage: "house") }
+                        // Center "+" button (intercepted, never actually selected)
+                        Color.clear
+                            .tag(99)
+                            .tabItem { Label(L.t("tab.add"), systemImage: "plus.circle.fill") }
+                        MoreView()
+                            .tag(2)
+                            .tabItem { Label(L.t("tab.more"), systemImage: "ellipsis.circle") }
+                    }
+                    .onChange(of: selectedTab) { oldValue, newValue in
+                        if newValue == 99 {
+                            // Intercept the "+" tab — show menu instead
+                            selectedTab = oldValue
+                            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                                showAddMenu = true
+                            }
+                        }
+                    }
                 }
-            } else {
-                TabView(selection: $selectedTab) {
-                    DashboardView(selectedTab: $selectedTab)
-                        .tag(0)
-                        .tabItem { Label(L.t("tab.home"), systemImage: "house") }
-                    NavigationStack {
-                        MealListView()
+            }
+
+            // Add menu overlay — Control Center style
+            if showAddMenu {
+                // Dimmed backdrop (tap to dismiss)
+                Color.black.opacity(0.4)
+                    .ignoresSafeArea()
+                    .onTapGesture {
+                        withAnimation(.spring(response: 0.25, dampingFraction: 0.8)) {
+                            showAddMenu = false
+                        }
                     }
-                    .tag(1)
-                    .tabItem { Label(L.t("tab.meals"), systemImage: "fork.knife") }
-                    NavigationStack {
-                        WeightView()
+
+                // Blurred panel with buttons
+                HStack(spacing: 14) {
+                    addMenuButton(icon: "camera.fill", label: L.t("tab.meals")) {
+                        withAnimation(.spring(response: 0.25, dampingFraction: 0.8)) {
+                            showAddMenu = false
+                        }
+                        showMealCreate = true
                     }
-                    .tag(2)
-                    .tabItem { Label(L.t("tab.weight"), systemImage: "scalemass") }
-                    NavigationStack {
-                        WorkoutListView()
+                    addMenuButton(icon: "scalemass.fill", label: L.t("tab.weight")) {
+                        withAnimation(.spring(response: 0.25, dampingFraction: 0.8)) {
+                            showAddMenu = false
+                        }
+                        showWeightCreate = true
                     }
-                    .tag(3)
-                    .tabItem { Label(L.t("tab.gym"), systemImage: "dumbbell") }
+                    addMenuButton(icon: "dumbbell.fill", label: L.t("tab.gym")) {
+                        withAnimation(.spring(response: 0.25, dampingFraction: 0.8)) {
+                            showAddMenu = false
+                        }
+                        Task { await createWorkout() }
+                    }
                 }
+                .padding(16)
+                .background(.ultraThinMaterial)
+                .environment(\.colorScheme, .dark)
+                .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+                .padding(.bottom, 90)
+                .transition(.scale(scale: 0.8).combined(with: .opacity))
             }
         }
         .task {
@@ -105,14 +159,70 @@ struct ContentView: View {
                 }
             }
         }
+        .fullScreenCover(item: $newWorkoutId, onDismiss: {
+            Task {
+                // Delete workout if no exercises were added
+                if let id = dismissedWorkoutId {
+                    if let detail = try? await workoutStore.getWorkout(id),
+                       detail.exercises.isEmpty {
+                        try? await workoutStore.deleteWorkout(id)
+                    }
+                    dismissedWorkoutId = nil
+                }
+                await workoutStore.loadWorkouts()
+                feedRefreshToken = UUID()
+            }
+        }) { item in
+            NavigationStack {
+                WorkoutDetailView(workoutId: item.value)
+                    .toolbar {
+                        ToolbarItem(placement: .topBarLeading) {
+                            Button(L.t("common.done")) {
+                                dismissedWorkoutId = item.value
+                                newWorkoutId = nil
+                            }
+                        }
+                    }
+            }
+        }
         .sheet(isPresented: $showImportPrompt) {
             WorkoutImportView(workouts: workoutStore.pendingImportWorkouts, existingWorkouts: importExistingWorkouts)
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
             if NotificationRouter.shared.pendingDestination != nil {
-                selectedTab = 0  // Switch to Home tab — summary is inline
+                selectedTab = 0
                 NotificationRouter.shared.pendingDestination = nil
             }
         }
+    }
+
+    private func addMenuButton(icon: String, label: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            VStack(spacing: 8) {
+                Image(systemName: icon)
+                    .font(.title2)
+                    .foregroundStyle(.white)
+                Text(label)
+                    .font(.caption2)
+                    .foregroundStyle(.white.opacity(0.7))
+            }
+            .frame(width: 80, height: 80)
+            .background(.white.opacity(0.15))
+            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+        }
+        .buttonStyle(.plain)
+    }
+
+    private func createWorkout() async {
+        do {
+            let today = {
+                let f = DateFormatter()
+                f.dateFormat = "yyyy-MM-dd"
+                return f.string(from: Date())
+            }()
+            let workout = try await workoutStore.createWorkout(date: today)
+            await workoutStore.loadWorkouts()
+            newWorkoutId = IdentifiableInt(value: workout.id)
+        } catch {}
     }
 }

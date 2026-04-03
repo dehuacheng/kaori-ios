@@ -10,6 +10,7 @@ struct SummaryDetailView: View {
     @State private var isLoading = false
     @State private var isGenerating = false
     @State private var createdAt: String?
+    @State private var sectionsCollapsed = false
 
     enum SummaryType {
         case daily(date: String)
@@ -38,8 +39,7 @@ struct SummaryDetailView: View {
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 60)
                 } else if let text = summaryText {
-                    Text(LocalizedStringKey(text))
-                        .font(.body)
+                    SummarySectionsView(markdown: text, allCollapsed: $sectionsCollapsed)
                         .textSelection(.enabled)
 
                     if let createdAt {

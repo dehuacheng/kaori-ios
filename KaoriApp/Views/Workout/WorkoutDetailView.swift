@@ -17,6 +17,7 @@ struct WorkoutDetailView: View {
     @State private var isSummarizing = false
     @State private var workoutStartTime = Date()
     @State private var newlyAddedSetIds: Set<Int> = []
+    @State private var showDeleteConfirm = false
 
     var body: some View {
         Group {
@@ -30,6 +31,38 @@ struct WorkoutDetailView: View {
             }
         }
         .navigationTitle(L.t("workout.title"))
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Menu {
+                    if let workout, !workout.exercises.isEmpty {
+                        Button {
+                            Task { await finishWorkout() }
+                        } label: {
+                            Label(L.t("workout.finishSummarize"), systemImage: "checkmark.circle")
+                        }
+                        .disabled(isSummarizing)
+                    }
+                    Divider()
+                    Button(role: .destructive) {
+                        showDeleteConfirm = true
+                    } label: {
+                        Label(L.t("workout.deleteWorkout"), systemImage: "trash")
+                    }
+                } label: {
+                    Image(systemName: "ellipsis.circle")
+                }
+            }
+        }
+        .alert(L.t("workout.deleteWorkout"), isPresented: $showDeleteConfirm) {
+            Button(L.t("common.delete"), role: .destructive) {
+                Task {
+                    try? await store.deleteWorkout(workoutId)
+                    await store.loadWorkouts()
+                    dismiss()
+                }
+            }
+            Button(L.t("common.cancel"), role: .cancel) {}
+        }
         .task { await loadWorkout() }
     }
 
@@ -110,37 +143,8 @@ struct WorkoutDetailView: View {
                     } label: {
                         Label(L.t("workout.addExercise"), systemImage: "plus.circle")
                     }
-
-                    if !workout.exercises.isEmpty {
-                        Button {
-                            Task { await finishWorkout() }
-                        } label: {
-                            if isSummarizing {
-                                HStack {
-                                    ProgressView()
-                                        .controlSize(.small)
-                                    Text(L.t("workout.analyzingWorkout"))
-                                }
-                            } else {
-                                Label(L.t("workout.finishSummarize"), systemImage: "checkmark.circle")
-                            }
-                        }
-                        .disabled(isSummarizing)
-                    }
                 }
 
-                // Delete
-                Section {
-                    Button(role: .destructive) {
-                        Task {
-                            try? await store.deleteWorkout(workout.id)
-                            await store.loadWorkouts()
-                            dismiss()
-                        }
-                    } label: {
-                        Label(L.t("workout.deleteWorkout"), systemImage: "trash")
-                    }
-                }
             }
 
             // Floating timer button

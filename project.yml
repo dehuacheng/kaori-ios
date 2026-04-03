@@ -19,6 +19,7 @@ targets:
     info:
       path: KaoriApp/Info.plist
       properties:
+        CFBundleDisplayName: "Kaori"
         NSCameraUsageDescription: "Kaori needs camera access to photograph your meals"
         NSPhotoLibraryUsageDescription: "Kaori needs photo library access to add meal photos"
         NSHealthShareUsageDescription: "Kaori reads your weight history from Apple Health to track trends"

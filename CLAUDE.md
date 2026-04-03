@@ -52,5 +52,16 @@ KaoriApp/
 - Units (kg, kcal, g, cm) are NOT localized — they are international.
 - The widget extension (`KaoriTimerWidget`) is not localized (separate target, minimal text).
 
+## Design Language
+
+The app follows an **Apple Health–inspired** aesthetic:
+- **Feed cards** use `FeedCardModifier` (`.feedCard()`) — `secondarySystemGroupedBackground`, 16pt padding, 14pt continuous corner radius
+- **Card headers** use colored SF Symbols + colored bold text per type: orange (meals), cyan (weight), orange/flame (workouts), yellow/sparkles (daily summary), blue/calendar (weekly summary), purple (AI)
+- **"+" add menu** uses iOS 18 Control Center style: dark dimmed backdrop, frosted glass panel (`.ultraThinMaterial` dark), translucent rounded square buttons with white icons
+- **Tab bar** hides when navigating into detail views (`.toolbar(.hidden, for: .tabBar)`)
+- **Swipe left** on feed items reveals contextual actions (delete for all items, regenerate for summaries)
+- **Tap** on feed cards navigates to the full detail view (meals → MealDetailView, workouts → WorkoutDetailView, summaries → SummaryDetailView). Cards should NOT expand/collapse inline.
+- All new feed cards must use `.feedCard()` for consistent styling
+
 ## Backend Repo
 GitHub: https://github.com/dehuacheng/kaori
