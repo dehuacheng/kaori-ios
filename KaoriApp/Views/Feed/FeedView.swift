@@ -7,17 +7,23 @@ struct FeedView: View {
     @Environment(WorkoutStore.self) private var workoutStore
     @Environment(ProfileStore.self) private var profileStore
     @Environment(APIClient.self) private var api
+    @Environment(FinanceStore.self) private var financeStore
 
     @Environment(NotificationSettings.self) private var notificationSettings
 
     @State private var feedItems: [FeedItem] = []
     @State private var loadedDates: Set<String> = []
     @State private var dailyTotals: [String: NutritionTotals] = [:]
+    @State private var portfolioSummaries: [String: PortfolioSummaryResponse] = [:]
+    @State private var portfolioLoading = false
+    @State private var hasPortfolioAccounts: Bool?
+    @State private var portfolioRefreshTask: Task<Void, Never>?
     @State private var isLoading = false
     @State private var showAnalytics = false
     @State private var selectedMealId: Int?
     @State private var selectedWorkoutId: Int?
     @State private var showSummaryDetail = false
+    @State private var selectedPortfolioDate: String?
 
     // AI Summary state
     @State private var dailySummaryText: String?
@@ -67,6 +73,27 @@ struct FeedView: View {
                                     }
                                     .tint(.blue)
                                 }
+                        }
+
+                        // Portfolio card (after summary, before nutrition) — today only
+                        if group.date == todayString, hasPortfolioAccounts == true {
+                            if let portfolioSummary = portfolioSummaries[group.date],
+                               portfolioSummary.combined != nil {
+                                Button {
+                                    selectedPortfolioDate = group.date
+                                } label: {
+                                    PortfolioFeedCard(summary: portfolioSummary)
+                                }
+                                .buttonStyle(.plain)
+                                .listRowSeparator(.hidden)
+                                .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
+                                .listRowBackground(Color.clear)
+                            } else {
+                                PortfolioFeedCardPlaceholder()
+                                    .listRowSeparator(.hidden)
+                                    .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
+                                    .listRowBackground(Color.clear)
+                            }
                         }
 
                         // Daily nutrition summary pinned at top
@@ -137,6 +164,10 @@ struct FeedView: View {
                 SummaryDetailView(summaryType: summaryType)
                     .toolbar(.hidden, for: .tabBar)
             }
+            .navigationDestination(item: $selectedPortfolioDate) { date in
+                PortfolioDetailView(date: date)
+                    .toolbar(.hidden, for: .tabBar)
+            }
             .navigationDestination(item: $selectedMealId) { mealId in
                 MealDetailView(mealId: mealId)
                     .toolbar(.hidden, for: .tabBar)
@@ -169,6 +200,11 @@ struct FeedView: View {
                 await weightStore.load()
                 await loadInitialFeed()
                 await loadSummary()
+                // Portfolio: check if accounts exist, then load in background
+                startPortfolioBackground()
+            }
+            .onDisappear {
+                portfolioRefreshTask?.cancel()
             }
         }
     }
@@ -319,6 +355,8 @@ struct FeedView: View {
             .buttonStyle(.plain)
         case .summary(let text, let date):
             SummaryFeedCard(text: text, date: date)
+        case .portfolio:
+            EmptyView()  // Portfolio card is rendered as a pinned card, not a feed item
         }
     }
 
@@ -441,6 +479,38 @@ struct FeedView: View {
         feedItems.sort { $0.sortDate > $1.sortDate }
     }
 
+    // MARK: - Portfolio (background loading + periodic refresh)
+
+    private func startPortfolioBackground() {
+        portfolioRefreshTask?.cancel()
+        portfolioRefreshTask = Task {
+            // Quick check: do any accounts exist?
+            let accounts = (try? await financeStore.loadAccountsQuick()) ?? []
+            await MainActor.run { hasPortfolioAccounts = !accounts.isEmpty }
+            guard !accounts.isEmpty else { return }
+
+            // Initial fetch
+            await refreshPortfolio()
+
+            // Periodic refresh: every 60 seconds
+            while !Task.isCancelled {
+                try? await Task.sleep(for: .seconds(60))
+                guard !Task.isCancelled else { break }
+                await refreshPortfolio()
+            }
+        }
+    }
+
+    private func refreshPortfolio() async {
+        let today = dateFormatter.string(from: Date())
+        if let summary = try? await financeStore.getPortfolioSummary(date: today),
+           summary.combined != nil {
+            await MainActor.run {
+                portfolioSummaries[today] = summary
+            }
+        }
+    }
+
     // MARK: - Deletion
 
     private func deleteItem(_ item: FeedItem) async {
@@ -452,6 +522,8 @@ struct FeedView: View {
         case .workout(let workout, _):
             try? await workoutStore.deleteWorkout(workout.id)
         case .summary:
+            break
+        case .portfolio:
             break
         }
         feedItems.removeAll { $0.id == item.id }

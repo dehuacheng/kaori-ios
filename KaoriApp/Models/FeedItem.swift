@@ -42,6 +42,7 @@ enum FeedItem: Identifiable {
     case weight(WeightEntry)
     case workout(Workout, meta: ImportedWorkoutMeta?)
     case summary(text: String, date: String)
+    case portfolio(PortfolioSummaryResponse)
 
     var id: String {
         switch self {
@@ -49,6 +50,7 @@ enum FeedItem: Identifiable {
         case .weight(let w): "weight-\(w.id)"
         case .workout(let w, _): "workout-\(w.id)"
         case .summary(_, let d): "summary-\(d)"
+        case .portfolio(let p): "portfolio-\(p.date)"
         }
     }
 
@@ -59,6 +61,7 @@ enum FeedItem: Identifiable {
         case .weight(let w): w.date
         case .workout(let w, _): w.date
         case .summary(_, let d): d
+        case .portfolio(let p): p.date
         }
     }
 
@@ -74,6 +77,8 @@ enum FeedItem: Identifiable {
             // Fall through handled below
         case .summary(_, let dateStr):
             if let d = dateOnlyFormatter.date(from: dateStr) { return d }
+        case .portfolio(let p):
+            if let d = dateOnlyFormatter.date(from: p.date) { return d }
         }
         // Fallback for workouts without meta: use created_at
         if case .workout(let w, _) = self, let d = parseUTCTimestamp(w.createdAt) { return d }
@@ -94,6 +99,8 @@ enum FeedItem: Identifiable {
             }
             return formatLocalTime(w.createdAt)
         case .summary:
+            return nil
+        case .portfolio:
             return nil
         }
     }

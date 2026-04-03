@@ -21,7 +21,7 @@ KaoriApp/
     Profile.swift     — Profile, ProfileUpdate, WeightUnit/HeightUnit enums
     Summary.swift     — SummaryDetail
     ImportedWorkoutMeta.swift — Apple Health workout metadata
-  Stores/         — @Observable stores (MealStore, WeightStore, ProfileStore, WorkoutStore)
+  Stores/         — @Observable stores (MealStore, WeightStore, ProfileStore, WorkoutStore, FinanceStore)
   Utils/          — UnitConverter (kg/lb, cm/in conversion + formatting)
   Views/
     Feed/           — Feed timeline and card components (see App Layout below)
@@ -32,6 +32,8 @@ KaoriApp/
     Settings/       — SettingsView, NotificationSettingsView
     Summary/        — SummaryDetailView, SummarySectionsView
     AnalyticsView.swift — Calorie + weight charts (shown as sheet)
+    Finance/        — Account list, account detail, holdings import (screenshot/PDF)
+    Portfolio/      — Portfolio feed card, portfolio detail view
     ManageView.swift    — "More" tab: data, tools, profile, settings menu
   Health/         — HealthKitManager (weight + workout sync)
   Notifications/  — NotificationManager, NotificationSettings, BackgroundTaskManager

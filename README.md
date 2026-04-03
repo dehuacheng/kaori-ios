@@ -19,6 +19,7 @@ SwiftUI iOS client for [Kaori](https://github.com/dehuacheng/kaori) — a person
 - **LLM backend picker** — Choose between Claude CLI, Anthropic API, or Codex CLI
 - **Notifications & AI summaries** — Configurable meal/weight reminders. AI-generated daily and weekly health summaries with swipe-to-regenerate.
 - **iOS 18 design** — Apple Health–inspired dark card aesthetic, Control Center–style add menu
+- **Financial portfolio** — Daily portfolio value card on the feed with live prices, per-account breakdown, top movers. Import holdings via multi-photo screenshots with LLM extraction. Account management in More > Data > Finance.
 
 ### Requirements
 
@@ -64,6 +65,7 @@ The Python backend is at [kaori](https://github.com/dehuacheng/kaori).
 - **Personal Document Vault** — Upload and retrieve personal documents (passport, IDs, etc.) with password/Face ID protection. Design in progress: considering both a full LLM assistant mode for rich querying and a static presentation mode for maximum security. May offer both and let users choose based on their LLM setup and risk tolerance.
 - **Medical Record Keeper** — Store exam results, lab work, and health records. Acts as your AI-powered PCP, nutritionist, and personal trainer — all in one place.
 - **Feed-Based UI Revamp** ✅ — Unified feed timeline with rich cards, multi-day infinite scroll, daily nutrition progress bars, AI summary cards, iOS 18 Control Center–style add menu, and analytics.
+- **Financial Accounts** ✅ — Brokerage portfolio tracking on the feed, screenshot import with LLM extraction, live prices, account management.
 - **Personal AI Assistant (Long-Term Vision)** — The ultimate goal: a personal AI assistant (Kaori by default — pick your own name) that provides comprehensive care across all aspects of your life. Core design principle: **your data stays in your hands**. Self-host or choose a trusted LLM provider. Everything else in the app is completely free and open-source — fork it and vibe-code it to make it yours.
 
 </details>
@@ -85,6 +87,7 @@ The Python backend is at [kaori](https://github.com/dehuacheng/kaori).
 - **LLM 后端选择** — 可选 Claude CLI、Anthropic API 或 Codex CLI
 - **通知与 AI 总结** — 可配置的饮食/体重提醒。AI 生成的每日和每周健康总结，左滑可重新生成。
 - **iOS 18 设计** — Apple Health 风格的暗色卡片设计，控制中心风格的添加菜单
+- **投资组合追踪** — 信息流显示每日投资组合涨跌卡片（实时行情），支持多图截图导入持仓（LLM 自动提取），账户管理在更多 > 数据 > 财务。
 
 ### 环境要求
 
@@ -130,6 +133,7 @@ Python 后端在 [kaori](https://github.com/dehuacheng/kaori)。
 - **个人文档保险库** — 上传和检索个人文档（护照、身份证等），通过密码/Face ID 保护。设计仍在进行中：考虑提供完整的 LLM 助手模式（功能更丰富）和静态展示模式（安全性最高），可能两者都提供，让用户根据自己的 LLM 配置和风险偏好自行选择。
 - **医疗记录管理** — 存储体检报告、化验结果等健康档案。充当你的 AI 全科医生、营养师和私人教练 — 一站式服务。
 - **信息流式 UI 重构** ✅ — 统一的信息流时间线，支持多日无限滚动、Apple Health 风格的卡片设计、每日营养进度条、AI 总结卡片、iOS 18 控制中心风格的添加菜单、数据分析视图。三标签布局：首页 | + | 更多。
+- **财务账户** ✅ — 券商投资组合追踪，截图导入持仓，实时行情，账户管理。
 - **个人 AI 助手（终极愿景）** — 最终目标：一个个人 AI 助手（默认叫 Kaori，你也可以自定义名字），全方位照顾你生活的各个方面。核心设计原则：**数据掌握在自己手中**。你需要自行部署或选择信任的 LLM 服务商。应用的其他部分完全免费开源 — 随意 fork，用 AI 编程定制成你自己的版本。
 
 </details>

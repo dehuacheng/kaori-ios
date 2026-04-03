@@ -12,7 +12,9 @@
 		1456E9490821F2D168C640BF /* defaults.json in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A03AAB1927618F07B50F2 /* defaults.json */; };
 		1592819803EA1FB2DBA66D98 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E305087E896AFBA0AFB4DBF /* PhotoPicker.swift */; };
 		17DB6EC4C460811FC4717BFF /* FeedCardStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EDC2D7635BA02633606F56 /* FeedCardStyle.swift */; };
+		191862843056E66CB107F000 /* HoldingsImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93BEE6741FB9D96C31F2FA9 /* HoldingsImportView.swift */; };
 		1BD326F61B192FF000E13F56 /* ExercisePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39346F4668E4F3EAC87B32D /* ExercisePickerView.swift */; };
+		1F2107DCC3BD6FEF8068B45D /* Finance.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0C761E19D66964B3766176E /* Finance.swift */; };
 		205EF93C84D2E5265CDDFD5E /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF2A2F8F4116DAFA93C2CDC /* APIClient.swift */; };
 		24809FEB7DB2E1D611DAFF99 /* zh-Hans.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E5E0F9ED1381B9AC4ED6D20 /* zh-Hans.json */; };
 		2B75B47F07B3BA6886F7B93A /* Meal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC45B434D316B99DB578F96 /* Meal.swift */; };
@@ -30,6 +32,7 @@
 		45A8B0596303F4256533472E /* KaoriTimerLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1841399B6EBD1A804EB3E20 /* KaoriTimerLiveActivity.swift */; };
 		4608389648507B3BBB4C8387 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F9883054F13D3EB695B476 /* SettingsView.swift */; };
 		4A37A72996217DD57F4776EF /* MealCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0A06BF94F3C800F35D2560 /* MealCreateView.swift */; };
+		4B4FFB43410556345FC048C2 /* PortfolioDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362D4D1E9B9CFBCB1DBD20C8 /* PortfolioDetailView.swift */; };
 		4D6849DE5A98ADA51DF02CBC /* ImportedWorkoutDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553174ED05FBF6A0DC71BC23 /* ImportedWorkoutDetailView.swift */; };
 		4F27A73B29E952033757C8E9 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DF9B688A1041D6787EE0A9 /* HealthKitManager.swift */; };
 		5194E74DEA086970F2D97603 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95564C2B8291EAE2D59742C3 /* FeedView.swift */; };
@@ -38,6 +41,7 @@
 		5B0BB6FB6685C7FB87C713E2 /* Weight.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEA26FF04B554F7679A7B4C0 /* Weight.swift */; };
 		5DC04D439AAB2B2E4FEF3342 /* AnalysisStatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29118F7D393B2E6A21E2FB6C /* AnalysisStatusBadge.swift */; };
 		5F9660B8B3E8A50B8573DC28 /* Summary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331E61143E2DD0F8D055F87B /* Summary.swift */; };
+		622E843913C032C04AB97813 /* FinanceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A1F27D4E61E81445746BF1 /* FinanceStore.swift */; };
 		652DACF32CB255993621EF35 /* WeightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647C6A152720E00B28A55515 /* WeightView.swift */; };
 		6DEA6E7611A31F4BDAFE4E69 /* WorkoutListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA605630E157E285492955F /* WorkoutListView.swift */; };
 		6E5E05F6A94D0E9B26B1740B /* MealRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4088294A4BCBA4D82EF459A4 /* MealRowView.swift */; };
@@ -45,6 +49,7 @@
 		7735EBC883D5CD034BADCCEF /* MealEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071BF34F3746B40727AB45DC /* MealEditView.swift */; };
 		7BDCAA5060ABF3D66F3E3C5A /* TimerActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB167B3D5954D349D6D17C4 /* TimerActivity.swift */; };
 		7D7162632F4C79E076C408E6 /* WorkoutImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579BBB648E4BF2D44F83F677 /* WorkoutImportView.swift */; };
+		7E1B446A66FE5CA6957E9A8C /* PortfolioFeedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DB8B83949719000B2F06C5 /* PortfolioFeedCard.swift */; };
 		806AA7E11EF4399BDCE4C7CB /* Localizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7E3A3F17C47614255F34BA /* Localizer.swift */; };
 		8357443E39F499DD8F0B8550 /* WorkoutRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99AD8BBFFF23F562B463C20 /* WorkoutRowView.swift */; };
 		89C41CD87949AC96B1E3F2FA /* WeightChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D5656813267E1EEA4F21326 /* WeightChartView.swift */; };
@@ -55,6 +60,7 @@
 		9405433C46DB2468CA014AD7 /* TimerActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB167B3D5954D349D6D17C4 /* TimerActivity.swift */; };
 		98F64E3441459FDCB7645D51 /* ConnectionBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D956B57C133B098D2E75EE /* ConnectionBanner.swift */; };
 		9FC60404A01F67EA31FB2BCD /* NotificationSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A8BFBB0AA7673018179D63 /* NotificationSettingsView.swift */; };
+		A0BB6066B535399EF86217BD /* FinanceAccountListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1631DF8A92D44CEFF6191980 /* FinanceAccountListView.swift */; };
 		A391DB5ADC4D916395C8CEEF /* KaoriTimerWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56EFC258D8FFDCEA908209C /* KaoriTimerWidgetBundle.swift */; };
 		A5F3319DB0A131CCC7074954 /* WorkoutStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB276F331D4A58B1AB64302 /* WorkoutStore.swift */; };
 		A9E80973719AA82394FF66BE /* MealDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D085BBC8CB56BB2B218B390 /* MealDetailView.swift */; };
@@ -63,6 +69,7 @@
 		BD943E644F42AF40BD058C73 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCD339C8B5D5941E4356EC91 /* Assets.xcassets */; };
 		C0B0D4BBFD239E20CC177682 /* TimerEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4CBC90D3E2E1018B6D94CC /* TimerEngine.swift */; };
 		CA042426C17B3F1EFF66222B /* MealListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F18C3AE2E1127D37CE8361 /* MealListView.swift */; };
+		CF005900DCBFDDCFBC22D0F1 /* FinanceAccountDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C3D14CAAD20B7ECB827014 /* FinanceAccountDetailView.swift */; };
 		D10FF928190F20C94059D030 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6342A0A859E54F590AD26E23 /* NotificationManager.swift */; };
 		D29BF20514F12E285C4C7E01 /* WorkoutDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AACBF7DA1F496716056BA0C9 /* WorkoutDetailView.swift */; };
 		D2AAF1B34D944110421145B4 /* NotificationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B38C0CFAA9E203A4714294 /* NotificationSettings.swift */; };
@@ -108,6 +115,7 @@
 		071BF34F3746B40727AB45DC /* MealEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealEditView.swift; sourceTree = "<group>"; };
 		0D5656813267E1EEA4F21326 /* WeightChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightChartView.swift; sourceTree = "<group>"; };
 		12D3D48551429C850EBE2565 /* FeedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItem.swift; sourceTree = "<group>"; };
+		1631DF8A92D44CEFF6191980 /* FinanceAccountListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinanceAccountListView.swift; sourceTree = "<group>"; };
 		16544D113CE9726E04BCA863 /* WorkoutFeedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutFeedCard.swift; sourceTree = "<group>"; };
 		192D6936A510F1EC2A651FFE /* KaoriApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KaoriApp.swift; sourceTree = "<group>"; };
 		1BADA41A1B2E732E0BE810DE /* TimerPresetPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPresetPickerView.swift; sourceTree = "<group>"; };
@@ -116,11 +124,13 @@
 		2E5E0F9ED1381B9AC4ED6D20 /* zh-Hans.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "zh-Hans.json"; sourceTree = "<group>"; };
 		303B1E52034AEBB719445463 /* ProfileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStore.swift; sourceTree = "<group>"; };
 		331E61143E2DD0F8D055F87B /* Summary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Summary.swift; sourceTree = "<group>"; };
+		362D4D1E9B9CFBCB1DBD20C8 /* PortfolioDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioDetailView.swift; sourceTree = "<group>"; };
 		37B38C0CFAA9E203A4714294 /* NotificationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettings.swift; sourceTree = "<group>"; };
 		37F18C3AE2E1127D37CE8361 /* MealListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealListView.swift; sourceTree = "<group>"; };
 		3C4A03AAB1927618F07B50F2 /* defaults.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = defaults.json; sourceTree = "<group>"; };
 		3E305087E896AFBA0AFB4DBF /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
 		4088294A4BCBA4D82EF459A4 /* MealRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealRowView.swift; sourceTree = "<group>"; };
+		41C3D14CAAD20B7ECB827014 /* FinanceAccountDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinanceAccountDetailView.swift; sourceTree = "<group>"; };
 		45D956B57C133B098D2E75EE /* ConnectionBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionBanner.swift; sourceTree = "<group>"; };
 		4A18D6133200360913819606 /* WeightStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightStore.swift; sourceTree = "<group>"; };
 		4A9C34474157CEDBC2DC2532 /* ExerciseManageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseManageView.swift; sourceTree = "<group>"; };
@@ -132,6 +142,7 @@
 		579BBB648E4BF2D44F83F677 /* WorkoutImportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutImportView.swift; sourceTree = "<group>"; };
 		6342A0A859E54F590AD26E23 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		647C6A152720E00B28A55515 /* WeightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightView.swift; sourceTree = "<group>"; };
+		69A1F27D4E61E81445746BF1 /* FinanceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinanceStore.swift; sourceTree = "<group>"; };
 		6AFEDFB821A71709EE98DC76 /* AppLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLanguage.swift; sourceTree = "<group>"; };
 		6CC6BB4FC53852C40426E13C /* WeightCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightCreateView.swift; sourceTree = "<group>"; };
 		7147A8679F3CFC8352E161CF /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
@@ -152,6 +163,7 @@
 		9FA605630E157E285492955F /* WorkoutListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListView.swift; sourceTree = "<group>"; };
 		9FE7B77F17ABBAAEEFFC88FB /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		9FF2A2F8F4116DAFA93C2CDC /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		A6DB8B83949719000B2F06C5 /* PortfolioFeedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioFeedCard.swift; sourceTree = "<group>"; };
 		AACBF7DA1F496716056BA0C9 /* WorkoutDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDetailView.swift; sourceTree = "<group>"; };
 		AB4BDBC4B40373E7CAFA954D /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		AEA26FF04B554F7679A7B4C0 /* Weight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weight.swift; sourceTree = "<group>"; };
@@ -169,9 +181,11 @@
 		E1841399B6EBD1A804EB3E20 /* KaoriTimerLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KaoriTimerLiveActivity.swift; sourceTree = "<group>"; };
 		E4A8BFBB0AA7673018179D63 /* NotificationSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsView.swift; sourceTree = "<group>"; };
 		E4EDC2D7635BA02633606F56 /* FeedCardStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCardStyle.swift; sourceTree = "<group>"; };
+		F0C761E19D66964B3766176E /* Finance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Finance.swift; sourceTree = "<group>"; };
 		F521DDA29FA86345A415C3B9 /* ManageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageView.swift; sourceTree = "<group>"; };
 		F79FACF2D6CFFF9A0D1F4326 /* SummaryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryDetailView.swift; sourceTree = "<group>"; };
 		F8CB71162C96FD59B8B31A1D /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		F93BEE6741FB9D96C31F2FA9 /* HoldingsImportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldingsImportView.swift; sourceTree = "<group>"; };
 		FB7D98DCD9C2AED3E0D3DEDB /* en.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = en.json; sourceTree = "<group>"; };
 		FBBD7792B31965E0769399AE /* WorkoutAnalysisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutAnalysisView.swift; sourceTree = "<group>"; };
 		FCC45B434D316B99DB578F96 /* Meal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meal.swift; sourceTree = "<group>"; };
@@ -308,7 +322,9 @@
 				D82352D904666CB869919AD1 /* AnalyticsView.swift */,
 				F521DDA29FA86345A415C3B9 /* ManageView.swift */,
 				1997825C977296845B17AF07 /* Feed */,
+				F6A7FEEC8F6F9E0D78750603 /* Finance */,
 				34D1D7AE9F248DB3A2D0B5D8 /* Meals */,
+				A154BFEEFD78520389B6FA30 /* Portfolio */,
 				3E4AE7121ED2FC4AD67E3534 /* Profile */,
 				29C269B3174AAEA25C4ED89D /* Settings */,
 				15EDAA3023E68B2C7FAA7B4B /* Shared */,
@@ -366,6 +382,15 @@
 			path = Weight;
 			sourceTree = "<group>";
 		};
+		A154BFEEFD78520389B6FA30 /* Portfolio */ = {
+			isa = PBXGroup;
+			children = (
+				362D4D1E9B9CFBCB1DBD20C8 /* PortfolioDetailView.swift */,
+				A6DB8B83949719000B2F06C5 /* PortfolioFeedCard.swift */,
+			);
+			path = Portfolio;
+			sourceTree = "<group>";
+		};
 		AC05EDD211670F36A9A92900 /* KaoriTimerWidget */ = {
 			isa = PBXGroup;
 			children = (
@@ -379,6 +404,7 @@
 		C05CD9878B69967530772BBA /* Stores */ = {
 			isa = PBXGroup;
 			children = (
+				69A1F27D4E61E81445746BF1 /* FinanceStore.swift */,
 				DD9AB8A03863BD0C08D6697D /* MealStore.swift */,
 				303B1E52034AEBB719445463 /* ProfileStore.swift */,
 				4A18D6133200360913819606 /* WeightStore.swift */,
@@ -400,6 +426,7 @@
 			isa = PBXGroup;
 			children = (
 				12D3D48551429C850EBE2565 /* FeedItem.swift */,
+				F0C761E19D66964B3766176E /* Finance.swift */,
 				76C24199376F64DF38580BBC /* ImportedWorkoutMeta.swift */,
 				FCC45B434D316B99DB578F96 /* Meal.swift */,
 				9FE7B77F17ABBAAEEFFC88FB /* Profile.swift */,
@@ -409,6 +436,16 @@
 				7147A8679F3CFC8352E161CF /* Workout.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		F6A7FEEC8F6F9E0D78750603 /* Finance */ = {
+			isa = PBXGroup;
+			children = (
+				41C3D14CAAD20B7ECB827014 /* FinanceAccountDetailView.swift */,
+				1631DF8A92D44CEFF6191980 /* FinanceAccountListView.swift */,
+				F93BEE6741FB9D96C31F2FA9 /* HoldingsImportView.swift */,
+			);
+			path = Finance;
 			sourceTree = "<group>";
 		};
 		F8B07C8E4586FE569B026C2D /* Localization */ = {
@@ -545,7 +582,12 @@
 				17DB6EC4C460811FC4717BFF /* FeedCardStyle.swift in Sources */,
 				452749A1DDF08929F71AD68E /* FeedItem.swift in Sources */,
 				5194E74DEA086970F2D97603 /* FeedView.swift in Sources */,
+				1F2107DCC3BD6FEF8068B45D /* Finance.swift in Sources */,
+				CF005900DCBFDDCFBC22D0F1 /* FinanceAccountDetailView.swift in Sources */,
+				A0BB6066B535399EF86217BD /* FinanceAccountListView.swift in Sources */,
+				622E843913C032C04AB97813 /* FinanceStore.swift in Sources */,
 				4F27A73B29E952033757C8E9 /* HealthKitManager.swift in Sources */,
+				191862843056E66CB107F000 /* HoldingsImportView.swift in Sources */,
 				4D6849DE5A98ADA51DF02CBC /* ImportedWorkoutDetailView.swift in Sources */,
 				2D68CF261AF3C6BAE4B300DC /* ImportedWorkoutMeta.swift in Sources */,
 				8D5792E195EA08099719C2B3 /* KaoriApp.swift in Sources */,
@@ -564,6 +606,8 @@
 				D2AAF1B34D944110421145B4 /* NotificationSettings.swift in Sources */,
 				9FC60404A01F67EA31FB2BCD /* NotificationSettingsView.swift in Sources */,
 				1592819803EA1FB2DBA66D98 /* PhotoPicker.swift in Sources */,
+				4B4FFB43410556345FC048C2 /* PortfolioDetailView.swift in Sources */,
+				7E1B446A66FE5CA6957E9A8C /* PortfolioFeedCard.swift in Sources */,
 				2F5A63776F5FBFC7CCA4F8C0 /* Profile.swift in Sources */,
 				FF244A6182756391D9F8AF69 /* ProfileStore.swift in Sources */,
 				076770AAF9ABECC2B6D9D9E8 /* ProfileView.swift in Sources */,

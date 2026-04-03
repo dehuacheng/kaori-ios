@@ -15,6 +15,7 @@ struct KaoriApp: App {
     @State private var weightStore: WeightStore
     @State private var profileStore: ProfileStore
     @State private var workoutStore: WorkoutStore
+    @State private var financeStore: FinanceStore
     @State private var timerEngine = TimerEngine()
     @State private var healthKit = HealthKitManager()
     @State private var notificationManager = NotificationManager()
@@ -29,6 +30,7 @@ struct KaoriApp: App {
         _weightStore = State(initialValue: WeightStore(api: api))
         _profileStore = State(initialValue: ProfileStore(api: api))
         _workoutStore = State(initialValue: WorkoutStore(api: api))
+        _financeStore = State(initialValue: FinanceStore(api: api))
     }
 
     var body: some Scene {
@@ -41,6 +43,7 @@ struct KaoriApp: App {
                 .environment(weightStore)
                 .environment(profileStore)
                 .environment(workoutStore)
+                .environment(financeStore)
                 .environment(timerEngine)
                 .environment(healthKit)
                 .environment(notificationManager)

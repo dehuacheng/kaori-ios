@@ -22,6 +22,11 @@ struct MoreView: View {
                     } label: {
                         Label(L.t("tab.gym"), systemImage: "dumbbell")
                     }
+                    NavigationLink {
+                        FinanceAccountListView()
+                    } label: {
+                        Label(L.t("finance.title"), systemImage: "chart.pie")
+                    }
                 }
 
                 Section(L.t("more.tools")) {

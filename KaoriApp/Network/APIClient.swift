@@ -152,6 +152,43 @@ class APIClient {
         return try decode(data)
     }
 
+    // MARK: - Multipart Upload (Multiple Files)
+
+    func postMultipartFiles<T: Decodable>(
+        _ path: String,
+        fields: [String: String] = [:],
+        files: [(data: Data, fieldName: String, filename: String, mimeType: String)]
+    ) async throws -> T {
+        let url = try buildURL(path: path)
+        let boundary = UUID().uuidString
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.timeoutInterval = 60
+        request.setValue("Bearer \(config.token)", forHTTPHeaderField: "Authorization")
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+
+        var body = Data()
+        for (key, value) in fields {
+            body.append("--\(boundary)\r\n")
+            body.append("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n")
+            body.append("\(value)\r\n")
+        }
+        for file in files {
+            body.append("--\(boundary)\r\n")
+            body.append("Content-Disposition: form-data; name=\"\(file.fieldName)\"; filename=\"\(file.filename)\"\r\n")
+            body.append("Content-Type: \(file.mimeType)\r\n\r\n")
+            body.append(file.data)
+            body.append("\r\n")
+        }
+        body.append("--\(boundary)--\r\n")
+        request.httpBody = body
+
+        let (data, response) = try await perform(request)
+        try checkStatus(response)
+        return try decode(data)
+    }
+
     // MARK: - Photo URL
 
     func photoURL(for path: String) -> URL? {
