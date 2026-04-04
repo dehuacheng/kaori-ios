@@ -44,13 +44,14 @@ open KaoriApp.xcodeproj
 
 ### Architecture
 
-Pure thin client — no local database. All data lives on the Kaori Python backend and is accessed via JSON API.
+**Feed-first, card-first.** Pure thin client — no local database. All data lives on the Kaori Python backend and is accessed via JSON API.
 
-- `Config/` — Server URL + bearer token (stored in UserDefaults)
-- `Network/` — APIClient with URLSession
-- `Models/` — Codable structs matching backend responses
-- `Stores/` — `@Observable` state managers
-- `Views/` — SwiftUI views organized by feature
+Every feature is a **card type** implemented as a `CardModule`. The feed renders all cards uniformly — no card gets special treatment. Adding a new card type means creating one module file and registering it; no changes to FeedView or other shared files.
+
+- `CardModule/` — Card module protocol + registry + per-type implementations
+- `Stores/` — `FeedStore` (unified feed state), `CardPreferenceStore`, domain stores
+- `Models/` — `FeedItem` (struct with `payload: Any`), Codable domain types
+- `Views/` — SwiftUI views organized by feature; feed views are card-type-agnostic
 
 ### Free Provisioning
 
@@ -112,13 +113,14 @@ open KaoriApp.xcodeproj
 
 ### 架构
 
-纯薄客户端 — 无本地数据库。所有数据存储在 Kaori Python 后端，通过 JSON API 访问。
+**信息流优先，卡片优先。** 纯薄客户端 — 无本地数据库。所有数据存储在 Kaori Python 后端，通过 JSON API 访问。
 
-- `Config/` — 服务器地址 + Bearer token（存储在 UserDefaults）
-- `Network/` — 基于 URLSession 的 APIClient
-- `Models/` — 与后端 JSON 响应对应的 Codable 结构体
-- `Stores/` — `@Observable` 状态管理器
-- `Views/` — 按功能模块组织的 SwiftUI 视图
+每个功能都是一种**卡片类型**，通过 `CardModule` 协议实现。信息流统一渲染所有卡片 — 没有任何卡片享受特殊待遇。添加新卡片类型只需创建一个模块文件并注册，无需修改 FeedView 或其他共享文件。
+
+- `CardModule/` — 卡片模块协议 + 注册表 + 各类型实现
+- `Stores/` — `FeedStore`（统一信息流状态）、`CardPreferenceStore`、各领域 Store
+- `Models/` — `FeedItem`（struct，payload: Any）、各领域 Codable 类型
+- `Views/` — 按功能模块组织的 SwiftUI 视图；信息流视图与卡片类型无关
 
 ### 免费签名
 

@@ -315,6 +315,7 @@
   "summary.generate": "生成总结",
   "summary.regenerate": "重新生成",
   "summary.generatedAt": "生成时间：%@",
+  "summary.noSummaryHint": "生成后的总结会显示在这里",
 
   "finance.title": "财务",
   "finance.brokerage": "证券账户",
@@ -348,5 +349,18 @@
   "finance.accounts": "账户",
   "finance.portfolio": "投资组合",
 
-  "common.retry": "重试"
+  "common.retry": "重试",
+
+  "settings.cardModules": "卡片模块",
+  "settings.enabledCards": "已启用卡片",
+  "settings.enabledCardsFooter": "禁用的卡片将从动态、+菜单和数据页隐藏。",
+  "settings.cardSettings": "卡片设置",
+
+  "card.meal": "饮食",
+  "card.weight": "体重",
+  "card.workout": "训练",
+  "card.portfolio": "投资组合",
+  "card.nutrition": "营养",
+  "card.summary": "总结",
+  "card.healthkitWorkout": "运动"
 }

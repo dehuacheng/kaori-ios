@@ -315,6 +315,7 @@
   "summary.generate": "Generate Summary",
   "summary.regenerate": "Regenerate",
   "summary.generatedAt": "Generated: %@",
+  "summary.noSummaryHint": "Summaries will appear here after they are generated",
 
   "finance.title": "Finance",
   "finance.brokerage": "Brokerage",
@@ -348,5 +349,18 @@
   "finance.accounts": "Accounts",
   "finance.portfolio": "Portfolio",
 
-  "common.retry": "Retry"
+  "common.retry": "Retry",
+
+  "settings.cardModules": "Card Modules",
+  "settings.enabledCards": "Enabled Cards",
+  "settings.enabledCardsFooter": "Disabled cards are hidden from the feed, + menu, and data tab.",
+  "settings.cardSettings": "Card Settings",
+
+  "card.meal": "Meals",
+  "card.weight": "Weight",
+  "card.workout": "Workout",
+  "card.portfolio": "Portfolio",
+  "card.nutrition": "Nutrition",
+  "card.summary": "Summary",
+  "card.healthkitWorkout": "Activity"
 }

@@ -31,7 +31,10 @@ struct Workout: Codable, Identifiable {
     let caloriesBurned: Double?
     let summary: String?
     let exerciseCount: Int?
+    let source: String?  // "manual" or "healthkit"
     let createdAt: String?
+
+    var isImported: Bool { source == "healthkit" }
 }
 
 // MARK: - Workout Detail (full tree)
@@ -115,6 +118,9 @@ struct WorkoutCreate: Codable {
     let date: String?
     let notes: String?
     let activityType: String?
+    let durationMinutes: Double?
+    let caloriesBurned: Double?
+    let source: String?  // "manual" or "healthkit"
 }
 
 struct WorkoutUpdate: Codable {

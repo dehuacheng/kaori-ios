@@ -14,14 +14,24 @@ KaoriApp/
   Config/         — AppConfig (server URL + token in UserDefaults)
   Network/        — APIClient (URLSession wrapper), APIError
   Models/         — Codable structs matching backend JSON responses
-    FeedItem.swift    — Unified feed item enum (meal, weight, workout, summary)
+    FeedItem.swift    — Unified feed item enum (meal, weight, workout, summary, portfolio)
     Meal.swift        — Meal, MealListResponse, NutritionTotals
     Weight.swift      — WeightEntry, WeightResponse, WeightCreate
     Workout.swift     — Workout, WorkoutDetail, ExerciseSet, etc.
     Profile.swift     — Profile, ProfileUpdate, WeightUnit/HeightUnit enums
     Summary.swift     — SummaryDetail
+    Finance.swift     — PortfolioSummaryResponse, FinancialAccount, etc.
     ImportedWorkoutMeta.swift — Apple Health workout metadata
-  Stores/         — @Observable stores (MealStore, WeightStore, ProfileStore, WorkoutStore, FinanceStore)
+  CardModule/     — Card-first architecture (see below)
+    CardModule.swift      — Protocol definition
+    CardRegistry.swift    — Module registry (@Observable, injected via Environment)
+    Modules/              — One file per card type
+      MealCardModule.swift, WeightCardModule.swift, WorkoutCardModule.swift,
+      PortfolioCardModule.swift, NutritionCardModule.swift, SummaryCardModule.swift
+  Stores/         — @Observable stores
+    MealStore, WeightStore, ProfileStore, WorkoutStore, FinanceStore
+    FeedStore         — Unified feed state (calls /api/feed or per-endpoint fallback)
+    CardPreferenceStore — Card enable/disable preferences
   Utils/          — UnitConverter (kg/lb, cm/in conversion + formatting)
   Views/
     Feed/           — Feed timeline and card components (see App Layout below)
@@ -29,45 +39,111 @@ KaoriApp/
     Weight/         — WeightView, WeightCreateView, WeightChartView
     Workout/        — WorkoutListView, WorkoutDetailView, SetRowView, TimerView
     Profile/        — ProfileView
-    Settings/       — SettingsView, NotificationSettingsView
+    Settings/       — SettingsView, NotificationSettingsView, CardModuleSettingsView
     Summary/        — SummaryDetailView, SummarySectionsView
     AnalyticsView.swift — Calorie + weight charts (shown as sheet)
     Finance/        — Account list, account detail, holdings import (screenshot/PDF)
     Portfolio/      — Portfolio feed card, portfolio detail view
-    ManageView.swift    — "More" tab: data, tools, profile, settings menu
+    ManageView.swift    — "More" tab: data, tools, profile, finances, settings menu
   Health/         — HealthKitManager (weight + workout sync)
   Notifications/  — NotificationManager, NotificationSettings, BackgroundTaskManager
   Localization/   — en.json, zh-Hans.json (flat key-value)
 ```
 
+## Card-First Architecture
+
+Kaori is a **feed-first, card-first** app. Every user-facing feature is a **card type** — the atomic unit of the app. Before adding a new feature or modifying an existing one, think: "which card does this belong to?"
+
+### Design Principles
+1. **No card is special in the feed.** All cards flow through one unified `ForEach` in FeedView. Ranking (priority) differs per card, but rendering and interaction are uniform.
+2. **Every card follows the same interaction pattern:** tap → detail view (if any), swipe left → contextual actions (if any). No inline expand/collapse, no special buttons.
+3. **Parallel development.** Adding a new card type should NOT require editing FeedView, FeedStore, ContentView, or any other shared file. If your change adds a `switch` or `if cardType ==` to a shared file, you're doing it wrong.
+4. **Data section is for data.** More > Data shows raw data for browsing/editing/deleting. Analytics and charts are separate (accessed via the chart icon in the feed nav bar).
+
+### FeedItem (struct, not enum)
+`FeedItem` is a **struct** with `payload: Any` — NOT a Swift enum. This is intentional: new card types create `FeedItem` instances via static factory methods (e.g., `FeedItem.post(...)`) without modifying `FeedItem.swift`. Each `CardModule` casts `item.payload as? MyType` to extract its data. Key stored properties: `id`, `cardType`, `dateString`, `sortPriority`, `sortDate`, `displayTime`.
+
+### CardModule Protocol
+Defined in `KaoriApp/CardModule/CardModule.swift`. Each card module provides:
+- **Identity**: `cardType`, `displayNameKey`, `iconName`, `accentColor`
+- **Behavior**: `supportsManualCreation`, `presentationStyle`, `feedSwipeActions`, `hasFeedDetailView`
+- **Views**: `feedCardView(item:)`, `feedDetailView(item:)`, `createView()`, `dataListView()`, `settingsView()`
+
+### CardRegistry
+`KaoriApp/CardModule/CardRegistry.swift` — holds all registered modules, injected via `@Environment`. Drives feed rendering, "+" menu, Data tab, and card settings. FeedView has **zero** card-type switches — it delegates everything to the registry.
+
+### Adding a New Card Type (iOS)
+1. **Write a card design doc** at `docs/cards/<type>.md` (see `docs/cards/README.md` for template)
+2. Create `KaoriApp/CardModule/Modules/XxxCardModule.swift` conforming to `CardModule`
+3. Add a static factory `FeedItem.xxx(...)` in your module file (or inline in FeedStore)
+4. Create feed card view, create view, data list view as needed under `Views/Xxx/`
+5. Register in `KaoriApp.init()`: `registry.register(XxxCardModule())`
+6. Add localization keys to both `en.json` and `zh-Hans.json`
+7. **No other files need modification** — FeedView, MoreView, ContentView, and SettingsView are all registry-driven
+
+### Modifying an Existing Card Type
+- All changes to a card's views stay within that card's module file and its associated view files
+- The CardModule protocol ensures consistent behavior across all card types
+- Do NOT add card-specific logic to FeedView, ContentView, or MoreView — those are generic and registry-driven
+- **Update the card's design doc** in `docs/cards/<type>.md` to reflect the change
+
+### Card Design Docs
+Every card type has a design doc at `docs/cards/<type>.md` covering module properties, views, store, FeedItem factory, and interaction patterns. See `docs/cards/README.md` for the index and template. **These docs must be kept in sync with the code.**
+
+### Key Invariants (enforced by pre-commit check)
+- All feed cards MUST use `.feedCard()` modifier
+- All card types MUST be registered in CardRegistry
+- FeedView.swift, MoreView.swift, ContentView MUST NOT contain `switch` or `if`/`case` on card types or `FeedItem` payloads — all card-specific logic lives in CardModule implementations
+- "+" menu options come from `CardRegistry.addableModules` — never hardcode
+- Data tab entries come from `CardRegistry.dataModules` — never hardcode
+- Swipe actions come from `module.feedSwipeActions` — never hardcode per-type
+- Detail navigation comes from `module.feedDetailView(item:)` — never hardcode per-type
+- Card enable/disable is managed via `CardPreferenceStore`
+
+### Pre-Commit Design Check
+Before pushing to GitHub, verify these constraints:
+```bash
+# Must return 0 results — no card-type switches in shared files
+grep -n 'case \.meal\|case \.weight\|case \.workout\|case \.summary\|case \.portfolio\|case \.nutrition' \
+  KaoriApp/Views/Feed/FeedView.swift \
+  KaoriApp/Views/ManageView.swift \
+  KaoriApp/KaoriApp.swift
+# Must return 0 — no payload type checks in shared files
+grep -n 'as? Meal\|as? WeightEntry\|as? Workout\|as? SummaryPayload\|as? PortfolioSummary\|as? NutritionPayload' \
+  KaoriApp/Views/Feed/FeedView.swift \
+  KaoriApp/Views/ManageView.swift
+```
+If either returns results, the change violates the card-first architecture. Move the logic into the appropriate `CardModule`.
+
 ## App Layout (3 Tabs)
 
 ### Tab 1: Home (Feed)
-- **FeedView** — multi-day infinite scroll timeline
+- **FeedView** — multi-day infinite scroll timeline, powered by `FeedStore`
 - Day headers ("Today", "Yesterday", "Apr 1")
-- Per-day pinned cards (top to bottom):
-  1. **AI Summary card** (daily or weekly, only for today, after configured hour)
-  2. **DailyNutritionCard** (4 progress bars: calories, protein, carbs, fat vs targets)
-  3. **Feed item cards** (meals, weight, workouts) sorted by time, newest first
-- Pull-to-refresh reloads data
-- Tap cards → detail views (tab bar hidden)
-- Swipe left → delete (all items) or regenerate (summaries)
+- **All cards rendered uniformly** via one `ForEach` — no hardcoded sections for any card type
+- Cards sorted by `(date desc, sortPriority asc, sortDate desc)` — pinned cards (summary=0, portfolio=1, nutrition=2) appear first, then chronological items (priority=10)
+- Portfolio card hidden on weekends/market-closed days
+- Nutrition card always shown for today (even with zero values)
+- Prefetches 7 days when ≤3 days remain while scrolling
+- Pull-to-refresh reloads all data via `FeedStore`
+- Tap → detail view (via `module.feedDetailView`), Swipe left → actions (via `module.feedSwipeActions`)
 
 ### Tab 2: "+" (Add Menu)
 - Center tab, intercepted — never actually navigated to
 - Opens iOS 18 Control Center–style overlay:
-  - Dark dimmed backdrop, frosted glass panel with 3 square buttons
+  - Dark dimmed backdrop, frosted glass panel with buttons driven by `CardRegistry.addableModules`
   - **Meal** → MealCreateView sheet
   - **Weight** → WeightCreateView sheet
   - **Workout** → creates workout, opens WorkoutDetailView as full-screen cover
+  - **Summary** → triggers AI summary generation
 - Workout auto-deleted on dismiss if no exercises were added
 - Tap outside to dismiss
 
 ### Tab 3: More
 - **MoreView** — list menu with NavigationLinks:
-  - Data: Meals, Weight, Gym (existing list/detail views)
+  - Data: driven by `CardRegistry.dataModules` (Meals, Weight, Gym, Portfolio, etc.)
   - Tools: Timer
-  - Profile, Settings
+  - Profile (personal data), Finances (account setup, parallel to Profile), Settings (app behavior)
 
 ### Other Overlays
 - **AnalyticsView** — opened via chart icon in feed nav bar (sheet)
@@ -77,13 +153,14 @@ KaoriApp/
 
 ## Data Flow
 
-### Feed (Client-Side Merge)
-- FeedView fetches meals, weight, workouts per date using existing API endpoints
-- Merges into `[FeedItem]` sorted by `sortDate` (newest first)
-- `FeedItem` enum: `.meal(Meal)`, `.weight(WeightEntry)`, `.workout(Workout, meta:)`, `.summary(text, date)`
-- Imported workouts use `ImportedWorkoutMeta.startDate` for time sorting/display
-- `NutritionTotals` captured per-date from meal API responses
-- Pagination: loads today + yesterday initially, loads more days on scroll
+### Feed (FeedStore)
+- `FeedStore` calls unified `GET /api/feed?start_date=...&end_date=...` (falls back to per-endpoint fetching if unavailable)
+- **All card types** (meals, weight, workouts, summary, portfolio, nutrition) stored as `FeedItem` structs in `feedItems: [FeedItem]` — no side dictionaries
+- `FeedItem` is a struct with `payload: Any`. Factory methods: `.meal()`, `.weight()`, `.workout()`, `.summary()`, `.portfolio()`, `.nutrition()`
+- Sorted by `(date desc, sortPriority asc, sortDate desc)`
+- Pagination: loads today + yesterday initially, prefetches 7 days when ≤3 remain
+- Portfolio auto-refreshes every 60s (market days only) via `FeedStore.startPortfolioRefresh()`
+- Card preferences (`CardPreferenceStore`) control which card types are visible
 
 ### Timestamps
 - Backend stores `created_at` in UTC (`datetime('now')` → `"yyyy-MM-dd HH:mm:ss"`)

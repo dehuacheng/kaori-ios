@@ -82,8 +82,13 @@ class WorkoutStore {
         return all
     }
 
-    func createWorkout(date: String? = nil, notes: String? = nil, activityType: String = "traditionalStrengthTraining") async throws -> WorkoutDetail {
-        let body = WorkoutCreate(date: date ?? currentDate, notes: notes, activityType: activityType)
+    func createWorkout(
+        date: String? = nil, notes: String? = nil,
+        activityType: String = "traditionalStrengthTraining",
+        durationMinutes: Double? = nil, caloriesBurned: Double? = nil,
+        source: String = "manual"
+    ) async throws -> WorkoutDetail {
+        let body = WorkoutCreate(date: date ?? currentDate, notes: notes, activityType: activityType, durationMinutes: durationMinutes, caloriesBurned: caloriesBurned, source: source)
         let response: WorkoutDetail = try await api.post("/api/workouts", body: body)
         await loadWorkouts()
         return response
@@ -255,9 +260,11 @@ class WorkoutStore {
 
         let notes = "Imported from Apple Health"
 
-        let created = try await createWorkout(date: dateStr, notes: notes, activityType: activityType)
-        let update = WorkoutUpdate(notes: notes, activityType: activityType, durationMinutes: durationMinutes)
-        _ = try await updateWorkout(created.id, body: update)
+        let created = try await createWorkout(
+            date: dateStr, notes: notes, activityType: activityType,
+            durationMinutes: durationMinutes, caloriesBurned: calories,
+            source: "healthkit"
+        )
 
         // Save HK metadata locally for rich display
         let meta = ImportedWorkoutMeta(

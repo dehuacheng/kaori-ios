@@ -39,3 +39,8 @@ struct SummaryDetailEmpty: Codable {
     let date: String?
     let summaryText: String?
 }
+
+struct SummaryDeleteResponse: Codable {
+    let id: Int
+    let deleted: Bool
+}

@@ -159,13 +159,13 @@ struct SettingsView: View {
                 }
             }
 
-            // MARK: - Workout
+            // MARK: - Card Modules
             if config.isConfigured {
-                Section(L.t("settings.workout")) {
+                Section {
                     NavigationLink {
-                        ExerciseManageView()
+                        CardModuleSettingsView()
                     } label: {
-                        Label(L.t("settings.manageExercises"), systemImage: "dumbbell")
+                        Label(L.t("settings.cardModules"), systemImage: "square.stack.3d.up")
                     }
                 }
             }

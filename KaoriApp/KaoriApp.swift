@@ -16,6 +16,9 @@ struct KaoriApp: App {
     @State private var profileStore: ProfileStore
     @State private var workoutStore: WorkoutStore
     @State private var financeStore: FinanceStore
+    @State private var feedStore: FeedStore
+    @State private var cardPreferenceStore: CardPreferenceStore
+    @State private var cardRegistry = CardRegistry()
     @State private var timerEngine = TimerEngine()
     @State private var healthKit = HealthKitManager()
     @State private var notificationManager = NotificationManager()
@@ -31,6 +34,19 @@ struct KaoriApp: App {
         _profileStore = State(initialValue: ProfileStore(api: api))
         _workoutStore = State(initialValue: WorkoutStore(api: api))
         _financeStore = State(initialValue: FinanceStore(api: api))
+        _feedStore = State(initialValue: FeedStore(api: api))
+        _cardPreferenceStore = State(initialValue: CardPreferenceStore(api: api))
+
+        // Register all card modules
+        let registry = CardRegistry()
+        registry.register(MealCardModule())
+        registry.register(WeightCardModule())
+        registry.register(WorkoutCardModule())
+        registry.register(HealthKitWorkoutCardModule())
+        registry.register(PortfolioCardModule())
+        registry.register(NutritionCardModule())
+        registry.register(SummaryCardModule())
+        _cardRegistry = State(initialValue: registry)
     }
 
     var body: some Scene {
@@ -44,6 +60,9 @@ struct KaoriApp: App {
                 .environment(profileStore)
                 .environment(workoutStore)
                 .environment(financeStore)
+                .environment(feedStore)
+                .environment(cardPreferenceStore)
+                .environment(cardRegistry)
                 .environment(timerEngine)
                 .environment(healthKit)
                 .environment(notificationManager)
@@ -60,12 +79,16 @@ struct ContentView: View {
     @Environment(HealthKitManager.self) private var healthKit
     @Environment(NotificationManager.self) private var notificationManager
     @Environment(NotificationSettings.self) private var notificationSettings
+    @Environment(CardRegistry.self) private var cardRegistry
+    @Environment(FeedStore.self) private var feedStore
     @State private var showImportPrompt = false
     @State private var importExistingWorkouts: [Workout] = []
     @State private var selectedTab = 0
     @State private var showAddMenu = false
     @State private var showMealCreate = false
     @State private var showWeightCreate = false
+    /// Active card module for sheet-based creation (driven by "+" menu)
+    @State private var activeCreateModule: String?
     @State private var newWorkoutId: IdentifiableInt?
     @State private var dismissedWorkoutId: Int?
     @State private var feedRefreshToken = UUID()
@@ -115,25 +138,15 @@ struct ContentView: View {
                         }
                     }
 
-                // Blurred panel with buttons
+                // Blurred panel with buttons — driven by CardRegistry
                 HStack(spacing: 14) {
-                    addMenuButton(icon: "camera.fill", label: L.t("tab.meals")) {
-                        withAnimation(.spring(response: 0.25, dampingFraction: 0.8)) {
-                            showAddMenu = false
+                    ForEach(cardRegistry.addableModules, id: \.cardType) { module in
+                        addMenuButton(icon: module.iconName, label: L.t(module.displayNameKey)) {
+                            withAnimation(.spring(response: 0.25, dampingFraction: 0.8)) {
+                                showAddMenu = false
+                            }
+                            handleAddAction(for: module.cardType)
                         }
-                        showMealCreate = true
-                    }
-                    addMenuButton(icon: "scalemass.fill", label: L.t("tab.weight")) {
-                        withAnimation(.spring(response: 0.25, dampingFraction: 0.8)) {
-                            showAddMenu = false
-                        }
-                        showWeightCreate = true
-                    }
-                    addMenuButton(icon: "dumbbell.fill", label: L.t("tab.gym")) {
-                        withAnimation(.spring(response: 0.25, dampingFraction: 0.8)) {
-                            showAddMenu = false
-                        }
-                        Task { await createWorkout() }
                     }
                 }
                 .padding(16)
@@ -188,6 +201,18 @@ struct ContentView: View {
                     }
             }
         }
+        .sheet(isPresented: Binding(
+            get: { activeCreateModule != nil },
+            set: { if !$0 { activeCreateModule = nil } }
+        ), onDismiss: {
+            Task { feedRefreshToken = UUID() }
+        }) {
+            if let moduleType = activeCreateModule,
+               let module = cardRegistry.module(for: moduleType),
+               let createView = module.createView(onDismiss: { activeCreateModule = nil }) {
+                createView
+            }
+        }
         .sheet(isPresented: $showImportPrompt) {
             WorkoutImportView(workouts: workoutStore.pendingImportWorkouts, existingWorkouts: importExistingWorkouts)
         }
@@ -214,6 +239,23 @@ struct ContentView: View {
             .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
         }
         .buttonStyle(.plain)
+    }
+
+    /// Route "+" menu tap to the right creation flow.
+    /// Meal/weight/workout have existing bindings; all other card types
+    /// use the generic activeCreateModule sheet — no switch needed for new types.
+    private func handleAddAction(for cardType: String) {
+        switch cardType {
+        case "meal":
+            showMealCreate = true
+        case "weight":
+            showWeightCreate = true
+        case "workout":
+            Task { await createWorkout() }
+        default:
+            // Generic: use the module's createView via sheet
+            activeCreateModule = cardType
+        }
     }
 
     private func createWorkout() async {

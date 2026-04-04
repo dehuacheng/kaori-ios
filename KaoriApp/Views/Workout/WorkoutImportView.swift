@@ -153,7 +153,7 @@ struct WorkoutImportView: View {
             let stub = Workout(
                 id: 0, date: hkDate, notes: nil, activityType: activity,
                 durationMinutes: duration, caloriesBurned: cal,
-                summary: nil, exerciseCount: nil, createdAt: nil
+                summary: nil, exerciseCount: nil, source: "healthkit", createdAt: nil
             )
             withAnimation {
                 existingWorkouts.append(stub)
