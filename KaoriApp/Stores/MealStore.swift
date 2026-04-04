@@ -61,6 +61,7 @@ class MealStore {
     func createMeal(
         description: String?,
         photo: Data?,
+        photos: [Data]? = nil,
         mealType: String,
         notes: String?
     ) async throws -> CreateMealResponse {
@@ -69,9 +70,18 @@ class MealStore {
         if let notes, !notes.isEmpty { fields["notes"] = notes }
         fields["meal_date"] = currentDate
 
-        let response: CreateMealResponse = try await api.postMultipart(
-            "/api/meals", fields: fields, imageData: photo
-        )
+        let response: CreateMealResponse
+        if let photos, photos.count > 1 {
+            // Multiple photos — use multi-file upload
+            let files = photos.enumerated().map { (i, data) in
+                (data: data, fieldName: "photos", filename: "photo\(i).jpg", mimeType: "image/jpeg")
+            }
+            response = try await api.postMultipartFiles("/api/meals", fields: fields, files: files)
+        } else {
+            // Single photo or none — use standard upload
+            let singlePhoto = photos?.first ?? photo
+            response = try await api.postMultipart("/api/meals", fields: fields, imageData: singlePhoto)
+        }
         await loadMeals()
         return response
     }

@@ -18,6 +18,7 @@ struct Meal: Codable, Identifiable {
     let date: String
     let mealType: String?
     let photoPath: String?
+    let photoPaths: String?  // JSON array of paths, e.g. "[\"a.jpg\",\"b.jpg\"]"
     let notes: String?
     let createdAt: String?
     let updatedAt: String?
@@ -29,6 +30,18 @@ struct Meal: Codable, Identifiable {
     let isEstimated: Int?
     let analysisStatus: String?
     let confidence: String?
+
+    /// All photo paths for this meal. Falls back to single photoPath if photoPaths is absent.
+    var allPhotoPaths: [String] {
+        if let photoPaths,
+           let data = photoPaths.data(using: .utf8),
+           let paths = try? JSONDecoder().decode([String].self, from: data),
+           !paths.isEmpty {
+            return paths
+        }
+        if let photoPath { return [photoPath] }
+        return []
+    }
 }
 
 struct CreateMealResponse: Codable {

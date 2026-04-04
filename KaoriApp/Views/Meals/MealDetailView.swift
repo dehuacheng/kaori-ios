@@ -23,16 +23,37 @@ struct MealDetailView: View {
             if let meal {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 16) {
-                        // Photo
-                        if let path = meal.photoPath, let url = api.photoURL(for: path) {
-                            AsyncImage(url: url) { image in
-                                image.resizable().scaledToFit()
-                            } placeholder: {
-                                ProgressView()
-                                    .frame(height: 200)
-                                    .frame(maxWidth: .infinity)
+                        // Photos
+                        let paths = meal.allPhotoPaths
+                        if !paths.isEmpty {
+                            if paths.count == 1, let url = api.photoURL(for: paths[0]) {
+                                AsyncImage(url: url) { image in
+                                    image.resizable().scaledToFit()
+                                } placeholder: {
+                                    ProgressView()
+                                        .frame(height: 200)
+                                        .frame(maxWidth: .infinity)
+                                }
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                            } else {
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack(spacing: 8) {
+                                        ForEach(paths, id: \.self) { path in
+                                            if let url = api.photoURL(for: path) {
+                                                AsyncImage(url: url) { image in
+                                                    image.resizable().scaledToFill()
+                                                } placeholder: {
+                                                    RoundedRectangle(cornerRadius: 12)
+                                                        .fill(Color.white.opacity(0.05))
+                                                        .overlay { ProgressView() }
+                                                }
+                                                .frame(width: 240, height: 240)
+                                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                            }
+                                        }
+                                    }
+                                }
                             }
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
                         }
 
                         // Header

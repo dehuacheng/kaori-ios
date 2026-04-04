@@ -9,7 +9,7 @@ struct SummaryCardModule: CardModule {
     let hasFeedDetailView = true
     let hasDataListView = true
     let presentationStyle = CardPresentationStyle.sheet
-    let feedSwipeActions: [CardSwipeAction] = [.regenerate]
+    let feedSwipeActions: [CardSwipeAction] = [.delete, .regenerate]
 
     @MainActor
     func feedCardView(item: FeedItem, displayTime: String?) -> AnyView {

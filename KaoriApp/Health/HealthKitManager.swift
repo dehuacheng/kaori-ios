@@ -109,6 +109,13 @@ class HealthKitManager {
         case "highIntensityIntervalTraining": .highIntensityIntervalTraining
         case "coreTraining": .coreTraining
         case "walking": .walking
+        case "stairClimbing": .stairClimbing
+        case "elliptical": .elliptical
+        case "rowing": .rowing
+        case "flexibility": .flexibility
+        case "mixedCardio": .mixedCardio
+        case "dance": .dance
+        case "jumpRope": .jumpRope
         default: .traditionalStrengthTraining
         }
     }
@@ -127,6 +134,13 @@ class HealthKitManager {
         case .highIntensityIntervalTraining: "highIntensityIntervalTraining"
         case .coreTraining: "coreTraining"
         case .walking: "walking"
+        case .stairClimbing: "stairClimbing"
+        case .elliptical: "elliptical"
+        case .rowing: "rowing"
+        case .flexibility: "flexibility"
+        case .mixedCardio: "mixedCardio"
+        case .dance: "dance"
+        case .jumpRope: "jumpRope"
         default: "other"
         }
     }

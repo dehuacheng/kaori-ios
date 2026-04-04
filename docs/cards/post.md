@@ -17,7 +17,7 @@
 
 ## Purpose
 
-Personal microblog for quick thoughts. No title required — just content and date.
+Personal microblog for quick thoughts with optional photo attachments (up to 5). No title required — just content, date, and optional photos.
 
 ## FeedItem Factory
 `FeedItem.post(...)` — payload type: `Post`
@@ -32,7 +32,7 @@ Personal microblog for quick thoughts. No title required — just content and da
 `Stores/PostStore.swift` — CRUD via `/api/post`
 
 ## Backend
-- `POST /api/post` — create {date, content}
+- `POST /api/post` — create (multipart: photos + fields {post_date, title, content})
 - `GET /api/post?date=...` — list by date
 - `GET /api/post/{id}` — detail
 - `PUT /api/post/{id}` — update

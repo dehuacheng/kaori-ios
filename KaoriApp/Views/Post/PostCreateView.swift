@@ -7,6 +7,7 @@ struct PostCreateView: View {
 
     @State private var content = ""
     @State private var postDate = Date()
+    @State private var imagesData: [Data] = []
     @State private var isSubmitting = false
     @State private var error: String?
 
@@ -22,6 +23,10 @@ struct PostCreateView: View {
                 Section(L.t("post.content")) {
                     TextEditor(text: $content)
                         .frame(minHeight: 120)
+                }
+
+                Section(L.t("meal.photo")) {
+                    MultiPhotoPickerButton(imagesData: $imagesData)
                 }
 
                 Section {
@@ -57,7 +62,8 @@ struct PostCreateView: View {
             try await store.create(
                 date: dateFormatter.string(from: postDate),
                 title: nil,
-                content: content
+                content: content,
+                photos: imagesData.isEmpty ? nil : imagesData
             )
             dismiss()
         } catch {

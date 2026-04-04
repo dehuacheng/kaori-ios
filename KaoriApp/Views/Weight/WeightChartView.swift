@@ -24,11 +24,26 @@ struct WeightChartView: View {
     }
 
     /// All points with segment IDs, filtered to the visible date range.
+    /// When multiple entries exist for a day, uses the minimum weight.
     private var chartPoints: [ChartPoint] {
-        let sorted = weights.compactMap { entry -> (date: Date, weight: Double)? in
+        let parsed = weights.compactMap { entry -> (date: Date, weight: Double)? in
             guard let date = Self.dateFormatter.date(from: entry.date) else { return nil }
             return (date, UnitConverter.displayWeight(entry.weightKg, unit: wu))
-        }.sorted { $0.date < $1.date }
+        }
+
+        // Group by calendar day and take the minimum weight per day
+        var minByDay: [String: (date: Date, weight: Double)] = [:]
+        for item in parsed {
+            let key = Self.dateFormatter.string(from: item.date)
+            if let existing = minByDay[key] {
+                if item.weight < existing.weight {
+                    minByDay[key] = item
+                }
+            } else {
+                minByDay[key] = item
+            }
+        }
+        let sorted = minByDay.values.sorted { $0.date < $1.date }
 
         // Assign segments on full dataset
         var allPoints: [ChartPoint] = []

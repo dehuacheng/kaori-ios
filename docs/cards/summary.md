@@ -13,13 +13,13 @@
 | hasFeedDetailView | Yes |
 | hasDataListView | Yes |
 | hasSettingsView | No |
-| feedSwipeActions | `[.regenerate]` |
+| feedSwipeActions | `[.delete, .regenerate]` |
 | sortPriority | 0 (pinned at top) |
 
 ## FeedItem
 
 Factory: `FeedItem.summary(...)`
-Payload type: `SummaryPayload` (contains `text` + `date`)
+Payload type: `SummaryPayload` (contains `summaryId` + `text` + `date`)
 
 ## Views
 

@@ -8,7 +8,7 @@ struct MealCreateView: View {
     @State private var description = ""
     @State private var notes = ""
     @State private var mealType = "snack"
-    @State private var imageData: Data?
+    @State private var imagesData: [Data] = []
     @State private var isSubmitting = false
     @State private var error: String?
 
@@ -18,7 +18,7 @@ struct MealCreateView: View {
         NavigationStack {
             Form {
                 Section(L.t("meal.photo")) {
-                    PhotoPickerButton(imageData: $imageData)
+                    MultiPhotoPickerButton(imagesData: $imagesData)
                 }
 
                 Section(L.t("meal.details")) {
@@ -49,7 +49,7 @@ struct MealCreateView: View {
                     Button(L.t("common.save")) {
                         Task { await submit() }
                     }
-                    .disabled(isSubmitting || (description.isEmpty && imageData == nil))
+                    .disabled(isSubmitting || (description.isEmpty && imagesData.isEmpty))
                 }
             }
             .disabled(isSubmitting)
@@ -70,7 +70,7 @@ struct MealCreateView: View {
 
         // Capture values before dismiss
         let desc = description.isEmpty ? nil : description
-        let photo = imageData
+        let photos = imagesData.isEmpty ? nil : imagesData
         let type = mealType
         let n = notes.isEmpty ? nil : notes
 
@@ -79,7 +79,7 @@ struct MealCreateView: View {
 
         do {
             _ = try await store.createMeal(
-                description: desc, photo: photo, mealType: type, notes: n
+                description: desc, photo: nil, photos: photos, mealType: type, notes: n
             )
             await store.loadMeals()
         } catch {

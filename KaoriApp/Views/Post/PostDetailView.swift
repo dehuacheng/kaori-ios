@@ -3,6 +3,7 @@ import SwiftUI
 struct PostDetailView: View {
     let post: Post
     @Environment(PostStore.self) private var store
+    @Environment(APIClient.self) private var api
     @Environment(Localizer.self) private var L
     @Environment(\.dismiss) private var dismiss
 
@@ -11,6 +12,37 @@ struct PostDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
+                let paths = post.allPhotoPaths
+                if paths.count == 1, let url = api.photoURL(for: paths[0]) {
+                    AsyncImage(url: url) { image in
+                        image.resizable().scaledToFit()
+                    } placeholder: {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color.white.opacity(0.05))
+                            .frame(height: 300)
+                            .overlay { ProgressView() }
+                    }
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                } else if paths.count > 1 {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 8) {
+                            ForEach(paths, id: \.self) { path in
+                                if let url = api.photoURL(for: path) {
+                                    AsyncImage(url: url) { image in
+                                        image.resizable().scaledToFill()
+                                    } placeholder: {
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .fill(Color.white.opacity(0.05))
+                                            .overlay { ProgressView() }
+                                    }
+                                    .frame(width: 240, height: 240)
+                                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                                }
+                            }
+                        }
+                    }
+                }
+
                 Text(post.content)
                     .font(.body)
 

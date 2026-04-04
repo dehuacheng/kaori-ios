@@ -59,6 +59,91 @@ struct PhotoPickerButton: View {
     }
 }
 
+struct MultiPhotoPickerButton: View {
+    @Binding var imagesData: [Data]
+    @Environment(Localizer.self) private var L
+    @State private var showCamera = false
+    @State private var selectedItems: [PhotosPickerItem] = []
+
+    var body: some View {
+        VStack(spacing: 12) {
+            if !imagesData.isEmpty {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 8) {
+                        ForEach(Array(imagesData.enumerated()), id: \.offset) { index, data in
+                            if let uiImage = UIImage(data: data) {
+                                ZStack(alignment: .topTrailing) {
+                                    Image(uiImage: uiImage)
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 100, height: 100)
+                                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                                    Button {
+                                        imagesData.remove(at: index)
+                                    } label: {
+                                        Image(systemName: "xmark.circle.fill")
+                                            .foregroundStyle(.white, .red)
+                                            .font(.title3)
+                                    }
+                                    .offset(x: 4, y: -4)
+                                }
+                            }
+                        }
+                    }
+                }
+                .frame(height: 110)
+            }
+
+            HStack(spacing: 12) {
+                Button {
+                    showCamera = true
+                } label: {
+                    Label(L.t("shared.camera"), systemImage: "camera")
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.bordered)
+
+                PhotosPicker(selection: $selectedItems, maxSelectionCount: 5, matching: .images) {
+                    Label(L.t("shared.library"), systemImage: "photo.on.rectangle")
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.bordered)
+
+                if !imagesData.isEmpty {
+                    Button(role: .destructive) {
+                        imagesData.removeAll()
+                        selectedItems.removeAll()
+                    } label: {
+                        Image(systemName: "trash")
+                    }
+                    .buttonStyle(.bordered)
+                }
+            }
+        }
+        .fullScreenCover(isPresented: $showCamera) {
+            CameraView(imageData: Binding(
+                get: { nil },
+                set: { data in
+                    if let data { imagesData.append(data) }
+                }
+            ))
+        }
+        .onChange(of: selectedItems) { _, items in
+            Task {
+                var newData: [Data] = []
+                for item in items {
+                    if let data = try? await item.loadTransferable(type: Data.self),
+                       let image = UIImage(data: data),
+                       let jpeg = resized(image).jpegData(compressionQuality: 0.8) {
+                        newData.append(jpeg)
+                    }
+                }
+                imagesData = newData
+            }
+        }
+    }
+}
+
 private func resized(_ image: UIImage, maxDimension: CGFloat = 1600) -> UIImage {
     let size = image.size
     guard max(size.width, size.height) > maxDimension else { return image }

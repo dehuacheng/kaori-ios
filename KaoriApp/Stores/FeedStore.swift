@@ -246,8 +246,9 @@ class FeedStore {
             let _: PostDeleteResponse? = try? await api.delete("/api/post/\(post.id)")
         } else if let reminder = item.payload as? Reminder {
             let _: ReminderDeleteResponse? = try? await api.delete("/api/reminders/\(reminder.id)")
+        } else if let p = item.payload as? SummaryPayload, let summaryId = p.summaryId {
+            let _: SummaryDeleteResponse? = try? await api.delete("/api/summary/\(summaryId)")
         }
-        // Other types (summary, portfolio, nutrition) have no delete action
         feedItems.removeAll { $0.id == item.id }
     }
 
@@ -296,7 +297,7 @@ class FeedStore {
             )
             // Replace or add the summary feed item for today
             feedItems.removeAll { $0.id == "summary-\(todayString)" }
-            feedItems.append(.summary(text: result.summaryText, date: todayString))
+            feedItems.append(.summary(id: result.id, text: result.summaryText, date: todayString))
             sortFeedItems()
             return result.summaryText
         } catch {
@@ -313,7 +314,7 @@ class FeedStore {
                 query: ["language": lang]
             )
             feedItems.removeAll { $0.id == "summary-\(todayString)" }
-            feedItems.append(.summary(text: result.summaryText, date: todayString))
+            feedItems.append(.summary(id: result.id, text: result.summaryText, date: todayString))
             sortFeedItems()
             return result.summaryText
         } catch {
@@ -381,7 +382,7 @@ class FeedStore {
             if let summary = group.summary,
                let text = summary.summaryText, !text.isEmpty {
                 feedItems.removeAll { $0.id == "summary-\(group.date)" }
-                feedItems.append(.summary(text: text, date: group.date))
+                feedItems.append(.summary(id: summary.id, text: text, date: group.date))
             }
 
             // Portfolio → portfolio card (only on market days for today)
@@ -481,7 +482,7 @@ class FeedStore {
         if let result: SummaryDetail = try? await api.get(
             "/api/summary/daily-detail", query: ["date": dateStr]
         ), !result.summaryText.isEmpty {
-            feedItems.append(.summary(text: result.summaryText, date: dateStr))
+            feedItems.append(.summary(id: result.id, text: result.summaryText, date: dateStr))
         }
 
         sortFeedItems()
