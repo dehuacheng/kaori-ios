@@ -139,6 +139,30 @@ struct FeedItem: Identifiable {
             payload: NutritionPayload(totals: totals, profile: profile)
         )
     }
+
+    static func post(_ post: Post) -> FeedItem {
+        FeedItem(
+            id: "post-\(post.id)",
+            cardType: "post",
+            dateString: post.date,
+            sortPriority: 10,
+            sortDate: parseUTCTimestamp(post.createdAt) ?? .distantPast,
+            displayTime: formatLocalTime(post.createdAt),
+            payload: post
+        )
+    }
+
+    static func reminder(_ reminder: Reminder) -> FeedItem {
+        FeedItem(
+            id: "reminder-\(reminder.id)",
+            cardType: "reminder",
+            dateString: reminder.dueDate,
+            sortPriority: 3,
+            sortDate: parseUTCTimestamp(reminder.createdAt) ?? .distantPast,
+            displayTime: nil,
+            payload: reminder
+        )
+    }
 }
 
 // MARK: - Payload types for compound data

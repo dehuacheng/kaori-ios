@@ -14,6 +14,7 @@ struct FeedView: View {
 
     @State private var showAnalytics = false
     @State private var selectedItemId: String?
+    @State private var showDebugLog = false
 
     @Binding var showMealCreate: Bool
     @Binding var showWeightCreate: Bool
@@ -46,8 +47,23 @@ struct FeedView: View {
                                     .listRowSeparator(.hidden)
                                     .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
                                     .listRowBackground(Color.clear)
-                                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                                         swipeActions(for: item)
+                                    }
+                                    .swipeActions(edge: .leading, allowsFullSwipe: false) {
+                                        leadingSwipeActions(for: item)
+                                    }
+                                    .onAppear {
+                                        if item.id == group.items.last?.id,
+                                           feedStore.daysRemainingBelow(group.date) <= 3 {
+                                            Task {
+                                                await feedStore.loadMoreDays(
+                                                    mealStore: mealStore,
+                                                    weightStore: weightStore,
+                                                    workoutStore: workoutStore
+                                                )
+                                            }
+                                        }
                                     }
                             }
                         }
@@ -56,22 +72,6 @@ struct FeedView: View {
                             .font(.headline)
                             .foregroundStyle(.secondary)
                             .textCase(nil)
-                    }
-
-                    if feedStore.daysRemainingBelow(group.date) <= 3 {
-                        Color.clear
-                            .frame(height: 1)
-                            .listRowSeparator(.hidden)
-                            .listRowBackground(Color.clear)
-                            .onAppear {
-                                Task {
-                                    await feedStore.loadMoreDays(
-                                        mealStore: mealStore,
-                                        weightStore: weightStore,
-                                        workoutStore: workoutStore
-                                    )
-                                }
-                            }
                     }
                 }
 
@@ -94,6 +94,11 @@ struct FeedView: View {
             }
             .navigationTitle(L.t("tab.home"))
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button { showDebugLog = true } label: {
+                        Image(systemName: "ladybug")
+                    }
+                }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button { showAnalytics = true } label: {
                         Image(systemName: "chart.xyaxis.line")
@@ -102,6 +107,21 @@ struct FeedView: View {
             }
             .sheet(isPresented: $showAnalytics) {
                 AnalyticsView()
+            }
+            .sheet(isPresented: $showDebugLog) {
+                NavigationStack {
+                    List {
+                        ForEach(Array(FeedDebugLog.shared.lines.enumerated()), id: \.offset) { _, line in
+                            Text(line).font(.caption2).monospaced()
+                        }
+                    }
+                    .navigationTitle("Feed Debug")
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button("Done") { showDebugLog = false }
+                        }
+                    }
+                }
             }
             .navigationDestination(item: $selectedItemId) { itemId in
                 Group {
@@ -191,30 +211,42 @@ struct FeedView: View {
     @ViewBuilder
     private func swipeActions(for item: FeedItem) -> some View {
         if let module = cardRegistry.module(for: item.cardType) {
-            ForEach(module.feedSwipeActions, id: \.self) { action in
-                switch action {
-                case .delete:
-                    Button(role: .destructive) {
-                        Task {
-                            await feedStore.deleteItem(
-                                item,
-                                mealStore: mealStore,
-                                weightStore: weightStore,
-                                workoutStore: workoutStore
-                            )
+            if let custom = module.feedTrailingSwipeContent(item: item) {
+                custom
+            } else {
+                ForEach(module.feedSwipeActions, id: \.self) { action in
+                    switch action {
+                    case .delete:
+                        Button(role: .destructive) {
+                            Task {
+                                await feedStore.deleteItem(
+                                    item,
+                                    mealStore: mealStore,
+                                    weightStore: weightStore,
+                                    workoutStore: workoutStore
+                                )
+                            }
+                        } label: {
+                            Label(L.t("common.delete"), systemImage: "trash")
                         }
-                    } label: {
-                        Label(L.t("common.delete"), systemImage: "trash")
+                    case .regenerate:
+                        Button {
+                            Task { await feedStore.regenerateSummary() }
+                        } label: {
+                            Label(L.t("summary.regenerate"), systemImage: "arrow.clockwise")
+                        }
+                        .tint(.blue)
                     }
-                case .regenerate:
-                    Button {
-                        Task { await feedStore.regenerateSummary() }
-                    } label: {
-                        Label(L.t("summary.regenerate"), systemImage: "arrow.clockwise")
-                    }
-                    .tint(.blue)
                 }
             }
+        }
+    }
+
+    @ViewBuilder
+    private func leadingSwipeActions(for item: FeedItem) -> some View {
+        if let module = cardRegistry.module(for: item.cardType),
+           let content = module.feedLeadingSwipeContent(item: item) {
+            content
         }
     }
 
@@ -232,15 +264,20 @@ struct FeedView: View {
         if grouped[today] == nil {
             grouped[today] = []
         }
-        return grouped.map { DayGroup(date: $0.key, items: $0.value) }
+        return grouped
+            .map { DayGroup(date: $0.key, items: $0.value) }
+            .filter { !$0.items.isEmpty || $0.date == today }
             .sorted { $0.date > $1.date }
     }
 
     private func dayLabel(_ dateStr: String) -> String {
         let today = dateFormatter.string(from: Date())
         if dateStr == today { return L.t("common.today") }
-        if let _ = dateFormatter.date(from: dateStr),
-           let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date()),
+        if let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: Date()),
+           dateFormatter.string(from: tomorrow) == dateStr {
+            return L.t("feed.tomorrow")
+        }
+        if let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date()),
            dateFormatter.string(from: yesterday) == dateStr {
             return L.t("feed.yesterday")
         }

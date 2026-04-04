@@ -75,6 +75,14 @@ protocol CardModule {
     /// Build the settings view for per-card settings. Return nil if no settings.
     @MainActor
     func settingsView() -> AnyView?
+
+    /// Custom trailing (swipe-left) actions. Return nil to use default enum-based actions.
+    @MainActor
+    func feedTrailingSwipeContent(item: FeedItem) -> AnyView?
+
+    /// Custom leading (swipe-right) actions. Return nil for no leading swipe.
+    @MainActor
+    func feedLeadingSwipeContent(item: FeedItem) -> AnyView?
 }
 
 // Default implementations
@@ -89,4 +97,6 @@ extension CardModule {
     @MainActor func createView(onDismiss: @escaping () -> Void) -> AnyView? { nil }
     @MainActor func dataListView() -> AnyView? { nil }
     @MainActor func settingsView() -> AnyView? { nil }
+    @MainActor func feedTrailingSwipeContent(item: FeedItem) -> AnyView? { nil }
+    @MainActor func feedLeadingSwipeContent(item: FeedItem) -> AnyView? { nil }
 }

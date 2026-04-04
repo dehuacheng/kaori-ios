@@ -18,6 +18,8 @@ struct KaoriApp: App {
     @State private var financeStore: FinanceStore
     @State private var feedStore: FeedStore
     @State private var cardPreferenceStore: CardPreferenceStore
+    @State private var postStore: PostStore
+    @State private var reminderStore: ReminderStore
     @State private var cardRegistry = CardRegistry()
     @State private var timerEngine = TimerEngine()
     @State private var healthKit = HealthKitManager()
@@ -36,6 +38,8 @@ struct KaoriApp: App {
         _financeStore = State(initialValue: FinanceStore(api: api))
         _feedStore = State(initialValue: FeedStore(api: api))
         _cardPreferenceStore = State(initialValue: CardPreferenceStore(api: api))
+        _postStore = State(initialValue: PostStore(api: api))
+        _reminderStore = State(initialValue: ReminderStore(api: api))
 
         // Register all card modules
         let registry = CardRegistry()
@@ -46,6 +50,8 @@ struct KaoriApp: App {
         registry.register(PortfolioCardModule())
         registry.register(NutritionCardModule())
         registry.register(SummaryCardModule())
+        registry.register(PostCardModule())
+        registry.register(ReminderCardModule())
         _cardRegistry = State(initialValue: registry)
     }
 
@@ -63,6 +69,8 @@ struct KaoriApp: App {
                 .environment(feedStore)
                 .environment(cardPreferenceStore)
                 .environment(cardRegistry)
+                .environment(postStore)
+                .environment(reminderStore)
                 .environment(timerEngine)
                 .environment(healthKit)
                 .environment(notificationManager)
@@ -139,7 +147,8 @@ struct ContentView: View {
                     }
 
                 // Blurred panel with buttons — driven by CardRegistry
-                HStack(spacing: 14) {
+                let columns = Array(repeating: GridItem(.fixed(80), spacing: 14), count: 4)
+                LazyVGrid(columns: columns, spacing: 14) {
                     ForEach(cardRegistry.addableModules, id: \.cardType) { module in
                         addMenuButton(icon: module.iconName, label: L.t(module.displayNameKey)) {
                             withAnimation(.spring(response: 0.25, dampingFraction: 0.8)) {

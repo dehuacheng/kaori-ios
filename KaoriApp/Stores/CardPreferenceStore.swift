@@ -49,12 +49,18 @@ class CardPreferenceStore {
 }
 
 struct CardPreferenceItem: Codable, Identifiable {
-    let id: Int
+    var id: Int { _id ?? cardType.hashValue }
+    private let _id: Int?
     var cardType: String
     var enabled: Bool
     var pinned: Bool
     var pinOrder: Int
     var updatedAt: String?
+
+    enum CodingKeys: String, CodingKey {
+        case _id = "id"
+        case cardType, enabled, pinned, pinOrder, updatedAt
+    }
 }
 
 private struct CardPreferenceUpdate: Codable {

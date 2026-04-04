@@ -15,6 +15,8 @@ Every feature in Kaori is a **card type** implemented as a `CardModule`. Each ca
 | `portfolio` | [portfolio.md](portfolio.md) | `PortfolioCardModule` | `PortfolioFeedCard` | `PortfolioDetailView` |
 | `nutrition` | [nutrition.md](nutrition.md) | `NutritionCardModule` | `DailyNutritionCard` | — |
 | `summary` | [summary.md](summary.md) | `SummaryCardModule` | `SummaryFeedCard` | `SummaryDetailView` |
+| `post` | [post.md](post.md) | `PostCardModule` | `PostFeedCard` | `PostDetailView` |
+| `reminder` | [reminder.md](reminder.md) | `ReminderCardModule` | `ReminderFeedCard` | `ReminderDetailView` |
 
 ## Template for New Cards
 

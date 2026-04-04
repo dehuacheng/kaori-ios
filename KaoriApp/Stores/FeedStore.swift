@@ -14,7 +14,7 @@ class FeedStore {
     /// Cached profile for nutrition card rendering
     var cachedProfile: Profile?
 
-    private let api: APIClient
+    let api: APIClient
     private var loadedDates: Set<String> = []
     private var portfolioRefreshTask: Task<Void, Never>?
     private var useUnifiedEndpoint = true
@@ -118,6 +118,22 @@ class FeedStore {
             await loadDateLegacy(today, mealStore: mealStore, weightStore: weightStore, workoutStore: workoutStore)
         }
         ensureTodayNutrition()
+    }
+
+    /// Quick refresh of today via unified endpoint only (no store deps).
+    func refreshTodayQuick() async {
+        let today = todayString
+        guard useUnifiedEndpoint else { return }
+        do {
+            let response: FeedAPIResponse = try await api.get(
+                "/api/feed",
+                query: ["start_date": today, "end_date": today]
+            )
+            feedItems.removeAll { $0.dateString == today }
+            applyFeedResponse(response)
+            loadedDates.insert(today)
+            ensureTodayNutrition()
+        } catch {}
     }
 
     /// Refresh only today's data.
@@ -226,6 +242,10 @@ class FeedStore {
             try? await workoutStore.deleteWorkout(workout.id)
         } else if let p = item.payload as? HealthKitWorkoutPayload {
             try? await workoutStore.deleteWorkout(p.workout.id)
+        } else if let post = item.payload as? Post {
+            let _: PostDeleteResponse? = try? await api.delete("/api/post/\(post.id)")
+        } else if let reminder = item.payload as? Reminder {
+            let _: ReminderDeleteResponse? = try? await api.delete("/api/reminders/\(reminder.id)")
         }
         // Other types (summary, portfolio, nutrition) have no delete action
         feedItems.removeAll { $0.id == item.id }
@@ -405,6 +425,14 @@ class FeedStore {
             if let workout = try? decoder.decode(Workout.self, from: rawData) {
                 return .healthKitWorkout(workout, meta: WorkoutStore.importedMeta(forWorkoutId: workout.id))
             }
+        case "post":
+            if let post = try? decoder.decode(Post.self, from: rawData) {
+                return .post(post)
+            }
+        case "reminder":
+            if let reminder = try? decoder.decode(Reminder.self, from: rawData) {
+                return .reminder(reminder)
+            }
         default:
             break
         }
@@ -563,6 +591,21 @@ private enum JSONValue: Codable {
         case .object(let v): try container.encode(v)
         case .array(let v): try container.encode(v)
         case .null: try container.encodeNil()
+        }
+    }
+}
+
+// MARK: - Debug log (temporary — remove after debugging)
+
+@Observable
+class FeedDebugLog {
+    static let shared = FeedDebugLog()
+    var lines: [String] = []
+
+    static func append(_ msg: String) {
+        Task { @MainActor in
+            shared.lines.append("[\(Date().formatted(date: .omitted, time: .standard))] \(msg)")
+            if shared.lines.count > 50 { shared.lines.removeFirst() }
         }
     }
 }

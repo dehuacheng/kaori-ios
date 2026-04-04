@@ -12,12 +12,15 @@
 		0C7D78FF8414F51BC0F8712A /* en.json in Resources */ = {isa = PBXBuildFile; fileRef = FB7D98DCD9C2AED3E0D3DEDB /* en.json */; };
 		1456E9490821F2D168C640BF /* defaults.json in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A03AAB1927618F07B50F2 /* defaults.json */; };
 		1592819803EA1FB2DBA66D98 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E305087E896AFBA0AFB4DBF /* PhotoPicker.swift */; };
+		15B4CD4C13F8939197F44627 /* ReminderDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA83F4FDF8CA26DC04C134A /* ReminderDetailView.swift */; };
 		17DB6EC4C460811FC4717BFF /* FeedCardStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EDC2D7635BA02633606F56 /* FeedCardStyle.swift */; };
 		191862843056E66CB107F000 /* HoldingsImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93BEE6741FB9D96C31F2FA9 /* HoldingsImportView.swift */; };
 		1BD326F61B192FF000E13F56 /* ExercisePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39346F4668E4F3EAC87B32D /* ExercisePickerView.swift */; };
 		1DDD8059D326D9F7392D1A54 /* CardModuleSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324EAFCDCB2AA529E70DAF5A /* CardModuleSettingsView.swift */; };
 		1F2107DCC3BD6FEF8068B45D /* Finance.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0C761E19D66964B3766176E /* Finance.swift */; };
+		1FA2FC945A1F52BDA1FCBB6E /* ReminderFeedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F557EE85C083C644A79700 /* ReminderFeedCard.swift */; };
 		205EF93C84D2E5265CDDFD5E /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF2A2F8F4116DAFA93C2CDC /* APIClient.swift */; };
+		21FA4D52BC2D16D40B280CB7 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92170DF1C172891E924064FF /* Post.swift */; };
 		24809FEB7DB2E1D611DAFF99 /* zh-Hans.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E5E0F9ED1381B9AC4ED6D20 /* zh-Hans.json */; };
 		2B75B47F07B3BA6886F7B93A /* Meal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC45B434D316B99DB578F96 /* Meal.swift */; };
 		2D68CF261AF3C6BAE4B300DC /* ImportedWorkoutMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C24199376F64DF38580BBC /* ImportedWorkoutMeta.swift */; };
@@ -26,9 +29,11 @@
 		33291EF7B2FCE4F256B06444 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CB71162C96FD59B8B31A1D /* APIError.swift */; };
 		36CB5CD95180E847E2B62C74 /* AppLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AFEDFB821A71709EE98DC76 /* AppLanguage.swift */; };
 		383B947796045CC4516BB2C9 /* CardPreferenceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5C8FA0A94976536ACFF877 /* CardPreferenceStore.swift */; };
+		3CDB53D44EAA58555DB95ED5 /* PostListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B150CC5924D3232A6C6622 /* PostListView.swift */; };
 		3CE5401AAB5C94C091B3A069 /* SummarySectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC039E0635E1BE6BD28D5E22 /* SummarySectionsView.swift */; };
 		3F05B819ACD2BD58A39F2DD4 /* TimerPresetPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BADA41A1B2E732E0BE810DE /* TimerPresetPickerView.swift */; };
 		41CC03C78AA848D9CE6ED032 /* BackgroundTaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8AC707079AE923CE770EB0 /* BackgroundTaskManager.swift */; };
+		421EC4D4D8A72E98E8D208D5 /* ReminderListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B4257E94222E26E1AFA4CD /* ReminderListView.swift */; };
 		43643E0CD1C37F71E49717C9 /* CardModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AFD28E8BD5650AC20EE20B /* CardModule.swift */; };
 		443A39F296950894B84255D4 /* WorkoutFeedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16544D113CE9726E04BCA863 /* WorkoutFeedCard.swift */; };
 		452749A1DDF08929F71AD68E /* FeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D3D48551429C850EBE2565 /* FeedItem.swift */; };
@@ -40,13 +45,19 @@
 		4A37A72996217DD57F4776EF /* MealCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0A06BF94F3C800F35D2560 /* MealCreateView.swift */; };
 		4B4FFB43410556345FC048C2 /* PortfolioDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362D4D1E9B9CFBCB1DBD20C8 /* PortfolioDetailView.swift */; };
 		4D6849DE5A98ADA51DF02CBC /* ImportedWorkoutDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553174ED05FBF6A0DC71BC23 /* ImportedWorkoutDetailView.swift */; };
+		4EC094CD1350631E37F839EC /* PostCardModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1AE844762BDC48AF581DBB /* PostCardModule.swift */; };
 		4F27A73B29E952033757C8E9 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DF9B688A1041D6787EE0A9 /* HealthKitManager.swift */; };
+		50404DFCD9BDEF5057BB9F00 /* ReminderCardModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803649CE603F6C9402846A87 /* ReminderCardModule.swift */; };
 		5194E74DEA086970F2D97603 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95564C2B8291EAE2D59742C3 /* FeedView.swift */; };
 		532E5973BB1D7FBB50FD1AD1 /* MealStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9AB8A03863BD0C08D6697D /* MealStore.swift */; };
+		566A9A2B46DEC16A8FBFB352 /* ReminderStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2E1FE807640CD35AAE3F59 /* ReminderStore.swift */; };
 		57426DE756EB6B38EE9AE615 /* KaoriTimerWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4FCEC9FEE75376F1773C6EE7 /* KaoriTimerWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		57434CA3801444D7FCABDB7E /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180A82F0BB3F22AA39567B76 /* PostDetailView.swift */; };
 		5B0BB6FB6685C7FB87C713E2 /* Weight.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEA26FF04B554F7679A7B4C0 /* Weight.swift */; };
 		5C481C54A970CC84B1F64181 /* NutritionCardModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234E063F50E26DA9197E727B /* NutritionCardModule.swift */; };
+		5CEE4743586641D5E1AD8A76 /* ReminderCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1AFD6420F1234DD3F2A06 /* ReminderCreateView.swift */; };
 		5DC04D439AAB2B2E4FEF3342 /* AnalysisStatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29118F7D393B2E6A21E2FB6C /* AnalysisStatusBadge.swift */; };
+		5DF697CBBF5E628CBF8E9FE7 /* PostFeedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C2F5C7D6D8A6B05FEE2A36 /* PostFeedCard.swift */; };
 		5F9660B8B3E8A50B8573DC28 /* Summary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331E61143E2DD0F8D055F87B /* Summary.swift */; };
 		622E843913C032C04AB97813 /* FinanceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A1F27D4E61E81445746BF1 /* FinanceStore.swift */; };
 		652DACF32CB255993621EF35 /* WeightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647C6A152720E00B28A55515 /* WeightView.swift */; };
@@ -73,6 +84,7 @@
 		A391DB5ADC4D916395C8CEEF /* KaoriTimerWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56EFC258D8FFDCEA908209C /* KaoriTimerWidgetBundle.swift */; };
 		A5F3319DB0A131CCC7074954 /* WorkoutStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB276F331D4A58B1AB64302 /* WorkoutStore.swift */; };
 		A9E80973719AA82394FF66BE /* MealDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D085BBC8CB56BB2B218B390 /* MealDetailView.swift */; };
+		BAA56F4E32BE0088932CA20B /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0030EDC4C6AB11BB33FC438E /* Reminder.swift */; };
 		BAF10AD71D665307A22FF127 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE357CF3AA96BDB1CB1FD477 /* TimerView.swift */; };
 		BBE49675447E4CB29B8C426C /* ExerciseManageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9C34474157CEDBC2DC2532 /* ExerciseManageView.swift */; };
 		BD943E644F42AF40BD058C73 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCD339C8B5D5941E4356EC91 /* Assets.xcassets */; };
@@ -85,6 +97,7 @@
 		D2AAF1B34D944110421145B4 /* NotificationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B38C0CFAA9E203A4714294 /* NotificationSettings.swift */; };
 		D3C844077134346054F740DA /* SummaryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79FACF2D6CFFF9A0D1F4326 /* SummaryDetailView.swift */; };
 		D487F5FF58F027B208E175D1 /* CardRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C6C3743E658F8E2E6F667C /* CardRegistry.swift */; };
+		D89F35C5BF8C503243FCBCE7 /* PostCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF64D4EA7B0FE4AE689AE05 /* PostCreateView.swift */; };
 		D8FFD7F8540EB146677E5F34 /* WeightCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC6BB4FC53852C40426E13C /* WeightCreateView.swift */; };
 		D955049A398BAB322D35DBB5 /* WorkoutCardModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BF80B2D76B918F7D6A1614 /* WorkoutCardModule.swift */; };
 		E0EA4FC30388DD90D1A5E151 /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7147A8679F3CFC8352E161CF /* Workout.swift */; };
@@ -96,6 +109,7 @@
 		F41F741B60D2F3B0A09DE1B2 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4BDBC4B40373E7CAFA954D /* AppConfig.swift */; };
 		F89D28B8F2ABFD6EB279ABC3 /* WeightMiniChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576503C22041ADD79BA88998 /* WeightMiniChartView.swift */; };
 		F978CEACEB3F2E4587010B32 /* UnitConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A59685F569247784B5D75E /* UnitConverter.swift */; };
+		FC498B5584DF2699BD5E1316 /* PostStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFCBC4B4D2C9828B03E529F /* PostStore.swift */; };
 		FE57086B45271FE9FA94279B /* PortfolioCardModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1664F32FECC189999625FA7A /* PortfolioCardModule.swift */; };
 		FF244A6182756391D9F8AF69 /* ProfileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303B1E52034AEBB719445463 /* ProfileStore.swift */; };
 /* End PBXBuildFile section */
@@ -125,6 +139,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0030EDC4C6AB11BB33FC438E /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		071BF34F3746B40727AB45DC /* MealEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealEditView.swift; sourceTree = "<group>"; };
 		0D5656813267E1EEA4F21326 /* WeightChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightChartView.swift; sourceTree = "<group>"; };
 		0F5926285FF29F6902466E44 /* SummaryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryListView.swift; sourceTree = "<group>"; };
@@ -133,7 +148,9 @@
 		16544D113CE9726E04BCA863 /* WorkoutFeedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutFeedCard.swift; sourceTree = "<group>"; };
 		1664F32FECC189999625FA7A /* PortfolioCardModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioCardModule.swift; sourceTree = "<group>"; };
 		16BF80B2D76B918F7D6A1614 /* WorkoutCardModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCardModule.swift; sourceTree = "<group>"; };
+		180A82F0BB3F22AA39567B76 /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
 		192D6936A510F1EC2A651FFE /* KaoriApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KaoriApp.swift; sourceTree = "<group>"; };
+		1A2E1FE807640CD35AAE3F59 /* ReminderStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderStore.swift; sourceTree = "<group>"; };
 		1BADA41A1B2E732E0BE810DE /* TimerPresetPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPresetPickerView.swift; sourceTree = "<group>"; };
 		1C7E3A3F17C47614255F34BA /* Localizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizer.swift; sourceTree = "<group>"; };
 		234E063F50E26DA9197E727B /* NutritionCardModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionCardModule.swift; sourceTree = "<group>"; };
@@ -162,8 +179,10 @@
 		579BBB648E4BF2D44F83F677 /* WorkoutImportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutImportView.swift; sourceTree = "<group>"; };
 		585537003DC587FB46F13D36 /* WeightCardModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightCardModule.swift; sourceTree = "<group>"; };
 		6342A0A859E54F590AD26E23 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		63F557EE85C083C644A79700 /* ReminderFeedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderFeedCard.swift; sourceTree = "<group>"; };
 		647C6A152720E00B28A55515 /* WeightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightView.swift; sourceTree = "<group>"; };
 		69A1F27D4E61E81445746BF1 /* FinanceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinanceStore.swift; sourceTree = "<group>"; };
+		6AF1AFD6420F1234DD3F2A06 /* ReminderCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCreateView.swift; sourceTree = "<group>"; };
 		6AFEDFB821A71709EE98DC76 /* AppLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLanguage.swift; sourceTree = "<group>"; };
 		6CC6BB4FC53852C40426E13C /* WeightCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightCreateView.swift; sourceTree = "<group>"; };
 		7147A8679F3CFC8352E161CF /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
@@ -173,11 +192,13 @@
 		7B31E33107217C57F296F400 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7CB167B3D5954D349D6D17C4 /* TimerActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerActivity.swift; sourceTree = "<group>"; };
 		7F3A5F9FDD1069B52CBB1FE2 /* NotificationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRouter.swift; sourceTree = "<group>"; };
+		803649CE603F6C9402846A87 /* ReminderCardModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCardModule.swift; sourceTree = "<group>"; };
 		87957F71691258B26CDA92FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		88107ACB573A08C68773FDF8 /* KaoriApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KaoriApp.entitlements; sourceTree = "<group>"; };
 		8C8AC707079AE923CE770EB0 /* BackgroundTaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundTaskManager.swift; sourceTree = "<group>"; };
 		8E6B8A88C6BBC610BD2F01C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8F4CBC90D3E2E1018B6D94CC /* TimerEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerEngine.swift; sourceTree = "<group>"; };
+		92170DF1C172891E924064FF /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		95564C2B8291EAE2D59742C3 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		99DF9B688A1041D6787EE0A9 /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
 		9D085BBC8CB56BB2B218B390 /* MealDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDetailView.swift; sourceTree = "<group>"; };
@@ -187,12 +208,18 @@
 		9FE7B77F17ABBAAEEFFC88FB /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		9FF2A2F8F4116DAFA93C2CDC /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		A4AFD28E8BD5650AC20EE20B /* CardModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardModule.swift; sourceTree = "<group>"; };
+		A4C2F5C7D6D8A6B05FEE2A36 /* PostFeedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFeedCard.swift; sourceTree = "<group>"; };
 		A6DB8B83949719000B2F06C5 /* PortfolioFeedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioFeedCard.swift; sourceTree = "<group>"; };
+		A9B4257E94222E26E1AFA4CD /* ReminderListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderListView.swift; sourceTree = "<group>"; };
 		AACBF7DA1F496716056BA0C9 /* WorkoutDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDetailView.swift; sourceTree = "<group>"; };
 		AB4BDBC4B40373E7CAFA954D /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
+		AC1AE844762BDC48AF581DBB /* PostCardModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCardModule.swift; sourceTree = "<group>"; };
 		AD55312C63EA812B70DC705F /* HealthKitWorkoutCardModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitWorkoutCardModule.swift; sourceTree = "<group>"; };
+		ADA83F4FDF8CA26DC04C134A /* ReminderDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderDetailView.swift; sourceTree = "<group>"; };
 		AEA26FF04B554F7679A7B4C0 /* Weight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weight.swift; sourceTree = "<group>"; };
+		AFF64D4EA7B0FE4AE689AE05 /* PostCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCreateView.swift; sourceTree = "<group>"; };
 		B39346F4668E4F3EAC87B32D /* ExercisePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisePickerView.swift; sourceTree = "<group>"; };
+		B7B150CC5924D3232A6C6622 /* PostListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListView.swift; sourceTree = "<group>"; };
 		BF5C8FA0A94976536ACFF877 /* CardPreferenceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPreferenceStore.swift; sourceTree = "<group>"; };
 		C10D833F5F69DE4D7B8D1CC5 /* SetRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetRowView.swift; sourceTree = "<group>"; };
 		C4A59685F569247784B5D75E /* UnitConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitConverter.swift; sourceTree = "<group>"; };
@@ -218,6 +245,7 @@
 		FE357CF3AA96BDB1CB1FD477 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
 		FEB276F331D4A58B1AB64302 /* WorkoutStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutStore.swift; sourceTree = "<group>"; };
 		FED1964313DCCE5E82185BD2 /* WeightFeedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightFeedCard.swift; sourceTree = "<group>"; };
+		FEFCBC4B4D2C9828B03E529F /* PostStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStore.swift; sourceTree = "<group>"; };
 		FF5EE770DD3E04DCAF8C1E31 /* MealFeedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealFeedCard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -307,11 +335,23 @@
 				E4EDC2D7635BA02633606F56 /* FeedCardStyle.swift */,
 				95564C2B8291EAE2D59742C3 /* FeedView.swift */,
 				FF5EE770DD3E04DCAF8C1E31 /* MealFeedCard.swift */,
+				A4C2F5C7D6D8A6B05FEE2A36 /* PostFeedCard.swift */,
+				63F557EE85C083C644A79700 /* ReminderFeedCard.swift */,
 				D01C6303E264BF95416F0702 /* SummaryFeedCard.swift */,
 				FED1964313DCCE5E82185BD2 /* WeightFeedCard.swift */,
 				16544D113CE9726E04BCA863 /* WorkoutFeedCard.swift */,
 			);
 			path = Feed;
+			sourceTree = "<group>";
+		};
+		1D83024230488045501CF789 /* Post */ = {
+			isa = PBXGroup;
+			children = (
+				AFF64D4EA7B0FE4AE689AE05 /* PostCreateView.swift */,
+				180A82F0BB3F22AA39567B76 /* PostDetailView.swift */,
+				B7B150CC5924D3232A6C6622 /* PostListView.swift */,
+			);
+			path = Post;
 			sourceTree = "<group>";
 		};
 		29C269B3174AAEA25C4ED89D /* Settings */ = {
@@ -352,6 +392,8 @@
 				77D475E311820FEDFD06B5B4 /* MealCardModule.swift */,
 				234E063F50E26DA9197E727B /* NutritionCardModule.swift */,
 				1664F32FECC189999625FA7A /* PortfolioCardModule.swift */,
+				AC1AE844762BDC48AF581DBB /* PostCardModule.swift */,
+				803649CE603F6C9402846A87 /* ReminderCardModule.swift */,
 				30DAC620E10EB8CAD9947C3F /* SummaryCardModule.swift */,
 				585537003DC587FB46F13D36 /* WeightCardModule.swift */,
 				16BF80B2D76B918F7D6A1614 /* WorkoutCardModule.swift */,
@@ -368,7 +410,9 @@
 				F6A7FEEC8F6F9E0D78750603 /* Finance */,
 				34D1D7AE9F248DB3A2D0B5D8 /* Meals */,
 				A154BFEEFD78520389B6FA30 /* Portfolio */,
+				1D83024230488045501CF789 /* Post */,
 				3E4AE7121ED2FC4AD67E3534 /* Profile */,
+				5D23827D5BA6732190A91ABC /* Reminder */,
 				29C269B3174AAEA25C4ED89D /* Settings */,
 				15EDAA3023E68B2C7FAA7B4B /* Shared */,
 				092FAD55310621A30C970B01 /* Summary */,
@@ -384,6 +428,16 @@
 				9E73336FBC606B1432E7C480 /* ProfileView.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		5D23827D5BA6732190A91ABC /* Reminder */ = {
+			isa = PBXGroup;
+			children = (
+				6AF1AFD6420F1234DD3F2A06 /* ReminderCreateView.swift */,
+				ADA83F4FDF8CA26DC04C134A /* ReminderDetailView.swift */,
+				A9B4257E94222E26E1AFA4CD /* ReminderListView.swift */,
+			);
+			path = Reminder;
 			sourceTree = "<group>";
 		};
 		5DA83CAE575D41B54D146133 /* Config */ = {
@@ -461,7 +515,9 @@
 				798AB8F4211084BBB87259CF /* FeedStore.swift */,
 				69A1F27D4E61E81445746BF1 /* FinanceStore.swift */,
 				DD9AB8A03863BD0C08D6697D /* MealStore.swift */,
+				FEFCBC4B4D2C9828B03E529F /* PostStore.swift */,
 				303B1E52034AEBB719445463 /* ProfileStore.swift */,
+				1A2E1FE807640CD35AAE3F59 /* ReminderStore.swift */,
 				4A18D6133200360913819606 /* WeightStore.swift */,
 				FEB276F331D4A58B1AB64302 /* WorkoutStore.swift */,
 			);
@@ -484,7 +540,9 @@
 				F0C761E19D66964B3766176E /* Finance.swift */,
 				76C24199376F64DF38580BBC /* ImportedWorkoutMeta.swift */,
 				FCC45B434D316B99DB578F96 /* Meal.swift */,
+				92170DF1C172891E924064FF /* Post.swift */,
 				9FE7B77F17ABBAAEEFFC88FB /* Profile.swift */,
+				0030EDC4C6AB11BB33FC438E /* Reminder.swift */,
 				331E61143E2DD0F8D055F87B /* Summary.swift */,
 				7CB167B3D5954D349D6D17C4 /* TimerActivity.swift */,
 				AEA26FF04B554F7679A7B4C0 /* Weight.swift */,
@@ -672,9 +730,23 @@
 				FE57086B45271FE9FA94279B /* PortfolioCardModule.swift in Sources */,
 				4B4FFB43410556345FC048C2 /* PortfolioDetailView.swift in Sources */,
 				7E1B446A66FE5CA6957E9A8C /* PortfolioFeedCard.swift in Sources */,
+				21FA4D52BC2D16D40B280CB7 /* Post.swift in Sources */,
+				4EC094CD1350631E37F839EC /* PostCardModule.swift in Sources */,
+				D89F35C5BF8C503243FCBCE7 /* PostCreateView.swift in Sources */,
+				57434CA3801444D7FCABDB7E /* PostDetailView.swift in Sources */,
+				5DF697CBBF5E628CBF8E9FE7 /* PostFeedCard.swift in Sources */,
+				3CDB53D44EAA58555DB95ED5 /* PostListView.swift in Sources */,
+				FC498B5584DF2699BD5E1316 /* PostStore.swift in Sources */,
 				2F5A63776F5FBFC7CCA4F8C0 /* Profile.swift in Sources */,
 				FF244A6182756391D9F8AF69 /* ProfileStore.swift in Sources */,
 				076770AAF9ABECC2B6D9D9E8 /* ProfileView.swift in Sources */,
+				BAA56F4E32BE0088932CA20B /* Reminder.swift in Sources */,
+				50404DFCD9BDEF5057BB9F00 /* ReminderCardModule.swift in Sources */,
+				5CEE4743586641D5E1AD8A76 /* ReminderCreateView.swift in Sources */,
+				15B4CD4C13F8939197F44627 /* ReminderDetailView.swift in Sources */,
+				1FA2FC945A1F52BDA1FCBB6E /* ReminderFeedCard.swift in Sources */,
+				421EC4D4D8A72E98E8D208D5 /* ReminderListView.swift in Sources */,
+				566A9A2B46DEC16A8FBFB352 /* ReminderStore.swift in Sources */,
 				89FB08D4F71F7897215587EA /* SetRowView.swift in Sources */,
 				4608389648507B3BBB4C8387 /* SettingsView.swift in Sources */,
 				5F9660B8B3E8A50B8573DC28 /* Summary.swift in Sources */,
