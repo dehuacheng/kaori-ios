@@ -10,6 +10,7 @@ class FeedStore {
     var feedItems: [FeedItem] = []
     var isLoading = false
     var hasPortfolioAccounts: Bool?
+    var regeneratingSummaryDates: Set<String> = []
 
     /// Cached profile for nutrition card rendering
     var cachedProfile: Profile?
@@ -277,28 +278,36 @@ class FeedStore {
 
     // MARK: - Summary Generation (triggered via "+" menu or swipe-to-regenerate)
 
-    func regenerateSummary() async {
+    func regenerateSummary(for date: String? = nil) async {
+        let targetDate = date ?? todayString
         let weekday = Calendar.current.component(.weekday, from: Date())
         let weeklySummaryWeekday = UserDefaults.standard.integer(forKey: "weeklySummaryWeekday")
-        if weekday == weeklySummaryWeekday {
+        if targetDate == todayString && weekday == weeklySummaryWeekday {
             _ = await generateWeeklySummary()
         } else {
-            _ = await generateDailySummary()
+            _ = await generateDailySummary(for: targetDate)
         }
     }
 
-    func generateDailySummary() async -> String? {
+    func generateDailySummary(for date: String? = nil) async -> String? {
+        let targetDate = date ?? todayString
         let langRaw = UserDefaults.standard.string(forKey: "appLanguage") ?? "en"
         let lang = langRaw.hasPrefix("zh") ? "zh" : "en"
+        regeneratingSummaryDates.insert(targetDate)
+        defer { regeneratingSummaryDates.remove(targetDate) }
         do {
             let result: SummaryDetail = try await api.post(
                 "/api/summary/daily-detail",
-                query: ["language": lang, "date": todayString]
+                query: ["language": lang, "date": targetDate]
             )
-            // Replace or add the summary feed item for today
-            feedItems.removeAll { $0.id == "summary-\(todayString)" }
-            feedItems.append(.summary(id: result.id, text: result.summaryText, date: todayString))
-            sortFeedItems()
+            // Replace in-place or add the summary feed item for the target date
+            let newItem = FeedItem.summary(id: result.id, text: result.summaryText, date: targetDate)
+            if let idx = feedItems.firstIndex(where: { $0.id == "summary-\(targetDate)" }) {
+                feedItems[idx] = newItem
+            } else {
+                feedItems.append(newItem)
+                sortFeedItems()
+            }
             return result.summaryText
         } catch {
             return "Error: \(error.localizedDescription)"
@@ -308,14 +317,20 @@ class FeedStore {
     func generateWeeklySummary() async -> String? {
         let langRaw = UserDefaults.standard.string(forKey: "appLanguage") ?? "en"
         let lang = langRaw.hasPrefix("zh") ? "zh" : "en"
+        regeneratingSummaryDates.insert(todayString)
+        defer { regeneratingSummaryDates.remove(todayString) }
         do {
             let result: SummaryDetail = try await api.post(
                 "/api/summary/weekly-detail",
                 query: ["language": lang]
             )
-            feedItems.removeAll { $0.id == "summary-\(todayString)" }
-            feedItems.append(.summary(id: result.id, text: result.summaryText, date: todayString))
-            sortFeedItems()
+            let newItem = FeedItem.summary(id: result.id, text: result.summaryText, date: todayString)
+            if let idx = feedItems.firstIndex(where: { $0.id == "summary-\(todayString)" }) {
+                feedItems[idx] = newItem
+            } else {
+                feedItems.append(newItem)
+                sortFeedItems()
+            }
             return result.summaryText
         } catch {
             return "Error: \(error.localizedDescription)"

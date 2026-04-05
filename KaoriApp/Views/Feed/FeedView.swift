@@ -231,7 +231,7 @@ struct FeedView: View {
                         }
                     case .regenerate:
                         Button {
-                            Task { await feedStore.regenerateSummary() }
+                            Task { await feedStore.regenerateSummary(for: item.dateString) }
                         } label: {
                             Label(L.t("summary.regenerate"), systemImage: "arrow.clockwise")
                         }

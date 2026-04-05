@@ -14,7 +14,7 @@ struct SummaryCardModule: CardModule {
     @MainActor
     func feedCardView(item: FeedItem, displayTime: String?) -> AnyView {
         guard let p = item.payload as? SummaryPayload else { return AnyView(EmptyView()) }
-        return AnyView(SummaryFeedCard(text: p.text, date: p.date))
+        return AnyView(SummaryFeedCardWrapper(text: p.text, date: p.date))
     }
 
     @MainActor

@@ -235,13 +235,16 @@ struct ContentView: View {
 
     private func addMenuButton(icon: String, label: String, action: @escaping () -> Void) -> some View {
         Button(action: action) {
-            VStack(spacing: 8) {
+            VStack(spacing: 6) {
                 Image(systemName: icon)
                     .font(.title2)
                     .foregroundStyle(.white)
+                    .frame(height: 28)
                 Text(label)
                     .font(.caption2)
                     .foregroundStyle(.white.opacity(0.7))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
             }
             .frame(width: 80, height: 80)
             .background(.white.opacity(0.15))

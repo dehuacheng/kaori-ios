@@ -4,6 +4,7 @@
 SwiftUI iOS client for the Kaori personal life management app. Connects to the Kaori Python backend via JSON API over Tailscale.
 
 ## Architecture
+- **Full-stack:** Python (FastAPI) backend + iOS (SwiftUI) frontend. When implementing features, always consider both layers and their JSON contract. Test JSON encoding/decoding round-trips when adding new model fields.
 - **Pure thin client** — no local database, all data fetched from the backend
 - **iOS 17.0+**, SwiftUI with `@Observable` state management
 - **Zero external dependencies** — only Apple frameworks
@@ -246,6 +247,18 @@ The app follows an **Apple Health–inspired** aesthetic:
 - **Tap** on feed cards navigates to the full detail view. Cards should NOT expand/collapse inline.
 - **Detail view actions** (delete, reanalyze, etc.) go in a `...` toolbar menu with confirmation alerts for destructive actions.
 - **Nutrition progress bars** use colored bars: red (calories), blue (protein), orange (carbs), yellow (fat)
+
+## Debugging
+- When debugging iOS issues, always verify plist/config structure and nesting levels FIRST before investigating signing, provisioning, or other environmental causes.
+- When something you wrote doesn't work, verify your output against the Apple spec before blaming the environment.
+
+## SwiftUI Patterns
+- Avoid ZStack-based navigation patterns that cause timing conflicts.
+- When implementing delete/refresh flows, ensure deleted items are removed from local state immediately rather than waiting for server refresh.
+- Use `.buttonStyle(.plain)` on interactive elements inside List/ScrollView to prevent tap swallowing.
+
+## Workflow Preferences
+- After making a plan, start implementing code changes promptly. Do not spend extended time reading files and planning without producing edits — the user prefers iterative progress over exhaustive upfront analysis.
 
 ## Backend Repo
 GitHub: https://github.com/dehuacheng/kaori
