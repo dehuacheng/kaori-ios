@@ -38,6 +38,8 @@
   "shared.failed": "Failed",
   "shared.ai": "AI",
   "shared.manual": "Manual",
+  "shared.loading": "Loading",
+  "shared.live": "Live",
   "shared.camera": "Camera",
   "shared.library": "Library",
 

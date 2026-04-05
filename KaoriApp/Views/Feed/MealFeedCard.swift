@@ -15,7 +15,9 @@ struct MealFeedCard: View {
                 Text(L.t("mealType.\(meal.mealType ?? "snack")"))
                     .font(.subheadline.bold())
                     .foregroundStyle(mealColor)
-                AnalysisStatusBadge(status: meal.analysisStatus, isEstimated: meal.isEstimated)
+                if let badgeState = mealCardState {
+                    CardStateBadge(badgeState)
+                }
                 Spacer()
                 if let time = displayTime {
                     Text(time)
@@ -86,9 +88,25 @@ struct MealFeedCard: View {
                             .foregroundStyle(.secondary)
                     }
                 }
+                .processingOverlay(isPending)
             }
         }
         .feedCard()
+    }
+
+    private var isPending: Bool {
+        meal.analysisStatus == "pending" || meal.analysisStatus == "analyzing"
+    }
+
+    private var mealCardState: CardState? {
+        switch meal.analysisStatus {
+        case "pending", "analyzing": .processing
+        case "failed": .failed
+        default:
+            if meal.isEstimated == 1 { .ai }
+            else if meal.isEstimated == 0 { .manual }
+            else { nil }
+        }
     }
 
     private var mealIcon: String {

@@ -97,64 +97,74 @@ struct ContentView: View {
     @State private var showWeightCreate = false
     /// Active card module for sheet-based creation (driven by "+" menu)
     @State private var activeCreateModule: String?
+    @State private var pendingAddActionCardType: String?
     @State private var newWorkoutId: IdentifiableInt?
     @State private var dismissedWorkoutId: Int?
     @State private var feedRefreshToken = UUID()
-
     var body: some View {
-        ZStack(alignment: .bottom) {
-            VStack(spacing: 0) {
-                ConnectionBanner(isConnected: api.isConnected)
+        VStack(spacing: 0) {
+            ConnectionBanner(isConnected: api.isConnected)
 
-                if !config.isConfigured {
-                    NavigationStack {
-                        SettingsView()
-                    }
-                } else {
-                    TabView(selection: $selectedTab) {
-                        FeedView(showMealCreate: $showMealCreate, showWeightCreate: $showWeightCreate, refreshToken: feedRefreshToken)
-                            .tag(0)
-                            .tabItem { Label(L.t("tab.home"), systemImage: "house") }
-                        // Center "+" button (intercepted, never actually selected)
-                        Color.clear
-                            .tag(99)
-                            .tabItem { Label(L.t("tab.add"), systemImage: "plus.circle.fill") }
-                        MoreView()
-                            .tag(2)
-                            .tabItem { Label(L.t("tab.more"), systemImage: "ellipsis.circle") }
-                    }
-                    .onChange(of: selectedTab) { oldValue, newValue in
+            if !config.isConfigured {
+                NavigationStack {
+                    SettingsView()
+                }
+            } else {
+                // Custom binding intercepts the "+" tab (99) without ever
+                // changing selectedTab, preventing NavigationStack disruption.
+                TabView(selection: Binding(
+                    get: { selectedTab },
+                    set: { newValue in
                         if newValue == 99 {
-                            // Intercept the "+" tab — show menu instead
-                            selectedTab = oldValue
                             withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
                                 showAddMenu = true
                             }
+                        } else {
+                            selectedTab = newValue
                         }
                     }
+                )) {
+                    FeedView(showMealCreate: $showMealCreate, showWeightCreate: $showWeightCreate, refreshToken: feedRefreshToken)
+                        .tag(0)
+                        .tabItem { Label(L.t("tab.home"), systemImage: "house") }
+                    // Center "+" button (intercepted via binding, never actually selected)
+                    Color.clear
+                        .tag(99)
+                        .tabItem { Label(L.t("tab.add"), systemImage: "plus.circle.fill") }
+                    MoreView()
+                        .tag(2)
+                        .tabItem { Label(L.t("tab.more"), systemImage: "ellipsis.circle") }
                 }
             }
-
-            // Add menu overlay — Control Center style
-            if showAddMenu {
-                // Dimmed backdrop (tap to dismiss)
-                Color.black.opacity(0.4)
+        }
+        // Add menu overlay — Control Center style.
+        // The overlay is ALWAYS in the view tree (never conditionally
+        // added/removed). Toggling showAddMenu only changes opacity and
+        // hit-testing. This avoids SwiftUI view-hierarchy mutations that
+        // corrupt the NavigationStack's UIKit hosting controller layout
+        // for pushed detail views.
+        .overlay {
+            ZStack(alignment: .bottom) {
+                // Dimmed backdrop — always present, opacity-driven
+                Color.black
+                    .opacity(showAddMenu ? 0.4 : 0)
                     .ignoresSafeArea()
+                    .allowsHitTesting(showAddMenu)
                     .onTapGesture {
                         withAnimation(.spring(response: 0.25, dampingFraction: 0.8)) {
                             showAddMenu = false
                         }
                     }
 
-                // Blurred panel with buttons — driven by CardRegistry
+                // Blurred panel with buttons — always present, visibility-driven
                 let columns = Array(repeating: GridItem(.fixed(80), spacing: 14), count: 4)
                 LazyVGrid(columns: columns, spacing: 14) {
                     ForEach(cardRegistry.addableModules, id: \.cardType) { module in
                         addMenuButton(icon: module.iconName, label: L.t(module.displayNameKey)) {
+                            pendingAddActionCardType = module.cardType
                             withAnimation(.spring(response: 0.25, dampingFraction: 0.8)) {
                                 showAddMenu = false
                             }
-                            handleAddAction(for: module.cardType)
                         }
                     }
                 }
@@ -163,8 +173,12 @@ struct ContentView: View {
                 .environment(\.colorScheme, .dark)
                 .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
                 .padding(.bottom, 90)
-                .transition(.scale(scale: 0.8).combined(with: .opacity))
+                .opacity(showAddMenu ? 1 : 0)
+                .scaleEffect(showAddMenu ? 1 : 0.8)
+                .allowsHitTesting(showAddMenu)
+                .accessibilityHidden(!showAddMenu)
             }
+            .animation(.spring(response: 0.3, dampingFraction: 0.7), value: showAddMenu)
         }
         .task {
             if config.isConfigured {
@@ -231,6 +245,17 @@ struct ContentView: View {
                 NotificationRouter.shared.pendingDestination = nil
             }
         }
+        .onChange(of: showAddMenu) { _, isShowing in
+            guard !isShowing, let cardType = pendingAddActionCardType else { return }
+            pendingAddActionCardType = nil
+            Task { @MainActor in
+                // Let the add-menu dismissal settle before mutating
+                // feed/navigation state.
+                try? await Task.sleep(for: .milliseconds(350))
+                selectedTab = 0
+                handleAddAction(for: cardType)
+            }
+        }
     }
 
     private func addMenuButton(icon: String, label: String, action: @escaping () -> Void) -> some View {
@@ -264,6 +289,9 @@ struct ContentView: View {
             showWeightCreate = true
         case "workout":
             Task { await createWorkout() }
+        case "summary":
+            Task { await feedStore.startSummaryGeneration() }
+            return
         default:
             // Generic: use the module's createView via sheet
             activeCreateModule = cardType

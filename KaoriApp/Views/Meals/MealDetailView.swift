@@ -60,7 +60,9 @@ struct MealDetailView: View {
                         HStack {
                             Text(L.t("mealType.\(meal.mealType ?? "snack")"))
                                 .font(.title2.bold())
-                            AnalysisStatusBadge(status: meal.analysisStatus, isEstimated: meal.isEstimated)
+                            if let state = mealDetailState {
+                    CardStateBadge(state)
+                }
                             if let confidence = meal.confidence {
                                 Text(confidence)
                                     .font(.caption2)
@@ -85,15 +87,7 @@ struct MealDetailView: View {
 
                         // Nutrition
                         if isPending {
-                            HStack {
-                                ProgressView()
-                                Text(L.t("meal.analyzingNutrition"))
-                                    .foregroundStyle(.secondary)
-                            }
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(.regularMaterial)
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            FullViewLoading(message: L.t("meal.analyzingNutrition"))
                         } else {
                             nutritionCard(meal)
                         }
@@ -109,7 +103,7 @@ struct MealDetailView: View {
                     .padding()
                 }
             } else {
-                ProgressView()
+                FullViewLoading(message: L.t("shared.loading"))
             }
         }
         .navigationTitle(meal?.date ?? "Meal")
@@ -239,6 +233,17 @@ struct MealDetailView: View {
         .padding()
         .background(.regularMaterial)
         .clipShape(RoundedRectangle(cornerRadius: 12))
+    }
+
+    private var mealDetailState: CardState? {
+        switch meal?.analysisStatus {
+        case "pending", "analyzing": .processing
+        case "failed": .failed
+        default:
+            if meal?.isEstimated == 1 { .ai }
+            else if meal?.isEstimated == 0 { .manual }
+            else { nil }
+        }
     }
 
     private func loadMeal() async {

@@ -32,6 +32,11 @@ Payload type: `PortfolioSummaryResponse`
 
 `Stores/FinanceStore.swift` — Manages portfolio data fetching, caching, and auto-refresh logic.
 
+## State Indicators
+
+- Feed card header: `CardStateBadge(.live)` when market data is fresh
+- Detail view: `FullViewLoading` during initial data fetch
+
 ## Notes
 
 - Auto-refreshes every 60 seconds on market days to keep prices current.

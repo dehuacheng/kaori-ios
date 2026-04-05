@@ -278,62 +278,70 @@ class FeedStore {
 
     // MARK: - Summary Generation (triggered via "+" menu or swipe-to-regenerate)
 
+    /// Called from "+" menu: ensures a real summary card exists immediately,
+    /// then generates content in the background.
+    func startSummaryGeneration() async {
+        let targetDate = todayString
+        let weekday = Calendar.current.component(.weekday, from: Date())
+        let storedWeekday = UserDefaults.standard.object(forKey: "weeklySummaryWeekday") as? Int ?? 1
+        let kind: SummaryKind = (weekday == storedWeekday) ? .weekly : .daily
+
+        // Ensure there is a stable summary card for this date immediately.
+        if summaryItemIndex(for: targetDate) == nil {
+            feedItems.append(FeedItem.summary(text: "", date: targetDate, kind: kind))
+            sortFeedItems()
+        }
+
+        regeneratingSummaryDates.insert(targetDate)
+        _ = await generateSummary(kind: kind, date: targetDate)
+    }
+
     func regenerateSummary(for date: String? = nil) async {
         let targetDate = date ?? todayString
-        let weekday = Calendar.current.component(.weekday, from: Date())
-        let weeklySummaryWeekday = UserDefaults.standard.integer(forKey: "weeklySummaryWeekday")
-        if targetDate == todayString && weekday == weeklySummaryWeekday {
-            _ = await generateWeeklySummary()
+        // Determine kind from existing feed item if available, else infer from weekday
+        let existingKind = summaryPayload(for: targetDate)?.kind
+        let kind: SummaryKind
+        if let existingKind {
+            kind = existingKind
         } else {
-            _ = await generateDailySummary(for: targetDate)
+            let weekday = Calendar.current.component(.weekday, from: Date())
+            let storedWeekday = UserDefaults.standard.object(forKey: "weeklySummaryWeekday") as? Int ?? 1
+            kind = (targetDate == todayString && weekday == storedWeekday) ? .weekly : .daily
         }
+        _ = await generateSummary(kind: kind, date: targetDate)
     }
 
-    func generateDailySummary(for date: String? = nil) async -> String? {
-        let targetDate = date ?? todayString
+    /// Canonical summary generation entry point. All generation flows route through this.
+    func generateSummary(kind: SummaryKind, date: String) async -> String? {
         let langRaw = UserDefaults.standard.string(forKey: "appLanguage") ?? "en"
         let lang = langRaw.hasPrefix("zh") ? "zh" : "en"
-        regeneratingSummaryDates.insert(targetDate)
-        defer { regeneratingSummaryDates.remove(targetDate) }
+        regeneratingSummaryDates.insert(date)
+        defer { regeneratingSummaryDates.remove(date) }
+
+        let endpoint: String
+        var query: [String: String]
+        switch kind {
+        case .daily:
+            endpoint = "/api/summary/daily-detail"
+            query = ["language": lang, "date": date]
+        case .weekly:
+            endpoint = "/api/summary/weekly-detail"
+            query = ["language": lang]
+        }
+
         do {
-            let result: SummaryDetail = try await api.post(
-                "/api/summary/daily-detail",
-                query: ["language": lang, "date": targetDate]
-            )
-            // Replace in-place or add the summary feed item for the target date
-            let newItem = FeedItem.summary(id: result.id, text: result.summaryText, date: targetDate)
-            if let idx = feedItems.firstIndex(where: { $0.id == "summary-\(targetDate)" }) {
+            let result: SummaryDetail = try await api.post(endpoint, query: query)
+            let newItem = FeedItem.summary(id: result.id, text: result.summaryText, date: date, kind: kind)
+            if let idx = summaryItemIndex(for: date) {
                 feedItems[idx] = newItem
+                sortFeedItems()
             } else {
                 feedItems.append(newItem)
                 sortFeedItems()
             }
             return result.summaryText
         } catch {
-            return "Error: \(error.localizedDescription)"
-        }
-    }
-
-    func generateWeeklySummary() async -> String? {
-        let langRaw = UserDefaults.standard.string(forKey: "appLanguage") ?? "en"
-        let lang = langRaw.hasPrefix("zh") ? "zh" : "en"
-        regeneratingSummaryDates.insert(todayString)
-        defer { regeneratingSummaryDates.remove(todayString) }
-        do {
-            let result: SummaryDetail = try await api.post(
-                "/api/summary/weekly-detail",
-                query: ["language": lang]
-            )
-            let newItem = FeedItem.summary(id: result.id, text: result.summaryText, date: todayString)
-            if let idx = feedItems.firstIndex(where: { $0.id == "summary-\(todayString)" }) {
-                feedItems[idx] = newItem
-            } else {
-                feedItems.append(newItem)
-                sortFeedItems()
-            }
-            return result.summaryText
-        } catch {
-            return "Error: \(error.localizedDescription)"
+            return nil
         }
     }
 
@@ -376,6 +384,30 @@ class FeedStore {
         }
     }
 
+    private func summaryItemIndex(for date: String) -> Int? {
+        feedItems.firstIndex { item in
+            guard item.cardType == "summary",
+                  let payload = item.payload as? SummaryPayload else { return false }
+            return payload.date == date
+        }
+    }
+
+    private func summaryPayload(for date: String) -> SummaryPayload? {
+        feedItems.first { item in
+            guard item.cardType == "summary",
+                  let payload = item.payload as? SummaryPayload else { return false }
+            return payload.date == date
+        }?.payload as? SummaryPayload
+    }
+
+    private func removeSummaryItems(for date: String) {
+        feedItems.removeAll { item in
+            guard item.cardType == "summary",
+                  let payload = item.payload as? SummaryPayload else { return false }
+            return payload.date == date
+        }
+    }
+
     /// Apply a unified feed API response to local state.
     private func applyFeedResponse(_ response: FeedAPIResponse) {
         for group in response.dates {
@@ -396,8 +428,9 @@ class FeedStore {
             // Summary → summary card
             if let summary = group.summary,
                let text = summary.summaryText, !text.isEmpty {
-                feedItems.removeAll { $0.id == "summary-\(group.date)" }
-                feedItems.append(.summary(id: summary.id, text: text, date: group.date))
+                let kind: SummaryKind = (summary.type == "weekly") ? .weekly : .daily
+                removeSummaryItems(for: group.date)
+                feedItems.append(.summary(id: summary.id, text: text, date: group.date, kind: kind))
             }
 
             // Portfolio → portfolio card (only on market days for today)
@@ -497,7 +530,9 @@ class FeedStore {
         if let result: SummaryDetail = try? await api.get(
             "/api/summary/daily-detail", query: ["date": dateStr]
         ), !result.summaryText.isEmpty {
-            feedItems.append(.summary(id: result.id, text: result.summaryText, date: dateStr))
+            let kind: SummaryKind = (result.type == "weekly") ? .weekly : .daily
+            removeSummaryItems(for: dateStr)
+            feedItems.append(.summary(id: result.id, text: result.summaryText, date: dateStr, kind: kind))
         }
 
         sortFeedItems()
@@ -610,19 +645,3 @@ private enum JSONValue: Codable {
         }
     }
 }
-
-// MARK: - Debug log (temporary — remove after debugging)
-
-@Observable
-class FeedDebugLog {
-    static let shared = FeedDebugLog()
-    var lines: [String] = []
-
-    static func append(_ msg: String) {
-        Task { @MainActor in
-            shared.lines.append("[\(Date().formatted(date: .omitted, time: .standard))] \(msg)")
-            if shared.lines.count > 50 { shared.lines.removeFirst() }
-        }
-    }
-}
-

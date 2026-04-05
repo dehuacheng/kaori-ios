@@ -24,9 +24,7 @@ struct HoldingsImportView: View {
                     reviewView
                 } else if isUploading || isPolling {
                     VStack(spacing: 16) {
-                        ProgressView()
-                        Text(isUploading ? L.t("finance.uploading") : L.t("finance.analyzing"))
-                            .foregroundStyle(.secondary)
+                        FullViewLoading(message: isUploading ? L.t("finance.uploading") : L.t("finance.analyzing"))
                         if imageDatas.count > 1 {
                             Text(String(format: L.t("finance.photosCount"), imageDatas.count))
                                 .font(.caption)
@@ -35,20 +33,11 @@ struct HoldingsImportView: View {
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else if let error = analysisError {
-                    VStack(spacing: 16) {
-                        Image(systemName: "exclamationmark.triangle")
-                            .font(.largeTitle)
-                            .foregroundStyle(.red)
-                        Text(error)
-                            .foregroundStyle(.secondary)
-                            .multilineTextAlignment(.center)
-                        Button(L.t("common.retry")) {
-                            analysisError = nil
-                            selectedPhotos = []
-                            imageDatas = []
-                        }
+                    FullViewError(message: error) {
+                        analysisError = nil
+                        selectedPhotos = []
+                        imageDatas = []
                     }
-                    .padding()
                 } else {
                     pickerView
                 }

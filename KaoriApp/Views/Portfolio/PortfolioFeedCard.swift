@@ -19,14 +19,7 @@ struct PortfolioFeedCard: View {
                     .foregroundStyle(changeColor)
                 Spacer()
                 if summary.isLive {
-                    HStack(spacing: 4) {
-                        Circle()
-                            .fill(.green)
-                            .frame(width: 6, height: 6)
-                        Text("Live")
-                            .font(.caption2.bold())
-                            .foregroundStyle(.secondary)
-                    }
+                    CardStateBadge(.live)
                 }
             }
 
@@ -123,33 +116,5 @@ struct PortfolioFeedCard: View {
     private func formatPercent(_ value: Double) -> String {
         let sign = value >= 0 ? "+" : ""
         return String(format: "%@%.1f%%", sign, value)
-    }
-}
-
-struct PortfolioFeedCardPlaceholder: View {
-    var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack {
-                Image(systemName: "chart.line.uptrend.xyaxis")
-                    .foregroundStyle(.secondary)
-                    .font(.body.bold())
-                Text("Portfolio")
-                    .font(.subheadline.bold())
-                    .foregroundStyle(.secondary)
-                Spacer()
-                ProgressView()
-                    .controlSize(.small)
-            }
-            HStack(alignment: .firstTextBaseline) {
-                Text("$—")
-                    .font(.title2.bold())
-                    .foregroundStyle(.secondary)
-                Spacer()
-                Text("Loading...")
-                    .font(.caption)
-                    .foregroundStyle(.tertiary)
-            }
-        }
-        .feedCard()
     }
 }

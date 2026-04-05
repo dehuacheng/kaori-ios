@@ -64,6 +64,14 @@ protocol CardModule {
     @MainActor
     func feedDetailView(item: FeedItem) -> AnyView?
 
+    /// Whether this specific feed item should currently navigate to detail.
+    @MainActor
+    func canNavigateToFeedDetail(item: FeedItem) -> Bool
+
+    /// Stable identity for the detail navigation target for this feed item.
+    @MainActor
+    func feedDetailNavigationID(item: FeedItem) -> String
+
     /// Build the creation view (presented from "+"). Return nil if not creatable.
     @MainActor
     func createView(onDismiss: @escaping () -> Void) -> AnyView?
@@ -94,6 +102,8 @@ extension CardModule {
     var hasSettingsView: Bool { false }
 
     @MainActor func feedDetailView(item: FeedItem) -> AnyView? { nil }
+    @MainActor func canNavigateToFeedDetail(item: FeedItem) -> Bool { hasFeedDetailView }
+    @MainActor func feedDetailNavigationID(item: FeedItem) -> String { item.id }
     @MainActor func createView(onDismiss: @escaping () -> Void) -> AnyView? { nil }
     @MainActor func dataListView() -> AnyView? { nil }
     @MainActor func settingsView() -> AnyView? { nil }

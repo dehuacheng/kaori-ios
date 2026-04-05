@@ -75,8 +75,7 @@ struct PortfolioDetailView: View {
                     }
                 }
             } else if isLoading {
-                ProgressView()
-                    .frame(maxWidth: .infinity)
+                FullViewLoading(message: L.t("shared.loading"))
             }
         }
         .navigationTitle(L.t("finance.portfolio"))

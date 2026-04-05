@@ -4,11 +4,19 @@ struct SummarySectionsView: View {
     let markdown: String
     @Binding var allCollapsed: Bool
 
-    @State private var expandedSections: Set<String> = []
-    @State private var initialized = false
+    @State private var expandedSections: Set<String>
+
+    init(markdown: String, allCollapsed: Binding<Bool>) {
+        self.markdown = markdown
+        self._allCollapsed = allCollapsed
+        // Initialize with all sections expanded from the first frame
+        // to avoid a two-frame layout jump (collapsed → expanded).
+        let sections = Self.parseSectionsStatic(markdown)
+        self._expandedSections = State(initialValue: Set(sections.sections.map(\.title)))
+    }
 
     var body: some View {
-        let parsed = parseSections(markdown)
+        let parsed = Self.parseSectionsStatic(markdown)
         VStack(alignment: .leading, spacing: 6) {
             // Preamble (always visible commentary)
             if !parsed.preamble.isEmpty {
@@ -38,20 +46,12 @@ struct SummarySectionsView: View {
                 }
             }
         }
-        .onAppear {
-            if !initialized {
-                // Start with all sections expanded
-                let parsed = parseSections(markdown)
-                expandedSections = Set(parsed.sections.map(\.title))
-                initialized = true
-            }
-        }
         .onChange(of: allCollapsed) { _, collapsed in
             withAnimation {
                 if collapsed {
                     expandedSections.removeAll()
                 } else {
-                    let parsed = parseSections(markdown)
+                    let parsed = Self.parseSectionsStatic(markdown)
                     expandedSections = Set(parsed.sections.map(\.title))
                 }
             }
@@ -109,7 +109,7 @@ struct SummarySectionsView: View {
         let sections: [SummarySection]
     }
 
-    private func parseSections(_ text: String) -> ParsedSummary {
+    private static func parseSectionsStatic(_ text: String) -> ParsedSummary {
         var sections: [SummarySection] = []
         var currentTitle = ""
         var currentLines: [String] = []

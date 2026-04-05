@@ -104,15 +104,15 @@ struct FeedItem: Identifiable {
         )
     }
 
-    static func summary(id: Int? = nil, text: String, date: String) -> FeedItem {
-        FeedItem(
+    static func summary(id: Int? = nil, text: String, date: String, kind: SummaryKind = .daily) -> FeedItem {
+        return FeedItem(
             id: "summary-\(date)",
             cardType: "summary",
             dateString: date,
             sortPriority: 0,
             sortDate: dateOnlyFormatter.date(from: date) ?? .distantPast,
             displayTime: nil,
-            payload: SummaryPayload(summaryId: id, text: text, date: date)
+            payload: SummaryPayload(summaryId: id, text: text, date: date, kind: kind)
         )
     }
 
@@ -172,10 +172,16 @@ struct HealthKitWorkoutPayload {
     let meta: ImportedWorkoutMeta?
 }
 
+enum SummaryKind: String {
+    case daily
+    case weekly
+}
+
 struct SummaryPayload {
     let summaryId: Int?
     let text: String
     let date: String
+    let kind: SummaryKind
 }
 
 struct NutritionPayload {

@@ -4,7 +4,6 @@
 SwiftUI iOS client for the Kaori personal life management app. Connects to the Kaori Python backend via JSON API over Tailscale.
 
 ## Architecture
-- **Full-stack:** Python (FastAPI) backend + iOS (SwiftUI) frontend. When implementing features, always consider both layers and their JSON contract. Test JSON encoding/decoding round-trips when adding new model fields.
 - **Pure thin client** — no local database, all data fetched from the backend
 - **iOS 17.0+**, SwiftUI with `@Observable` state management
 - **Zero external dependencies** — only Apple frameworks
@@ -12,7 +11,7 @@ SwiftUI iOS client for the Kaori personal life management app. Connects to the K
 ## Structure
 ```
 KaoriApp/
-  Config/         — AppConfig (server URL + token in UserDefaults), SharedConfig (App Group shared defaults for extensions)
+  Config/         — AppConfig (server URL + token in UserDefaults)
   Network/        — APIClient (URLSession wrapper), APIError
   Models/         — Codable structs matching backend JSON responses
     FeedItem.swift    — Unified feed item enum (meal, weight, workout, summary, portfolio)
@@ -49,12 +48,6 @@ KaoriApp/
   Health/         — HealthKitManager (weight + workout sync)
   Notifications/  — NotificationManager, NotificationSettings, BackgroundTaskManager
   Localization/   — en.json, zh-Hans.json (flat key-value)
-  Shared/         — LinkedText (URL-detecting tappable text view)
-KaoriShareExtension/  — iOS Share Extension (share from other apps → Post card)
-  ShareViewController.swift     — UIKit entry point, extracts attachments, fetches URL metadata
-  ShareComposeView.swift        — SwiftUI compose UI (editable content, image preview, date picker)
-  ShareExtensionAPIClient.swift — Lightweight POST /api/post client using SharedConfig
-  URLMetadataFetcher.swift      — Fetches Open Graph metadata (title, description, image) from URLs
 ```
 
 ## Card-First Architecture
@@ -220,16 +213,6 @@ If either returns results, the change violates the card-first architecture. Move
 - Key naming convention: `{feature}.{element}` (e.g., `meal.logMeal`, `common.save`, `feed.empty`).
 - Units (kg, kcal, g, cm) are NOT localized — they are international.
 - The widget extension (`KaoriTimerWidget`) is not localized (separate target, minimal text).
-- The share extension (`KaoriShareExtension`) uses hardcoded bilingual strings (reads `appLanguage` from shared App Group defaults).
-
-## Share Extension
-- **Target:** `KaoriShareExtension` (bundle ID: `com.dehuacheng.kaori.app.share-extension`)
-- **Purpose:** Share content from other apps (Xiaohongshu, Douyin, Safari, etc.) into Kaori as Post cards
-- **App Group:** `group.com.dehuacheng.kaori` — shared `UserDefaults` suite for server URL, token, and language preference between the main app and extension
-- **SharedConfig** (`KaoriApp/Config/SharedConfig.swift`) — shared between both targets via `project.yml` sources. The main app mirrors `serverURL`, `token`, and `appLanguage` to the shared suite in `AppConfig` and `Localizer`.
-- **URL metadata enrichment:** When a URL is shared, `URLMetadataFetcher` fetches Open Graph tags (`og:title`, `og:description`, `og:image`) and pre-fills the compose view. OG image is downloaded as the post photo if no image was shared directly.
-- **Plist structure:** `NSExtensionActivationRule` MUST be under `NSExtensionAttributes` (not directly under `NSExtension`). See `feedback_ios_extension_plist.md` in memory.
-- **Localization:** Uses hardcoded bilingual strings (not the JSON-based Localizer), reading `appLanguage` from `SharedConfig.appLanguage`.
 
 ## Design Language
 
@@ -247,26 +230,6 @@ The app follows an **Apple Health–inspired** aesthetic:
 - **Tap** on feed cards navigates to the full detail view. Cards should NOT expand/collapse inline.
 - **Detail view actions** (delete, reanalyze, etc.) go in a `...` toolbar menu with confirmation alerts for destructive actions.
 - **Nutrition progress bars** use colored bars: red (calories), blue (protein), orange (carbs), yellow (fat)
-- **Feed cards are passive** — no `Button`, `Toggle`, `Menu`, `DisclosureGroup`, `TextField`, or `onTapGesture` inside feed cards. Nested controls conflict with FeedView's outer `Button` tap handler and corrupt NavigationStack state. Interactive behavior (expand/collapse, editing) belongs in the detail view only.
-- **Card state badges** use `CardStateBadge` from `Views/Shared/CardStateBadge.swift` — capsule pills for processing/failed/ai/manual/live/loading states. All cards with live-update states MUST use this shared component, not custom indicators.
-- **Processing overlay** — use `.processingOverlay(Bool)` modifier to dim content + show spinner during async operations. Do NOT use ad-hoc opacity changes.
-- **Detail view loading** — use `FullViewLoading(message:)` for centered spinner + text. `FullViewError(message:, onRetry:)` for error states with retry.
-
-## Debugging
-- When debugging iOS issues, always verify plist/config structure and nesting levels FIRST before investigating signing, provisioning, or other environmental causes.
-- When something you wrote doesn't work, verify your output against the Apple spec before blaming the environment.
-
-## SwiftUI Patterns
-- Avoid ZStack-based navigation patterns that cause timing conflicts.
-- When implementing delete/refresh flows, ensure deleted items are removed from local state immediately rather than waiting for server refresh.
-- Use `.buttonStyle(.plain)` on interactive elements inside List/ScrollView to prevent tap swallowing.
-- **Detail view layout**: Loading/empty states MUST be outside ScrollView. Use `Group { if data { ScrollView { ... } } else { FullViewLoading(...) } }`. Putting FullViewLoading inside ScrollView causes content to appear at the top instead of centered. See `docs/cards/README.md` for the full pattern table.
-- **No concurrent generation**: Detail views that trigger async generation (e.g., summaries) MUST check whether FeedStore is already generating before starting their own. Two concurrent generations mutate `feedItems` during navigation, corrupting NavigationStack state and making feed cards unclickable after returning.
-- **Navigation**: FeedView uses `NavigationLink(value: FeedNavigationTarget)` with `.navigationDestination(for:)`. Detail views are captured at render time — NavigationStack owns push/pop lifecycle, no manual state. The destination MUST NOT re-resolve from mutable `feedStore.feedItems`. See `docs/cards/README.md` rules 4-5.
-- **No gesture-heavy modifiers in feed-entered detail views**: `.textSelection(.enabled)` and similar gesture-layering modifiers conflict with NavigationStack's back-swipe and can leave feed cards unresponsive after pop.
-
-## Workflow Preferences
-- After making a plan, start implementing code changes promptly. Do not spend extended time reading files and planning without producing edits — the user prefers iterative progress over exhaustive upfront analysis.
 
 ## Backend Repo
 GitHub: https://github.com/dehuacheng/kaori

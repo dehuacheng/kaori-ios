@@ -38,6 +38,8 @@
   "shared.failed": "失败",
   "shared.ai": "AI",
   "shared.manual": "手动",
+  "shared.loading": "加载中",
+  "shared.live": "实时",
   "shared.camera": "拍照",
   "shared.library": "相册",
 

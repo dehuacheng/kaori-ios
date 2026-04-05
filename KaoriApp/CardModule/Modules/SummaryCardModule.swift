@@ -14,16 +14,28 @@ struct SummaryCardModule: CardModule {
     @MainActor
     func feedCardView(item: FeedItem, displayTime: String?) -> AnyView {
         guard let p = item.payload as? SummaryPayload else { return AnyView(EmptyView()) }
-        return AnyView(SummaryFeedCardWrapper(text: p.text, date: p.date))
+        return AnyView(SummaryFeedCardWrapper(text: p.text, date: p.date, kind: p.kind))
     }
 
     @MainActor
     func feedDetailView(item: FeedItem) -> AnyView? {
         guard let p = item.payload as? SummaryPayload else { return nil }
-        let isWeekly = Calendar.current.component(.weekday, from: Date()) ==
-            UserDefaults.standard.integer(forKey: "weeklySummaryWeekday")
-        let type: SummaryDetailView.SummaryType = isWeekly ? .weekly : .daily(date: p.date)
-        return AnyView(SummaryDetailView(summaryType: type))
+        let type: SummaryDetailView.SummaryType = p.kind == .weekly
+            ? .weekly(date: p.date)
+            : .daily(date: p.date)
+        let initialText = p.summaryId == nil ? nil : p.text
+        return AnyView(SummaryDetailView(summaryType: type, initialText: initialText))
+    }
+
+    @MainActor
+    func canNavigateToFeedDetail(item: FeedItem) -> Bool {
+        item.payload is SummaryPayload
+    }
+
+    @MainActor
+    func feedDetailNavigationID(item: FeedItem) -> String {
+        guard let p = item.payload as? SummaryPayload else { return item.id }
+        return "summary-\(p.date)-\(p.kind.rawValue)"
     }
 
     @MainActor
@@ -84,11 +96,8 @@ struct SummaryGenerateView: View {
             }
             .task {
                 isGenerating = true
-                if isWeeklySummaryDay {
-                    resultText = await feedStore.generateWeeklySummary()
-                } else {
-                    resultText = await feedStore.generateDailySummary()
-                }
+                let kind: SummaryKind = isWeeklySummaryDay ? .weekly : .daily
+                resultText = await feedStore.generateSummary(kind: kind, date: feedStore.todayString)
                 isGenerating = false
             }
         }

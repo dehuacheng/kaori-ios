@@ -23,7 +23,9 @@ struct MealRowView: View {
                 HStack {
                     Text(L.t("mealType.\(meal.mealType ?? "snack")"))
                         .font(.subheadline.bold())
-                    AnalysisStatusBadge(status: meal.analysisStatus, isEstimated: meal.isEstimated)
+                    if let state = mealRowState {
+                        CardStateBadge(state)
+                    }
                 }
                 if let desc = meal.description, !desc.isEmpty {
                     Text(desc)
@@ -37,10 +39,7 @@ struct MealRowView: View {
 
             // Nutrition
             VStack(alignment: .trailing, spacing: 2) {
-                if meal.analysisStatus == "pending" || meal.analysisStatus == "analyzing" {
-                    ProgressView()
-                        .scaleEffect(0.7)
-                } else if let cal = meal.calories {
+                if let cal = meal.calories {
                     Text("\(cal) kcal")
                         .font(.subheadline.bold())
                     if let p = meal.proteinG {
@@ -50,7 +49,19 @@ struct MealRowView: View {
                     }
                 }
             }
+            .processingOverlay(meal.analysisStatus == "pending" || meal.analysisStatus == "analyzing")
         }
         .padding(.vertical, 4)
+    }
+
+    private var mealRowState: CardState? {
+        switch meal.analysisStatus {
+        case "pending", "analyzing": .processing
+        case "failed": .failed
+        default:
+            if meal.isEstimated == 1 { .ai }
+            else if meal.isEstimated == 0 { .manual }
+            else { nil }
+        }
     }
 }

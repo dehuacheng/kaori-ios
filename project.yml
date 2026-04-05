@@ -77,6 +77,22 @@ targets:
         DEVELOPMENT_TEAM: VEHZLU88DS
         SWIFT_EMIT_LOC_STRINGS: true
 
+  KaoriAppTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - KaoriAppTests
+    dependencies:
+      - target: KaoriApp
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: true
+        PRODUCT_BUNDLE_IDENTIFIER: com.dehuacheng.kaori.app.tests
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/KaoriApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/KaoriApp"
+        BUNDLE_LOADER: "$(TEST_HOST)"
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: VEHZLU88DS
+
   KaoriShareExtension:
     type: app-extension
     platform: iOS

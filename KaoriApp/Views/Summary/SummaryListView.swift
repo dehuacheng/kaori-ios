@@ -27,7 +27,7 @@ struct SummaryListView: View {
                     NavigationLink {
                         SummaryDetailView(
                             summaryType: summary.type == "weekly"
-                                ? .weekly
+                                ? .weekly(date: summary.date)
                                 : .daily(date: summary.date)
                         )
                         .toolbar(.hidden, for: .tabBar)

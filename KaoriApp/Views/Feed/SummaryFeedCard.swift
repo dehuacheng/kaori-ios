@@ -5,11 +5,13 @@ struct SummaryFeedCardWrapper: View {
     @Environment(FeedStore.self) private var feedStore
     let text: String
     let date: String
+    let kind: SummaryKind
 
     var body: some View {
         SummaryFeedCard(
             text: text,
             date: date,
+            kind: kind,
             isRegenerating: feedStore.regeneratingSummaryDates.contains(date)
         )
     }
@@ -18,37 +20,50 @@ struct SummaryFeedCardWrapper: View {
 struct SummaryFeedCard: View {
     let text: String
     let date: String
+    let kind: SummaryKind
     var isRegenerating: Bool = false
-    @State private var isExpanded = false
+
+    private var bodyText: String {
+        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !trimmed.isEmpty {
+            return text
+        }
+        return Localizer.localized(isRegenerating ? "summary.generating" : "summary.noSummary")
+    }
+
+    private var headerIcon: String {
+        kind == .weekly ? "calendar.badge.clock" : "sparkles"
+    }
+
+    private var headerColor: Color {
+        kind == .weekly ? .blue : .purple
+    }
+
+    private var headerTitle: String {
+        kind == .weekly
+            ? Localizer.localized("summary.weeklyTitle")
+            : Localizer.localized("summary.dailyTitle")
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Image(systemName: "sparkles")
-                    .foregroundStyle(.purple)
-                Text("Daily Summary")
+                Image(systemName: headerIcon)
+                    .foregroundStyle(headerColor)
+                Text(headerTitle)
                     .font(.subheadline.bold())
-                    .foregroundStyle(.purple)
-                Spacer()
+                    .foregroundStyle(headerColor)
                 if isRegenerating {
-                    ProgressView()
-                        .controlSize(.small)
-                } else {
-                    Button {
-                        withAnimation { isExpanded.toggle() }
-                    } label: {
-                        Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
+                    CardStateBadge(.processing)
                 }
+                Spacer()
             }
 
-            Text(text)
+            Text(bodyText)
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
-                .lineLimit(isExpanded ? nil : 3)
-                .opacity(isRegenerating ? 0.4 : 1.0)
+                .lineLimit(3)
+                .processingOverlay(isRegenerating)
         }
         .feedCard()
     }
