@@ -43,7 +43,7 @@ struct PostDetailView: View {
                     }
                 }
 
-                Text(post.content)
+                LinkedText(post.content)
                     .font(.body)
 
                 HStack {

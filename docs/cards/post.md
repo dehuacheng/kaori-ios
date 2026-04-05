@@ -31,6 +31,17 @@ Personal microblog for quick thoughts with optional photo attachments (up to 5).
 ## Store
 `Stores/PostStore.swift` — CRUD via `/api/post`
 
+## Share Extension
+Posts can also be created via the iOS Share Extension (`KaoriShareExtension/`). When sharing from other apps (Xiaohongshu, Douyin, Safari, etc.):
+- The extension appears in the iOS share sheet as "Kaori"
+- Accepts URLs, text, and images
+- For URLs: fetches Open Graph metadata (title, description, og:image) to enrich the post content
+- Shows a compose view where the user can edit before saving
+- Communicates with the backend via `SharedConfig` (App Group shared UserDefaults for server URL + token)
+
+## Linked URLs
+URLs in post content are rendered as tappable links via `LinkedText` (`Views/Shared/LinkedText.swift`), using `NSDataDetector` for URL detection. Works in both feed cards and detail views.
+
 ## Backend
 - `POST /api/post` — create (multipart: photos + fields {post_date, title, content})
 - `GET /api/post?date=...` — list by date

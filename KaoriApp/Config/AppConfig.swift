@@ -3,10 +3,16 @@ import Foundation
 @Observable
 class AppConfig {
     var serverURL: String {
-        didSet { UserDefaults.standard.set(serverURL, forKey: "serverURL") }
+        didSet {
+            UserDefaults.standard.set(serverURL, forKey: "serverURL")
+            SharedConfig.serverURL = serverURL
+        }
     }
     var token: String {
-        didSet { UserDefaults.standard.set(token, forKey: "token") }
+        didSet {
+            UserDefaults.standard.set(token, forKey: "token")
+            SharedConfig.token = token
+        }
     }
 
     var isConfigured: Bool {
@@ -29,5 +35,8 @@ class AppConfig {
     init() {
         self.serverURL = UserDefaults.standard.string(forKey: "serverURL") ?? ""
         self.token = UserDefaults.standard.string(forKey: "token") ?? ""
+        // Migrate to shared suite for Share Extension access
+        if !serverURL.isEmpty { SharedConfig.serverURL = serverURL }
+        if !token.isEmpty { SharedConfig.token = token }
     }
 }

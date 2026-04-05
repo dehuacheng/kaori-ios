@@ -11,7 +11,7 @@ SwiftUI iOS client for the Kaori personal life management app. Connects to the K
 ## Structure
 ```
 KaoriApp/
-  Config/         — AppConfig (server URL + token in UserDefaults)
+  Config/         — AppConfig (server URL + token in UserDefaults), SharedConfig (App Group shared defaults for extensions)
   Network/        — APIClient (URLSession wrapper), APIError
   Models/         — Codable structs matching backend JSON responses
     FeedItem.swift    — Unified feed item enum (meal, weight, workout, summary, portfolio)
@@ -48,6 +48,12 @@ KaoriApp/
   Health/         — HealthKitManager (weight + workout sync)
   Notifications/  — NotificationManager, NotificationSettings, BackgroundTaskManager
   Localization/   — en.json, zh-Hans.json (flat key-value)
+  Shared/         — LinkedText (URL-detecting tappable text view)
+KaoriShareExtension/  — iOS Share Extension (share from other apps → Post card)
+  ShareViewController.swift     — UIKit entry point, extracts attachments, fetches URL metadata
+  ShareComposeView.swift        — SwiftUI compose UI (editable content, image preview, date picker)
+  ShareExtensionAPIClient.swift — Lightweight POST /api/post client using SharedConfig
+  URLMetadataFetcher.swift      — Fetches Open Graph metadata (title, description, image) from URLs
 ```
 
 ## Card-First Architecture
@@ -213,6 +219,16 @@ If either returns results, the change violates the card-first architecture. Move
 - Key naming convention: `{feature}.{element}` (e.g., `meal.logMeal`, `common.save`, `feed.empty`).
 - Units (kg, kcal, g, cm) are NOT localized — they are international.
 - The widget extension (`KaoriTimerWidget`) is not localized (separate target, minimal text).
+- The share extension (`KaoriShareExtension`) uses hardcoded bilingual strings (reads `appLanguage` from shared App Group defaults).
+
+## Share Extension
+- **Target:** `KaoriShareExtension` (bundle ID: `com.dehuacheng.kaori.app.share-extension`)
+- **Purpose:** Share content from other apps (Xiaohongshu, Douyin, Safari, etc.) into Kaori as Post cards
+- **App Group:** `group.com.dehuacheng.kaori` — shared `UserDefaults` suite for server URL, token, and language preference between the main app and extension
+- **SharedConfig** (`KaoriApp/Config/SharedConfig.swift`) — shared between both targets via `project.yml` sources. The main app mirrors `serverURL`, `token`, and `appLanguage` to the shared suite in `AppConfig` and `Localizer`.
+- **URL metadata enrichment:** When a URL is shared, `URLMetadataFetcher` fetches Open Graph tags (`og:title`, `og:description`, `og:image`) and pre-fills the compose view. OG image is downloaded as the post photo if no image was shared directly.
+- **Plist structure:** `NSExtensionActivationRule` MUST be under `NSExtensionAttributes` (not directly under `NSExtension`). See `feedback_ios_extension_plist.md` in memory.
+- **Localization:** Uses hardcoded bilingual strings (not the JSON-based Localizer), reading `appLanguage` from `SharedConfig.appLanguage`.
 
 ## Design Language
 

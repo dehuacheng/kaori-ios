@@ -5,6 +5,7 @@ class Localizer {
     var language: AppLanguage {
         didSet {
             UserDefaults.standard.set(language.rawValue, forKey: "appLanguage")
+            SharedConfig.appLanguage = language.rawValue
             loadStrings()
         }
     }
@@ -14,6 +15,7 @@ class Localizer {
     init() {
         let saved = UserDefaults.standard.string(forKey: "appLanguage") ?? "en"
         self.language = AppLanguage(rawValue: saved) ?? .english
+        SharedConfig.appLanguage = saved
         loadStrings()
     }
 

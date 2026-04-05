@@ -20,6 +20,7 @@ SwiftUI iOS client for [Kaori](https://github.com/dehuacheng/kaori) — a person
 - **Notifications & AI summaries** — Configurable meal/weight reminders. AI-generated daily and weekly health summaries with swipe-to-regenerate.
 - **iOS 18 design** — Apple Health–inspired dark card aesthetic, Control Center–style add menu
 - **Financial portfolio** — Daily portfolio value card on the feed with live prices, per-account breakdown, top movers. Import holdings via multi-photo screenshots with LLM extraction. Account management in More > Data > Finance.
+- **Share Extension** — Share content from any app (Xiaohongshu, Douyin, Safari, etc.) directly into your Kaori feed as a Post card. Auto-fetches URL metadata (title, description, preview image) via Open Graph tags.
 
 ### Requirements
 
@@ -89,6 +90,7 @@ The Python backend is at [kaori](https://github.com/dehuacheng/kaori).
 - **通知与 AI 总结** — 可配置的饮食/体重提醒。AI 生成的每日和每周健康总结，左滑可重新生成。
 - **iOS 18 设计** — Apple Health 风格的暗色卡片设计，控制中心风格的添加菜单
 - **投资组合追踪** — 信息流显示每日投资组合涨跌卡片（实时行情），支持多图截图导入持仓（LLM 自动提取），账户管理在更多 > 数据 > 财务。
+- **分享扩展** — 从任意应用（小红书、抖音、Safari 等）直接分享内容到 Kaori 信息流，自动创建随记卡片。自动获取链接元数据（标题、描述、预览图）。
 
 ### 环境要求
 

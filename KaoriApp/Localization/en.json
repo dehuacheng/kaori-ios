@@ -399,5 +399,12 @@
   "reminder.deleteReminder": "Delete Reminder?",
   "reminder.noReminders": "No reminders yet",
   "reminder.active": "Active",
-  "reminder.completed": "Completed"
+  "reminder.completed": "Completed",
+
+  "share.saveToKaori": "Save to Kaori",
+  "share.notConfigured": "Open Kaori and configure server settings first",
+  "share.serverUnreachable": "Server unreachable — is Tailscale connected?",
+  "share.invalidToken": "Authentication failed — check token in Settings",
+  "share.saved": "Saved!",
+  "share.saving": "Saving..."
 }

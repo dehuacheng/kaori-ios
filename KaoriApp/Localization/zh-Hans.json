@@ -399,5 +399,12 @@
   "reminder.deleteReminder": "删除提醒？",
   "reminder.noReminders": "暂无提醒",
   "reminder.active": "进行中",
-  "reminder.completed": "已完成"
+  "reminder.completed": "已完成",
+
+  "share.saveToKaori": "保存到 Kaori",
+  "share.notConfigured": "请先打开 Kaori 并配置服务器",
+  "share.serverUnreachable": "无法连接服务器 — 请检查 Tailscale",
+  "share.invalidToken": "认证失败 — 请在设置中检查 Token",
+  "share.saved": "已保存！",
+  "share.saving": "保存中..."
 }

@@ -54,7 +54,7 @@ struct PostFeedCard: View {
                 .padding(.vertical, 2)
             }
 
-            Text(post.content)
+            LinkedText(post.content)
                 .font(.subheadline)
                 .lineLimit(4)
         }

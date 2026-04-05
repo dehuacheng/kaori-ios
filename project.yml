@@ -16,6 +16,8 @@ targets:
       path: KaoriApp/KaoriApp.entitlements
       properties:
         com.apple.developer.healthkit: true
+        com.apple.security.application-groups:
+          - group.com.dehuacheng.kaori
     info:
       path: KaoriApp/Info.plist
       properties:
@@ -37,6 +39,8 @@ targets:
           - UIInterfaceOrientationLandscapeRight
     dependencies:
       - target: KaoriTimerWidgetExtension
+        embed: true
+      - target: KaoriShareExtension
         embed: true
     settings:
       base:
@@ -69,6 +73,40 @@ targets:
         CURRENT_PROJECT_VERSION: "1"
         MARKETING_VERSION: "0.1.0"
         PRODUCT_BUNDLE_IDENTIFIER: com.dehuacheng.kaori.app.timer-widget
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: VEHZLU88DS
+        SWIFT_EMIT_LOC_STRINGS: true
+
+  KaoriShareExtension:
+    type: app-extension
+    platform: iOS
+    sources:
+      - KaoriShareExtension
+      - path: KaoriApp/Config/SharedConfig.swift
+        type: file
+    entitlements:
+      path: KaoriShareExtension/KaoriShareExtension.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.dehuacheng.kaori
+    info:
+      path: KaoriShareExtension/Info.plist
+      properties:
+        CFBundleDisplayName: Kaori
+        NSExtension:
+          NSExtensionAttributes:
+            NSExtensionActivationRule:
+              NSExtensionActivationSupportsText: true
+              NSExtensionActivationSupportsWebURLWithMaxCount: 1
+              NSExtensionActivationSupportsImageWithMaxCount: 1
+          NSExtensionPointIdentifier: com.apple.share-services
+          NSExtensionPrincipalClass: "$(PRODUCT_MODULE_NAME).ShareViewController"
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: false
+        CURRENT_PROJECT_VERSION: "1"
+        MARKETING_VERSION: "0.1.0"
+        PRODUCT_BUNDLE_IDENTIFIER: com.dehuacheng.kaori.app.share-extension
         CODE_SIGN_STYLE: Automatic
         DEVELOPMENT_TEAM: VEHZLU88DS
         SWIFT_EMIT_LOC_STRINGS: true
