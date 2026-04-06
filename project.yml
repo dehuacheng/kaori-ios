@@ -31,6 +31,7 @@ targets:
         NSPhotoLibraryUsageDescription: "Kaori needs photo library access to add meal photos"
         NSLocationWhenInUseUsageDescription: "Kaori uses your location to show local weather in your feed"
         NSHealthShareUsageDescription: "Kaori reads your weight history from Apple Health to track trends"
+        NSFaceIDUsageDescription: "Kaori uses Face ID to protect your personal health and financial data"
         NSHealthUpdateUsageDescription: "Kaori saves weight and workout data to Apple Health"
         NSSupportsLiveActivities: true
         BGTaskSchedulerPermittedIdentifiers:

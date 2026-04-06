@@ -27,6 +27,7 @@ struct KaoriApp: App {
     @State private var notificationManager = NotificationManager()
     @State private var notificationSettings = NotificationSettings()
     @State private var locationManager = LocationManager()
+    @State private var appLockManager = AppLockManager()
 
     init() {
         let config = AppConfig()
@@ -81,6 +82,7 @@ struct KaoriApp: App {
                 .environment(notificationManager)
                 .environment(notificationSettings)
                 .environment(locationManager)
+                .environment(appLockManager)
         }
     }
 }
@@ -96,6 +98,8 @@ struct ContentView: View {
     @Environment(CardRegistry.self) private var cardRegistry
     @Environment(FeedStore.self) private var feedStore
     @Environment(LocationManager.self) private var locationManager
+    @Environment(AppLockManager.self) private var appLockManager
+    @Environment(\.scenePhase) private var scenePhase
     @State private var showImportPrompt = false
     @State private var importExistingWorkouts: [Workout] = []
     @State private var selectedTab = 0
@@ -265,6 +269,21 @@ struct ContentView: View {
                 try? await Task.sleep(for: .milliseconds(350))
                 selectedTab = 0
                 handleAddAction(for: cardType)
+            }
+        }
+        .overlay {
+            if appLockManager.isLocked {
+                LockScreenView()
+            }
+        }
+        .onChange(of: scenePhase) { _, newPhase in
+            switch newPhase {
+            case .background:
+                appLockManager.appDidEnterBackground()
+            case .active:
+                appLockManager.appWillEnterForeground()
+            default:
+                break
             }
         }
     }

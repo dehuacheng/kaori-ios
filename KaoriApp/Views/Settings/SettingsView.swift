@@ -20,6 +20,7 @@ struct SettingsView: View {
     @State private var workoutImportList: [HKWorkout] = []
     @State private var existingWorkouts: [Workout] = []
     @State private var isFetchingWorkouts = false
+    @Environment(AppLockManager.self) private var appLockManager
     @State private var selectedLLMMode: LLMMode = .claudeCli
     @State private var isSavingLLM = false
     @State private var bodyWeightUnit: WeightUnit = .kg
@@ -166,6 +167,31 @@ struct SettingsView: View {
                                 .font(.subheadline)
                         }
                     }
+                }
+            }
+
+            // MARK: - Security
+            if config.isConfigured {
+                Section {
+                    Toggle(L.t("settings.appLock"), isOn: Binding(
+                        get: { appLockManager.isAppLockEnabled },
+                        set: { newValue in
+                            if newValue {
+                                Task {
+                                    let ok = await appLockManager.authenticateToEnable()
+                                    if ok {
+                                        appLockManager.isAppLockEnabled = true
+                                    }
+                                }
+                            } else {
+                                appLockManager.isAppLockEnabled = false
+                            }
+                        }
+                    ))
+                } header: {
+                    Text(L.t("settings.security"))
+                } footer: {
+                    Text(L.t("settings.appLockFooter", appLockManager.biometryLabel))
                 }
             }
 

@@ -439,6 +439,10 @@
   "chat.memoryValue": "Value",
   "chat.memoryCategory": "Category",
 
+  "settings.security": "Security",
+  "settings.appLock": "App Lock",
+  "settings.appLockFooter": "Require %@ when opening the app",
+
   "settings.aiAgent": "AI Agent",
   "settings.agentMemory": "Agent Memory",
 

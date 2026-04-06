@@ -26,6 +26,8 @@
 	<string>1</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Kaori needs camera access to photograph your meals</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Kaori uses Face ID to protect your personal health and financial data</string>
 	<key>NSHealthShareUsageDescription</key>
 	<string>Kaori reads your weight history from Apple Health to track trends</string>
 	<key>NSHealthUpdateUsageDescription</key>

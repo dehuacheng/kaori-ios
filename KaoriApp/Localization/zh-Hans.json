@@ -439,6 +439,10 @@
   "chat.memoryValue": "内容",
   "chat.memoryCategory": "分类",
 
+  "settings.security": "安全",
+  "settings.appLock": "应用锁",
+  "settings.appLockFooter": "打开应用时需要%@验证",
+
   "settings.aiAgent": "AI 助手",
   "settings.agentMemory": "助手记忆",
 
