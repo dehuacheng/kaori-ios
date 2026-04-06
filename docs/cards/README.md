@@ -2,7 +2,7 @@
 
 Every feature in Kaori is a **card type** implemented as a `CardModule`. Each card has a design doc here covering its iOS module, views, feed behavior, and interaction patterns.
 
-**When adding or modifying a card, update its doc here.** See `CLAUDE.md` for the full checklist.
+**When adding or modifying a card, read the backend repo's `docs/cards/HOWTO.md` for the full-stack checklist.** Update this doc and the per-card doc when done.
 
 ## Cards
 

@@ -82,23 +82,12 @@ Defined in `KaoriApp/CardModule/CardModule.swift`. Each card module provides:
 ### CardRegistry
 `KaoriApp/CardModule/CardRegistry.swift` — holds all registered modules, injected via `@Environment`. Drives feed rendering, "+" menu, Data tab, and card settings. FeedView has **zero** card-type switches — it delegates everything to the registry.
 
-### Adding a New Card Type (iOS)
-1. **Write a card design doc** at `docs/cards/<type>.md` (see `docs/cards/README.md` for template)
-2. Create `KaoriApp/CardModule/Modules/XxxCardModule.swift` conforming to `CardModule`
-3. Add a static factory `FeedItem.xxx(...)` in your module file (or inline in FeedStore)
-4. Create feed card view, create view, data list view as needed under `Views/Xxx/`
-5. Register in `KaoriApp.init()`: `registry.register(XxxCardModule())`
-6. Add localization keys to both `en.json` and `zh-Hans.json`
-7. **No other files need modification** — FeedView, MoreView, ContentView, and SettingsView are all registry-driven
+### Adding or Editing a Card (iOS + Backend)
+**Read the backend repo's `docs/cards/HOWTO.md` first** — it has the full-stack checklist (backend + iOS), file-by-file, with items-based vs singleton distinction, and common edit patterns.
 
-### Modifying an Existing Card Type
-- All changes to a card's views stay within that card's module file and its associated view files
-- The CardModule protocol ensures consistent behavior across all card types
-- Do NOT add card-specific logic to FeedView, ContentView, or MoreView — those are generic and registry-driven
-- **Update the card's design doc** in `docs/cards/<type>.md` to reflect the change
-
-### Card Design Docs
-Every card type has a design doc at `docs/cards/<type>.md` covering module properties, views, store, FeedItem factory, and interaction patterns. See `docs/cards/README.md` for the index and template. **These docs must be kept in sync with the code.**
+- Per-card design docs: backend `docs/cards/<type>.md` (template: `docs/cards/README.md`)
+- Simplest reference card module: `PostCardModule.swift` (34 lines)
+- Key iOS-only files when adding a card: `CardModule/Modules/`, `Models/FeedItem.swift`, `Stores/FeedStore.swift` (`convertToFeedItem` for items-based, `applyFeedResponse` for singleton), `KaoriApp.swift` (registration), `Localization/*.json`
 
 ### Key Invariants (enforced by pre-commit check)
 - All feed cards MUST use `.feedCard()` modifier
