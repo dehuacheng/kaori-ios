@@ -4,7 +4,7 @@ import LocalAuthentication
 @Observable
 class AppLockManager {
     var isLocked: Bool
-    private var backgroundedAt: Date?
+    private(set) var didEnterBackground = false
 
     var isAppLockEnabled: Bool {
         get { UserDefaults.standard.bool(forKey: "isAppLockEnabled") }
@@ -19,11 +19,12 @@ class AppLockManager {
     // MARK: - Lifecycle
 
     func appDidEnterBackground() {
-        backgroundedAt = Date()
+        didEnterBackground = true
     }
 
     func appWillEnterForeground() {
-        guard isAppLockEnabled else { return }
+        guard isAppLockEnabled, didEnterBackground else { return }
+        didEnterBackground = false
         isLocked = true
     }
 
