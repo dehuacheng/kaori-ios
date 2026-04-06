@@ -163,6 +163,42 @@ struct FeedItem: Identifiable {
             payload: reminder
         )
     }
+
+    static func weatherCurrent(_ response: WeatherResponse) -> FeedItem {
+        let date = response.current?.date ?? ""
+        return FeedItem(
+            id: "weather-current-\(date)",
+            cardType: "weather",
+            dateString: date,
+            sortPriority: 0,
+            sortDate: .distantFuture,
+            displayTime: nil,
+            payload: WeatherPayload(
+                data: response.current!,
+                location: response.location,
+                isLive: response.isLive,
+                kind: .current
+            )
+        )
+    }
+
+    static func weatherForecast(_ response: WeatherResponse) -> FeedItem {
+        let date = response.forecast?.date ?? ""
+        return FeedItem(
+            id: "weather-forecast-\(date)",
+            cardType: "weather",
+            dateString: date,
+            sortPriority: 0,
+            sortDate: .distantFuture,
+            displayTime: nil,
+            payload: WeatherPayload(
+                data: response.forecast!,
+                location: response.location,
+                isLive: response.isLive,
+                kind: .forecast
+            )
+        )
+    }
 }
 
 // MARK: - Payload types for compound data
@@ -187,4 +223,16 @@ struct SummaryPayload {
 struct NutritionPayload {
     let totals: NutritionTotals
     let profile: Profile?
+}
+
+enum WeatherCardKind {
+    case current
+    case forecast
+}
+
+struct WeatherPayload {
+    let data: WeatherData
+    let location: WeatherLocation?
+    let isLive: Bool
+    let kind: WeatherCardKind
 }

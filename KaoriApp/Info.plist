@@ -30,6 +30,8 @@
 	<string>Kaori reads your weight history from Apple Health to track trends</string>
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>Kaori saves weight and workout data to Apple Health</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Kaori uses your location to show local weather in your feed</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Kaori needs photo library access to add meal photos</string>
 	<key>NSSupportsLiveActivities</key>

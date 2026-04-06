@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		038BD44288262C1A70C97C84 /* WeatherDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF5CE899C7604F8B7C48726 /* WeatherDetailView.swift */; };
 		06A917B084A9E912DD511AE8 /* MealCardModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D475E311820FEDFD06B5B4 /* MealCardModule.swift */; };
 		076770AAF9ABECC2B6D9D9E8 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E73336FBC606B1432E7C480 /* ProfileView.swift */; };
+		08759F1C6CEBA94E1F2F1FAC /* AgentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4D3C801FF1604CD7ED95D5 /* AgentStore.swift */; };
 		0C7D78FF8414F51BC0F8712A /* en.json in Resources */ = {isa = PBXBuildFile; fileRef = FB7D98DCD9C2AED3E0D3DEDB /* en.json */; };
 		11E092E0D4A1BBBFFDF2C4B9 /* UnitConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133E9D0C32C79FE969939FD8 /* UnitConverterTests.swift */; };
 		1456E9490821F2D168C640BF /* defaults.json in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A03AAB1927618F07B50F2 /* defaults.json */; };
@@ -23,6 +25,7 @@
 		205EF93C84D2E5265CDDFD5E /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF2A2F8F4116DAFA93C2CDC /* APIClient.swift */; };
 		21FA4D52BC2D16D40B280CB7 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92170DF1C172891E924064FF /* Post.swift */; };
 		24809FEB7DB2E1D611DAFF99 /* zh-Hans.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E5E0F9ED1381B9AC4ED6D20 /* zh-Hans.json */; };
+		24EF8936F5133FACFCDA2F4B /* WeatherDataListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40913D548D582C1C27E9D796 /* WeatherDataListView.swift */; };
 		2B75B47F07B3BA6886F7B93A /* Meal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC45B434D316B99DB578F96 /* Meal.swift */; };
 		2D68CF261AF3C6BAE4B300DC /* ImportedWorkoutMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C24199376F64DF38580BBC /* ImportedWorkoutMeta.swift */; };
 		2F5A63776F5FBFC7CCA4F8C0 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE7B77F17ABBAAEEFFC88FB /* Profile.swift */; };
@@ -42,15 +45,18 @@
 		455C5E5E58B480BE0B5B1A1F /* NotificationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3A5F9FDD1069B52CBB1FE2 /* NotificationRouter.swift */; };
 		45A8B0596303F4256533472E /* KaoriTimerLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1841399B6EBD1A804EB3E20 /* KaoriTimerLiveActivity.swift */; };
 		4608389648507B3BBB4C8387 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F9883054F13D3EB695B476 /* SettingsView.swift */; };
+		482AA56B888C855709FA3537 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F3F907BD72DB2E3480A612 /* ChatView.swift */; };
 		48CF34BDE73D97E0320673F0 /* FeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798AB8F4211084BBB87259CF /* FeedStore.swift */; };
 		49A3AA3D563633A55CF4C376 /* SummaryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5926285FF29F6902466E44 /* SummaryListView.swift */; };
 		4A37A72996217DD57F4776EF /* MealCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0A06BF94F3C800F35D2560 /* MealCreateView.swift */; };
 		4B4FFB43410556345FC048C2 /* PortfolioDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362D4D1E9B9CFBCB1DBD20C8 /* PortfolioDetailView.swift */; };
 		4D6849DE5A98ADA51DF02CBC /* ImportedWorkoutDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553174ED05FBF6A0DC71BC23 /* ImportedWorkoutDetailView.swift */; };
 		4EC094CD1350631E37F839EC /* PostCardModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1AE844762BDC48AF581DBB /* PostCardModule.swift */; };
+		4EFEEB8559EEAEDEE9D4E373 /* Agent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCA67E70C3D529DEBDC082A /* Agent.swift */; };
 		4F27A73B29E952033757C8E9 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DF9B688A1041D6787EE0A9 /* HealthKitManager.swift */; };
 		50404DFCD9BDEF5057BB9F00 /* ReminderCardModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803649CE603F6C9402846A87 /* ReminderCardModule.swift */; };
 		5194E74DEA086970F2D97603 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95564C2B8291EAE2D59742C3 /* FeedView.swift */; };
+		51DAAADF9C1E91BECFAFE84E /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91DA9ED319A78156A39FD54 /* Weather.swift */; };
 		52C7BB78652E3C5206EA2488 /* CardRegistryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E674FC98786A665C1D2AFD8 /* CardRegistryTests.swift */; };
 		52F6ABC31B148EAE930A53F1 /* FeedItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16416DBA4DDD11359F49AB05 /* FeedItemTests.swift */; };
 		532E5973BB1D7FBB50FD1AD1 /* MealStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9AB8A03863BD0C08D6697D /* MealStore.swift */; };
@@ -59,12 +65,15 @@
 		57434CA3801444D7FCABDB7E /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180A82F0BB3F22AA39567B76 /* PostDetailView.swift */; };
 		5B0BB6FB6685C7FB87C713E2 /* Weight.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEA26FF04B554F7679A7B4C0 /* Weight.swift */; };
 		5B71438DB279C8B7A1C4E082 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086EF4517801CABE1067D87D /* ShareViewController.swift */; };
+		5BFF4C81B1D9C1AB0E50BE17 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F90F02AA0E49CCCEB3D0214 /* LocationManager.swift */; };
 		5C481C54A970CC84B1F64181 /* NutritionCardModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234E063F50E26DA9197E727B /* NutritionCardModule.swift */; };
 		5CEE4743586641D5E1AD8A76 /* ReminderCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1AFD6420F1234DD3F2A06 /* ReminderCreateView.swift */; };
 		5DF697CBBF5E628CBF8E9FE7 /* PostFeedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C2F5C7D6D8A6B05FEE2A36 /* PostFeedCard.swift */; };
+		5E0A6B64DBFFBDB0A7CCC65B /* AgentMemoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695C145117312007051573AC /* AgentMemoryView.swift */; };
 		5F9660B8B3E8A50B8573DC28 /* Summary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331E61143E2DD0F8D055F87B /* Summary.swift */; };
 		619631777EF8C0F95189DF60 /* KaoriShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DC626B3AEA12FB372AD4CE7F /* KaoriShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		622E843913C032C04AB97813 /* FinanceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A1F27D4E61E81445746BF1 /* FinanceStore.swift */; };
+		62C345505E31EAB46B9E3087 /* ChatSessionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A7F9F41767E399BB3D7CD8 /* ChatSessionListView.swift */; };
 		652DACF32CB255993621EF35 /* WeightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647C6A152720E00B28A55515 /* WeightView.swift */; };
 		6DEA6E7611A31F4BDAFE4E69 /* WorkoutListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA605630E157E285492955F /* WorkoutListView.swift */; };
 		6E5E05F6A94D0E9B26B1740B /* MealRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4088294A4BCBA4D82EF459A4 /* MealRowView.swift */; };
@@ -75,6 +84,7 @@
 		7E1B446A66FE5CA6957E9A8C /* PortfolioFeedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DB8B83949719000B2F06C5 /* PortfolioFeedCard.swift */; };
 		806AA7E11EF4399BDCE4C7CB /* Localizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7E3A3F17C47614255F34BA /* Localizer.swift */; };
 		8357443E39F499DD8F0B8550 /* WorkoutRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99AD8BBFFF23F562B463C20 /* WorkoutRowView.swift */; };
+		839A09B86351815626A89877 /* SSEClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6A254643FF8358144C6937 /* SSEClient.swift */; };
 		860FE2EF1F57E669117B4929 /* ShareComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1E23E5561B198FE89C7625 /* ShareComposeView.swift */; };
 		89C41CD87949AC96B1E3F2FA /* WeightChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D5656813267E1EEA4F21326 /* WeightChartView.swift */; };
 		89FB08D4F71F7897215587EA /* SetRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10D833F5F69DE4D7B8D1CC5 /* SetRowView.swift */; };
@@ -92,15 +102,18 @@
 		A391DB5ADC4D916395C8CEEF /* KaoriTimerWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56EFC258D8FFDCEA908209C /* KaoriTimerWidgetBundle.swift */; };
 		A5F3319DB0A131CCC7074954 /* WorkoutStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB276F331D4A58B1AB64302 /* WorkoutStore.swift */; };
 		A609FF59EAC04FED7D3195DB /* LinkedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4548644C0D48B3C7EABA1FA0 /* LinkedText.swift */; };
+		A6D894B21FA5726CB1CDB25F /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = F50FE2436E31709B07082022 /* MarkdownUI */; };
 		A9E80973719AA82394FF66BE /* MealDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D085BBC8CB56BB2B218B390 /* MealDetailView.swift */; };
 		B4D605C41253221582299BA2 /* SharedConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDDAD3B33CDEF4CC6BAFE6A /* SharedConfig.swift */; };
 		BAA56F4E32BE0088932CA20B /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0030EDC4C6AB11BB33FC438E /* Reminder.swift */; };
 		BAF10AD71D665307A22FF127 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE357CF3AA96BDB1CB1FD477 /* TimerView.swift */; };
+		BB0AE6B5C37FE141A906B5A1 /* WeatherFeedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B84474DBF9DC592E7FA1AA /* WeatherFeedCard.swift */; };
 		BBE49675447E4CB29B8C426C /* ExerciseManageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9C34474157CEDBC2DC2532 /* ExerciseManageView.swift */; };
 		BD943E644F42AF40BD058C73 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCD339C8B5D5941E4356EC91 /* Assets.xcassets */; };
 		C0B0D4BBFD239E20CC177682 /* TimerEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4CBC90D3E2E1018B6D94CC /* TimerEngine.swift */; };
 		C35863E731B68FFD9B463866 /* CodableRoundTripTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4987B8C124BFF6745DD5238 /* CodableRoundTripTests.swift */; };
 		CA042426C17B3F1EFF66222B /* MealListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F18C3AE2E1127D37CE8361 /* MealListView.swift */; };
+		CEB5B4ECA722DBCCC923316A /* ChatBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66CCD7F37CE8A2076B74ABD /* ChatBubbleView.swift */; };
 		CF005900DCBFDDCFBC22D0F1 /* FinanceAccountDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C3D14CAAD20B7ECB827014 /* FinanceAccountDetailView.swift */; };
 		CFBA804BC82DCDD42A210285 /* WeightCardModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585537003DC587FB46F13D36 /* WeightCardModule.swift */; };
 		D10FF928190F20C94059D030 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6342A0A859E54F590AD26E23 /* NotificationManager.swift */; };
@@ -111,6 +124,7 @@
 		D89F35C5BF8C503243FCBCE7 /* PostCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF64D4EA7B0FE4AE689AE05 /* PostCreateView.swift */; };
 		D8FFD7F8540EB146677E5F34 /* WeightCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC6BB4FC53852C40426E13C /* WeightCreateView.swift */; };
 		D955049A398BAB322D35DBB5 /* WorkoutCardModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BF80B2D76B918F7D6A1614 /* WorkoutCardModule.swift */; };
+		E090ACCEC0E8C9938B0D8F2B /* WeatherCardModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEB65226FF6DD31F8AA4DD0 /* WeatherCardModule.swift */; };
 		E0EA4FC30388DD90D1A5E151 /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7147A8679F3CFC8352E161CF /* Workout.swift */; };
 		E3397517F27336E0F656E8BB /* WeightFeedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FED1964313DCCE5E82185BD2 /* WeightFeedCard.swift */; };
 		E39C2D525ECE1764BFC79DBA /* ManageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F521DDA29FA86345A415C3B9 /* ManageView.swift */; };
@@ -169,6 +183,7 @@
 /* Begin PBXFileReference section */
 		0030EDC4C6AB11BB33FC438E /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		071BF34F3746B40727AB45DC /* MealEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealEditView.swift; sourceTree = "<group>"; };
+		07F3F907BD72DB2E3480A612 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		086EF4517801CABE1067D87D /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		0D5656813267E1EEA4F21326 /* WeightChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightChartView.swift; sourceTree = "<group>"; };
 		0F5926285FF29F6902466E44 /* SummaryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryListView.swift; sourceTree = "<group>"; };
@@ -198,12 +213,15 @@
 		3C4A03AAB1927618F07B50F2 /* defaults.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = defaults.json; sourceTree = "<group>"; };
 		3E305087E896AFBA0AFB4DBF /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
 		4088294A4BCBA4D82EF459A4 /* MealRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealRowView.swift; sourceTree = "<group>"; };
+		40913D548D582C1C27E9D796 /* WeatherDataListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataListView.swift; sourceTree = "<group>"; };
 		41C3D14CAAD20B7ECB827014 /* FinanceAccountDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinanceAccountDetailView.swift; sourceTree = "<group>"; };
 		4548644C0D48B3C7EABA1FA0 /* LinkedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedText.swift; sourceTree = "<group>"; };
 		45D956B57C133B098D2E75EE /* ConnectionBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionBanner.swift; sourceTree = "<group>"; };
 		4A18D6133200360913819606 /* WeightStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightStore.swift; sourceTree = "<group>"; };
 		4A9C34474157CEDBC2DC2532 /* ExerciseManageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseManageView.swift; sourceTree = "<group>"; };
 		4B1E23E5561B198FE89C7625 /* ShareComposeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareComposeView.swift; sourceTree = "<group>"; };
+		4BCA67E70C3D529DEBDC082A /* Agent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Agent.swift; sourceTree = "<group>"; };
+		4CEB65226FF6DD31F8AA4DD0 /* WeatherCardModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCardModule.swift; sourceTree = "<group>"; };
 		4FCEC9FEE75376F1773C6EE7 /* KaoriTimerWidgetExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = KaoriTimerWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		5093E8267DC769C300CE1F21 /* DailyNutritionCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyNutritionCard.swift; sourceTree = "<group>"; };
 		53F9883054F13D3EB695B476 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -214,10 +232,13 @@
 		6342A0A859E54F590AD26E23 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		63F557EE85C083C644A79700 /* ReminderFeedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderFeedCard.swift; sourceTree = "<group>"; };
 		647C6A152720E00B28A55515 /* WeightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightView.swift; sourceTree = "<group>"; };
+		68B84474DBF9DC592E7FA1AA /* WeatherFeedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherFeedCard.swift; sourceTree = "<group>"; };
+		695C145117312007051573AC /* AgentMemoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentMemoryView.swift; sourceTree = "<group>"; };
 		69A1F27D4E61E81445746BF1 /* FinanceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinanceStore.swift; sourceTree = "<group>"; };
 		6AF1AFD6420F1234DD3F2A06 /* ReminderCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCreateView.swift; sourceTree = "<group>"; };
 		6AFEDFB821A71709EE98DC76 /* AppLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLanguage.swift; sourceTree = "<group>"; };
 		6CC6BB4FC53852C40426E13C /* WeightCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightCreateView.swift; sourceTree = "<group>"; };
+		6F90F02AA0E49CCCEB3D0214 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		7147A8679F3CFC8352E161CF /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
 		76C24199376F64DF38580BBC /* ImportedWorkoutMeta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportedWorkoutMeta.swift; sourceTree = "<group>"; };
 		77D475E311820FEDFD06B5B4 /* MealCardModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealCardModule.swift; sourceTree = "<group>"; };
@@ -226,6 +247,7 @@
 		7CB167B3D5954D349D6D17C4 /* TimerActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerActivity.swift; sourceTree = "<group>"; };
 		7F3A5F9FDD1069B52CBB1FE2 /* NotificationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRouter.swift; sourceTree = "<group>"; };
 		803649CE603F6C9402846A87 /* ReminderCardModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCardModule.swift; sourceTree = "<group>"; };
+		86A7F9F41767E399BB3D7CD8 /* ChatSessionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSessionListView.swift; sourceTree = "<group>"; };
 		87957F71691258B26CDA92FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		88107ACB573A08C68773FDF8 /* KaoriApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KaoriApp.entitlements; sourceTree = "<group>"; };
 		8C8AC707079AE923CE770EB0 /* BackgroundTaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundTaskManager.swift; sourceTree = "<group>"; };
@@ -257,6 +279,9 @@
 		AFF64D4EA7B0FE4AE689AE05 /* PostCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCreateView.swift; sourceTree = "<group>"; };
 		B39346F4668E4F3EAC87B32D /* ExercisePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisePickerView.swift; sourceTree = "<group>"; };
 		B7B150CC5924D3232A6C6622 /* PostListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListView.swift; sourceTree = "<group>"; };
+		BD6A254643FF8358144C6937 /* SSEClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSEClient.swift; sourceTree = "<group>"; };
+		BE4D3C801FF1604CD7ED95D5 /* AgentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentStore.swift; sourceTree = "<group>"; };
+		BEF5CE899C7604F8B7C48726 /* WeatherDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDetailView.swift; sourceTree = "<group>"; };
 		BF5C8FA0A94976536ACFF877 /* CardPreferenceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPreferenceStore.swift; sourceTree = "<group>"; };
 		C0E52C9193D73843F21A08AA /* CardStateBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStateBadge.swift; sourceTree = "<group>"; };
 		C10D833F5F69DE4D7B8D1CC5 /* SetRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetRowView.swift; sourceTree = "<group>"; };
@@ -275,9 +300,11 @@
 		E4A8BFBB0AA7673018179D63 /* NotificationSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsView.swift; sourceTree = "<group>"; };
 		E4EDC2D7635BA02633606F56 /* FeedCardStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCardStyle.swift; sourceTree = "<group>"; };
 		E6D8764CF74402B715260DCD /* ShareExtensionAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionAPIClient.swift; sourceTree = "<group>"; };
+		E91DA9ED319A78156A39FD54 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		EDD80A012324DF8BE57953D4 /* KaoriAppTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = KaoriAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0C761E19D66964B3766176E /* Finance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Finance.swift; sourceTree = "<group>"; };
 		F521DDA29FA86345A415C3B9 /* ManageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageView.swift; sourceTree = "<group>"; };
+		F66CCD7F37CE8A2076B74ABD /* ChatBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBubbleView.swift; sourceTree = "<group>"; };
 		F7062099EBCF116FC913D89B /* HealthKitMappingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitMappingTests.swift; sourceTree = "<group>"; };
 		F79FACF2D6CFFF9A0D1F4326 /* SummaryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryDetailView.swift; sourceTree = "<group>"; };
 		F8CB71162C96FD59B8B31A1D /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
@@ -291,6 +318,17 @@
 		FEFCBC4B4D2C9828B03E529F /* PostStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStore.swift; sourceTree = "<group>"; };
 		FF5EE770DD3E04DCAF8C1E31 /* MealFeedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealFeedCard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		609302D953B487B5CC0F743E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6D894B21FA5726CB1CDB25F /* MarkdownUI in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		03C7469DC61842EF253C3E97 /* Workout */ = {
@@ -323,6 +361,7 @@
 		06DD7EE98F122917C8FFB4B3 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				6F90F02AA0E49CCCEB3D0214 /* LocationManager.swift */,
 				C4A59685F569247784B5D75E /* UnitConverter.swift */,
 			);
 			path = Utils;
@@ -388,6 +427,16 @@
 			path = Feed;
 			sourceTree = "<group>";
 		};
+		1BD1976CA0198E5B5F62EDBA /* Weather */ = {
+			isa = PBXGroup;
+			children = (
+				40913D548D582C1C27E9D796 /* WeatherDataListView.swift */,
+				BEF5CE899C7604F8B7C48726 /* WeatherDetailView.swift */,
+				68B84474DBF9DC592E7FA1AA /* WeatherFeedCard.swift */,
+			);
+			path = Weather;
+			sourceTree = "<group>";
+		};
 		1D83024230488045501CF789 /* Post */ = {
 			isa = PBXGroup;
 			children = (
@@ -413,6 +462,7 @@
 			children = (
 				9FF2A2F8F4116DAFA93C2CDC /* APIClient.swift */,
 				F8CB71162C96FD59B8B31A1D /* APIError.swift */,
+				BD6A254643FF8358144C6937 /* SSEClient.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -439,6 +489,7 @@
 				AC1AE844762BDC48AF581DBB /* PostCardModule.swift */,
 				803649CE603F6C9402846A87 /* ReminderCardModule.swift */,
 				30DAC620E10EB8CAD9947C3F /* SummaryCardModule.swift */,
+				4CEB65226FF6DD31F8AA4DD0 /* WeatherCardModule.swift */,
 				585537003DC587FB46F13D36 /* WeightCardModule.swift */,
 				16BF80B2D76B918F7D6A1614 /* WorkoutCardModule.swift */,
 			);
@@ -462,6 +513,7 @@
 			children = (
 				D82352D904666CB869919AD1 /* AnalyticsView.swift */,
 				F521DDA29FA86345A415C3B9 /* ManageView.swift */,
+				F873F32F504B604D81957F2E /* Chat */,
 				1997825C977296845B17AF07 /* Feed */,
 				F6A7FEEC8F6F9E0D78750603 /* Finance */,
 				34D1D7AE9F248DB3A2D0B5D8 /* Meals */,
@@ -472,6 +524,7 @@
 				29C269B3174AAEA25C4ED89D /* Settings */,
 				15EDAA3023E68B2C7FAA7B4B /* Shared */,
 				092FAD55310621A30C970B01 /* Summary */,
+				1BD1976CA0198E5B5F62EDBA /* Weather */,
 				9211173922DAB0218DFE918A /* Weight */,
 				03C7469DC61842EF253C3E97 /* Workout */,
 			);
@@ -570,6 +623,7 @@
 		C05CD9878B69967530772BBA /* Stores */ = {
 			isa = PBXGroup;
 			children = (
+				BE4D3C801FF1604CD7ED95D5 /* AgentStore.swift */,
 				BF5C8FA0A94976536ACFF877 /* CardPreferenceStore.swift */,
 				798AB8F4211084BBB87259CF /* FeedStore.swift */,
 				69A1F27D4E61E81445746BF1 /* FinanceStore.swift */,
@@ -597,6 +651,7 @@
 		F08331818F18B68E3917C49B /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4BCA67E70C3D529DEBDC082A /* Agent.swift */,
 				12D3D48551429C850EBE2565 /* FeedItem.swift */,
 				F0C761E19D66964B3766176E /* Finance.swift */,
 				76C24199376F64DF38580BBC /* ImportedWorkoutMeta.swift */,
@@ -606,6 +661,7 @@
 				0030EDC4C6AB11BB33FC438E /* Reminder.swift */,
 				331E61143E2DD0F8D055F87B /* Summary.swift */,
 				7CB167B3D5954D349D6D17C4 /* TimerActivity.swift */,
+				E91DA9ED319A78156A39FD54 /* Weather.swift */,
 				AEA26FF04B554F7679A7B4C0 /* Weight.swift */,
 				7147A8679F3CFC8352E161CF /* Workout.swift */,
 			);
@@ -620,6 +676,17 @@
 				F93BEE6741FB9D96C31F2FA9 /* HoldingsImportView.swift */,
 			);
 			path = Finance;
+			sourceTree = "<group>";
+		};
+		F873F32F504B604D81957F2E /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				695C145117312007051573AC /* AgentMemoryView.swift */,
+				F66CCD7F37CE8A2076B74ABD /* ChatBubbleView.swift */,
+				86A7F9F41767E399BB3D7CD8 /* ChatSessionListView.swift */,
+				07F3F907BD72DB2E3480A612 /* ChatView.swift */,
+			);
+			path = Chat;
 			sourceTree = "<group>";
 		};
 		F8B07C8E4586FE569B026C2D /* Localization */ = {
@@ -655,6 +722,7 @@
 			buildPhases = (
 				F94F522772C4ED413EA8E69B /* Sources */,
 				CC87D4D23AE4DF2DB2738EA2 /* Resources */,
+				609302D953B487B5CC0F743E /* Frameworks */,
 				34BDE11E95084F456341D351 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
@@ -665,6 +733,7 @@
 			);
 			name = KaoriApp;
 			packageProductDependencies = (
+				F50FE2436E31709B07082022 /* MarkdownUI */,
 			);
 			productName = KaoriApp;
 			productReference = D13D1111C4EBEDC3AF4FA747 /* KaoriApp.app */;
@@ -758,6 +827,9 @@
 			);
 			mainGroup = DA9E4523F10EC2CDA5F3CC01;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				CA342F590E109CBB511D4A21 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 7A29CA4EDA5595EBDF979EE8 /* Products */;
 			projectDirPath = "";
@@ -826,6 +898,9 @@
 			files = (
 				205EF93C84D2E5265CDDFD5E /* APIClient.swift in Sources */,
 				33291EF7B2FCE4F256B06444 /* APIError.swift in Sources */,
+				4EFEEB8559EEAEDEE9D4E373 /* Agent.swift in Sources */,
+				5E0A6B64DBFFBDB0A7CCC65B /* AgentMemoryView.swift in Sources */,
+				08759F1C6CEBA94E1F2F1FAC /* AgentStore.swift in Sources */,
 				F0F9BC0B82628F21C0A32E07 /* AnalyticsView.swift in Sources */,
 				F41F741B60D2F3B0A09DE1B2 /* AppConfig.swift in Sources */,
 				73AC9F0DAB9F0B963BA14D16 /* AppDelegate.swift in Sources */,
@@ -836,6 +911,9 @@
 				383B947796045CC4516BB2C9 /* CardPreferenceStore.swift in Sources */,
 				D487F5FF58F027B208E175D1 /* CardRegistry.swift in Sources */,
 				3071D4BAEDDB2D6562E2042B /* CardStateBadge.swift in Sources */,
+				CEB5B4ECA722DBCCC923316A /* ChatBubbleView.swift in Sources */,
+				62C345505E31EAB46B9E3087 /* ChatSessionListView.swift in Sources */,
+				482AA56B888C855709FA3537 /* ChatView.swift in Sources */,
 				98F64E3441459FDCB7645D51 /* ConnectionBanner.swift in Sources */,
 				E84AE89720D0A2F9CE85808E /* DailyNutritionCard.swift in Sources */,
 				BBE49675447E4CB29B8C426C /* ExerciseManageView.swift in Sources */,
@@ -856,6 +934,7 @@
 				8D5792E195EA08099719C2B3 /* KaoriApp.swift in Sources */,
 				A609FF59EAC04FED7D3195DB /* LinkedText.swift in Sources */,
 				806AA7E11EF4399BDCE4C7CB /* Localizer.swift in Sources */,
+				5BFF4C81B1D9C1AB0E50BE17 /* LocationManager.swift in Sources */,
 				E39C2D525ECE1764BFC79DBA /* ManageView.swift in Sources */,
 				2B75B47F07B3BA6886F7B93A /* Meal.swift in Sources */,
 				06A917B084A9E912DD511AE8 /* MealCardModule.swift in Sources */,
@@ -892,6 +971,7 @@
 				1FA2FC945A1F52BDA1FCBB6E /* ReminderFeedCard.swift in Sources */,
 				421EC4D4D8A72E98E8D208D5 /* ReminderListView.swift in Sources */,
 				566A9A2B46DEC16A8FBFB352 /* ReminderStore.swift in Sources */,
+				839A09B86351815626A89877 /* SSEClient.swift in Sources */,
 				89FB08D4F71F7897215587EA /* SetRowView.swift in Sources */,
 				4608389648507B3BBB4C8387 /* SettingsView.swift in Sources */,
 				B4D605C41253221582299BA2 /* SharedConfig.swift in Sources */,
@@ -906,6 +986,11 @@
 				3F05B819ACD2BD58A39F2DD4 /* TimerPresetPickerView.swift in Sources */,
 				BAF10AD71D665307A22FF127 /* TimerView.swift in Sources */,
 				F978CEACEB3F2E4587010B32 /* UnitConverter.swift in Sources */,
+				51DAAADF9C1E91BECFAFE84E /* Weather.swift in Sources */,
+				E090ACCEC0E8C9938B0D8F2B /* WeatherCardModule.swift in Sources */,
+				24EF8936F5133FACFCDA2F4B /* WeatherDataListView.swift in Sources */,
+				038BD44288262C1A70C97C84 /* WeatherDetailView.swift in Sources */,
+				BB0AE6B5C37FE141A906B5A1 /* WeatherFeedCard.swift in Sources */,
 				5B0BB6FB6685C7FB87C713E2 /* Weight.swift in Sources */,
 				CFBA804BC82DCDD42A210285 /* WeightCardModule.swift in Sources */,
 				89C41CD87949AC96B1E3F2FA /* WeightChartView.swift in Sources */,
@@ -1287,6 +1372,25 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CA342F590E109CBB511D4A21 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F50FE2436E31709B07082022 /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CA342F590E109CBB511D4A21 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
+			productName = MarkdownUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E6102C4C9318222F07E28140 /* Project object */;
 }

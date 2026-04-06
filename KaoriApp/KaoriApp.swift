@@ -26,6 +26,7 @@ struct KaoriApp: App {
     @State private var healthKit = HealthKitManager()
     @State private var notificationManager = NotificationManager()
     @State private var notificationSettings = NotificationSettings()
+    @State private var locationManager = LocationManager()
 
     init() {
         let config = AppConfig()
@@ -54,6 +55,7 @@ struct KaoriApp: App {
         registry.register(SummaryCardModule())
         registry.register(PostCardModule())
         registry.register(ReminderCardModule())
+        registry.register(WeatherCardModule())
         _cardRegistry = State(initialValue: registry)
     }
 
@@ -78,6 +80,7 @@ struct KaoriApp: App {
                 .environment(healthKit)
                 .environment(notificationManager)
                 .environment(notificationSettings)
+                .environment(locationManager)
         }
     }
 }
@@ -92,6 +95,7 @@ struct ContentView: View {
     @Environment(NotificationSettings.self) private var notificationSettings
     @Environment(CardRegistry.self) private var cardRegistry
     @Environment(FeedStore.self) private var feedStore
+    @Environment(LocationManager.self) private var locationManager
     @State private var showImportPrompt = false
     @State private var importExistingWorkouts: [Workout] = []
     @State private var selectedTab = 0
@@ -194,6 +198,7 @@ struct ContentView: View {
                     notificationManager.rescheduleAll(settings: notificationSettings)
                     BackgroundTaskManager.scheduleDailySummaryFetch()
                 }
+                locationManager.requestLocation(api: api)
                 await workoutStore.checkForNewHealthKitWorkouts(healthKit: healthKit)
                 if !workoutStore.pendingImportWorkouts.isEmpty {
                     let dateFormatter = DateFormatter()

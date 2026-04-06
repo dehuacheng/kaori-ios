@@ -441,6 +441,19 @@ class FeedStore {
                     feedItems.append(.portfolio(portfolio))
                 }
             }
+
+            // Weather → current card under this date, forecast under its own date (tomorrow)
+            if let weather = group.weather {
+                if weather.current != nil {
+                    feedItems.removeAll { $0.id == "weather-current-\(group.date)" }
+                    feedItems.append(.weatherCurrent(weather))
+                }
+                if let forecast = weather.forecast {
+                    let forecastDate = forecast.date
+                    feedItems.removeAll { $0.id == "weather-forecast-\(forecastDate)" }
+                    feedItems.append(.weatherForecast(weather))
+                }
+            }
         }
 
         sortFeedItems()
@@ -552,6 +565,7 @@ struct FeedAPIDateGroup: Codable {
     let nutritionTotals: NutritionTotals?
     let summary: FeedAPISummary?
     let portfolio: PortfolioSummaryResponse?
+    let weather: WeatherResponse?
 }
 
 struct FeedAPISummary: Codable {

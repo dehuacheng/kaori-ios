@@ -25,6 +25,7 @@ struct SettingsView: View {
     @State private var bodyWeightUnit: WeightUnit = .kg
     @State private var heightUnit: HeightUnit = .cm
     @State private var exerciseWeightUnit: WeightUnit = .kg
+    @State private var temperatureUnit: TemperatureUnit = .current
 
     var body: some View {
         @Bindable var config = config
@@ -70,6 +71,15 @@ struct SettingsView: View {
                     }
                     .onChange(of: exerciseWeightUnit) { _, newValue in
                         Task { await saveUnit(unitExerciseWeight: newValue.rawValue) }
+                    }
+
+                    Picker(L.t("settings.temperatureUnit"), selection: $temperatureUnit) {
+                        ForEach(TemperatureUnit.allCases) { unit in
+                            Text(unit.label).tag(unit)
+                        }
+                    }
+                    .onChange(of: temperatureUnit) { _, newValue in
+                        TemperatureUnit.save(newValue)
                     }
                 } header: {
                     Text(L.t("settings.units"))

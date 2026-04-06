@@ -17,6 +17,7 @@ Every feature in Kaori is a **card type** implemented as a `CardModule`. Each ca
 | `summary` | [summary.md](summary.md) | `SummaryCardModule` | `SummaryFeedCard` | `SummaryDetailView` |
 | `post` | [post.md](post.md) | `PostCardModule` | `PostFeedCard` | `PostDetailView` |
 | `reminder` | [reminder.md](reminder.md) | `ReminderCardModule` | `ReminderFeedCard` | `ReminderDetailView` |
+| `weather` | [weather.md](weather.md) | `WeatherCardModule` | `WeatherFeedCard` | — |
 
 ## Shared Visual Components
 
