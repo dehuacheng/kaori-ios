@@ -7,13 +7,13 @@ SwiftUI iOS client for the Kaori personal life management app. Connects to the K
 - **Full-stack:** Python (FastAPI) backend + iOS (SwiftUI) frontend. When implementing features, always consider both layers and their JSON contract. Test JSON encoding/decoding round-trips when adding new model fields.
 - **Pure thin client** — no local database, all data fetched from the backend
 - **iOS 17.0+**, SwiftUI with `@Observable` state management
-- **Zero external dependencies** — only Apple frameworks
+- **One external dependency** — [MarkdownUI](https://github.com/gonzalezreal/swift-markdown-ui) for agent chat markdown rendering
 
 ## Structure
 ```
 KaoriApp/
   Config/         — AppConfig (server URL + token in UserDefaults), SharedConfig (App Group shared defaults for extensions)
-  Network/        — APIClient (URLSession wrapper), APIError
+  Network/        — APIClient (URLSession wrapper), APIError, SSEClient (agent chat streaming)
   Models/         — Codable structs matching backend JSON responses
     FeedItem.swift    — Unified feed item enum (meal, weight, workout, summary, portfolio)
     Meal.swift        — Meal, MealListResponse, NutritionTotals
@@ -22,6 +22,7 @@ KaoriApp/
     Profile.swift     — Profile, ProfileUpdate, WeightUnit/HeightUnit enums
     Summary.swift     — SummaryDetail
     Finance.swift     — PortfolioSummaryResponse, FinancialAccount, etc.
+    Agent.swift       — AgentSession, AgentMessage, AgentMemoryEntry, AgentPrompt, SSE event types
     ImportedWorkoutMeta.swift — Apple Health workout metadata
   CardModule/     — Card-first architecture (see below)
     CardModule.swift      — Protocol definition
@@ -33,6 +34,7 @@ KaoriApp/
     MealStore, WeightStore, ProfileStore, WorkoutStore, FinanceStore
     FeedStore         — Unified feed state (calls /api/feed or per-endpoint fallback)
     CardPreferenceStore — Card enable/disable preferences
+    AgentStore        — Agent chat sessions, SSE streaming, memory, prompts
   Utils/          — UnitConverter (kg/lb, cm/in conversion + formatting)
   Views/
     Feed/           — Feed timeline and card components (see App Layout below)
@@ -45,6 +47,7 @@ KaoriApp/
     AnalyticsView.swift — Calorie + weight charts (shown as sheet)
     Finance/        — Account list, account detail, holdings import (screenshot/PDF)
     Portfolio/      — Portfolio feed card, portfolio detail view
+    Chat/           — ChatSessionListView, ChatView, ChatBubbleView, AgentMemoryView
     ManageView.swift    — "More" tab: data, tools, profile, finances, settings menu
   Health/         — HealthKitManager (weight + workout sync)
   Notifications/  — NotificationManager, NotificationSettings, BackgroundTaskManager
@@ -122,9 +125,9 @@ grep -n 'as? Meal\|as? WeightEntry\|as? Workout\|as? SummaryPayload\|as? Portfol
 ```
 If either returns results, the change violates the card-first architecture. Move the logic into the appropriate `CardModule`.
 
-## App Layout (3 Tabs)
+## App Layout (4 Tabs)
 
-### Tab 1: Home (Feed)
+### Tab 1: Home (Feed) — tag 0
 - **FeedView** — multi-day infinite scroll timeline, powered by `FeedStore`
 - Day headers ("Today", "Yesterday", "Apr 1")
 - **All cards rendered uniformly** via one `ForEach` — no hardcoded sections for any card type
@@ -135,7 +138,19 @@ If either returns results, the change violates the card-first architecture. Move
 - Pull-to-refresh reloads all data via `FeedStore`
 - Tap → detail view (via `module.feedDetailView`), Swipe left → actions (via `module.feedSwipeActions`)
 
-### Tab 2: "+" (Add Menu)
+### Tab 2: Chat — tag 1
+- **ChatSessionListView** — session list with create/delete
+- NavigationStack with programmatic navigation (path binding)
+- Toolbar "+" (square.and.pencil) creates new session and navigates to it
+- Swipe to delete sessions
+- Tap → **ChatView** with SSE streaming, markdown rendering, tool call indicators
+- **ChatView**: ScrollView with LazyVStack of messages, auto-scroll, input bar
+- **ChatBubbleView**: User (right-aligned, accent), Assistant (left-aligned, MarkdownUI)
+- Thinking text (collapsible DisclosureGroup), tool call pills with spinner
+- Tab bar hidden in ChatView (`.toolbar(.hidden, for: .tabBar)`)
+- **AgentMemoryView** accessible from Settings > AI Agent
+
+### Tab 3: "+" (Add Menu) — tag 99
 - Center tab, intercepted — never actually navigated to
 - Opens iOS 18 Control Center–style overlay:
   - Dark dimmed backdrop, frosted glass panel with buttons driven by `CardRegistry.addableModules`
@@ -146,7 +161,7 @@ If either returns results, the change violates the card-first architecture. Move
 - Workout auto-deleted on dismiss if no exercises were added
 - Tap outside to dismiss
 
-### Tab 3: More
+### Tab 4: More — tag 2
 - **MoreView** — list menu with NavigationLinks:
   - Data: driven by `CardRegistry.dataModules` (Meals, Weight, Gym, Portfolio, etc.)
   - Tools: Timer

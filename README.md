@@ -21,6 +21,7 @@ SwiftUI iOS client for [Kaori](https://github.com/dehuacheng/kaori) — a person
 - **iOS 18 design** — Apple Health–inspired dark card aesthetic, Control Center–style add menu
 - **Financial portfolio** — Daily portfolio value card on the feed with live prices, per-account breakdown, top movers. Import holdings via multi-photo screenshots with LLM extraction. Account management in More > Data > Finance.
 - **Share Extension** — Share content from any app (Xiaohongshu, Douyin, Safari, etc.) directly into your Kaori feed as a Post card. Auto-fetches URL metadata (title, description, preview image) via Open Graph tags.
+- **AI agent chat** — SSE-streaming chat tab with agentic tool loop. The agent can query all your kaori data (meals, weight, workouts, portfolio, reminders) via server-side tools. Markdown rendering with MarkdownUI, tool call indicators, thinking text, session management, and cross-session memory.
 
 ### Requirements
 
@@ -68,6 +69,7 @@ The Python backend is at [kaori](https://github.com/dehuacheng/kaori).
 - **Medical Record Keeper** — Store exam results, lab work, and health records. Acts as your AI-powered PCP, nutritionist, and personal trainer — all in one place.
 - **Feed-Based UI Revamp** ✅ — Unified feed timeline with rich cards, multi-day infinite scroll, daily nutrition progress bars, AI summary cards, iOS 18 Control Center–style add menu, and analytics.
 - **Financial Accounts** ✅ — Brokerage portfolio tracking on the feed, screenshot import with LLM extraction, live prices, account management.
+- **AI Agent Chat** ✅ — Chat tab with SSE streaming, agentic tool loop, markdown rendering (MarkdownUI), session management, cross-session memory, and agent memory settings.
 - **Personal AI Assistant (Long-Term Vision)** — The ultimate goal: a personal AI assistant (Kaori by default — pick your own name) that provides comprehensive care across all aspects of your life. Core design principle: **your data stays in your hands**. Self-host or choose a trusted LLM provider. Everything else in the app is completely free and open-source — fork it and vibe-code it to make it yours.
 
 </details>
@@ -91,6 +93,7 @@ The Python backend is at [kaori](https://github.com/dehuacheng/kaori).
 - **iOS 18 设计** — Apple Health 风格的暗色卡片设计，控制中心风格的添加菜单
 - **投资组合追踪** — 信息流显示每日投资组合涨跌卡片（实时行情），支持多图截图导入持仓（LLM 自动提取），账户管理在更多 > 数据 > 财务。
 - **分享扩展** — 从任意应用（小红书、抖音、Safari 等）直接分享内容到 Kaori 信息流，自动创建随记卡片。自动获取链接元数据（标题、描述、预览图）。
+- **AI 助手对话** — SSE 流式对话标签页，支持 Agent 工具循环。助手可通过服务端工具查询所有 kaori 数据（饮食、体重、运动、投资、提醒等）。MarkdownUI 渲染、工具调用指示器、思考过程、会话管理和跨会话记忆。
 
 ### 环境要求
 
@@ -138,6 +141,7 @@ Python 后端在 [kaori](https://github.com/dehuacheng/kaori)。
 - **医疗记录管理** — 存储体检报告、化验结果等健康档案。充当你的 AI 全科医生、营养师和私人教练 — 一站式服务。
 - **信息流式 UI 重构** ✅ — 统一的信息流时间线，支持多日无限滚动、Apple Health 风格的卡片设计、每日营养进度条、AI 总结卡片、iOS 18 控制中心风格的添加菜单、数据分析视图。三标签布局：首页 | + | 更多。
 - **财务账户** ✅ — 券商投资组合追踪，截图导入持仓，实时行情，账户管理。
+- **AI 助手对话** ✅ — SSE 流式对话标签页，Agent 工具循环，MarkdownUI 渲染，会话管理，跨会话记忆，助手记忆设置。
 - **个人 AI 助手（终极愿景）** — 最终目标：一个个人 AI 助手（默认叫 Kaori，你也可以自定义名字），全方位照顾你生活的各个方面。核心设计原则：**数据掌握在自己手中**。你需要自行部署或选择信任的 LLM 服务商。应用的其他部分完全免费开源 — 随意 fork，用 AI 编程定制成你自己的版本。
 
 </details>

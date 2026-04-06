@@ -20,6 +20,7 @@ struct KaoriApp: App {
     @State private var cardPreferenceStore: CardPreferenceStore
     @State private var postStore: PostStore
     @State private var reminderStore: ReminderStore
+    @State private var agentStore: AgentStore
     @State private var cardRegistry = CardRegistry()
     @State private var timerEngine = TimerEngine()
     @State private var healthKit = HealthKitManager()
@@ -40,6 +41,7 @@ struct KaoriApp: App {
         _cardPreferenceStore = State(initialValue: CardPreferenceStore(api: api))
         _postStore = State(initialValue: PostStore(api: api))
         _reminderStore = State(initialValue: ReminderStore(api: api))
+        _agentStore = State(initialValue: AgentStore(api: api, config: config))
 
         // Register all card modules
         let registry = CardRegistry()
@@ -71,6 +73,7 @@ struct KaoriApp: App {
                 .environment(cardRegistry)
                 .environment(postStore)
                 .environment(reminderStore)
+                .environment(agentStore)
                 .environment(timerEngine)
                 .environment(healthKit)
                 .environment(notificationManager)
@@ -127,6 +130,9 @@ struct ContentView: View {
                     FeedView(showMealCreate: $showMealCreate, showWeightCreate: $showWeightCreate, refreshToken: feedRefreshToken)
                         .tag(0)
                         .tabItem { Label(L.t("tab.home"), systemImage: "house") }
+                    ChatSessionListView()
+                        .tag(1)
+                        .tabItem { Label(L.t("tab.chat"), systemImage: "bubble.left.and.text.bubble.right") }
                     // Center "+" button (intercepted via binding, never actually selected)
                     Color.clear
                         .tag(99)

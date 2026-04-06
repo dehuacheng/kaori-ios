@@ -403,6 +403,26 @@
   "reminder.active": "进行中",
   "reminder.completed": "已完成",
 
+  "tab.chat": "对话",
+
+  "chat.title": "对话",
+  "chat.newChat": "新对话",
+  "chat.untitled": "新对话",
+  "chat.noSessions": "暂无对话",
+  "chat.noSessionsHint": "开始与 AI 助手对话",
+  "chat.messages": "条消息",
+  "chat.placeholder": "输入消息...",
+  "chat.memory": "助手记忆",
+  "chat.noMemories": "暂无记忆",
+  "chat.noMemoriesHint": "AI 助手会记住你告诉它的信息",
+  "chat.addMemory": "添加记忆",
+  "chat.memoryKey": "关键词",
+  "chat.memoryValue": "内容",
+  "chat.memoryCategory": "分类",
+
+  "settings.aiAgent": "AI 助手",
+  "settings.agentMemory": "助手记忆",
+
   "share.saveToKaori": "保存到 Kaori",
   "share.notConfigured": "请先打开 Kaori 并配置服务器",
   "share.serverUnreachable": "无法连接服务器 — 请检查 Tailscale",

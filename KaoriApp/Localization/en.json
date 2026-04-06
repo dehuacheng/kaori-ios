@@ -403,6 +403,26 @@
   "reminder.active": "Active",
   "reminder.completed": "Completed",
 
+  "tab.chat": "Chat",
+
+  "chat.title": "Chat",
+  "chat.newChat": "New Chat",
+  "chat.untitled": "New Chat",
+  "chat.noSessions": "No Conversations",
+  "chat.noSessionsHint": "Start a conversation with your AI assistant",
+  "chat.messages": "msgs",
+  "chat.placeholder": "Message...",
+  "chat.memory": "Agent Memory",
+  "chat.noMemories": "No Memories",
+  "chat.noMemoriesHint": "The AI assistant will remember things you tell it",
+  "chat.addMemory": "Add Memory",
+  "chat.memoryKey": "Key",
+  "chat.memoryValue": "Value",
+  "chat.memoryCategory": "Category",
+
+  "settings.aiAgent": "AI Agent",
+  "settings.agentMemory": "Agent Memory",
+
   "share.saveToKaori": "Save to Kaori",
   "share.notConfigured": "Open Kaori and configure server settings first",
   "share.serverUnreachable": "Server unreachable — is Tailscale connected?",

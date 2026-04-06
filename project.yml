@@ -6,6 +6,11 @@ options:
   xcodeVersion: "16.0"
   generateEmptyDirectories: true
 
+packages:
+  MarkdownUI:
+    url: https://github.com/gonzalezreal/swift-markdown-ui
+    from: "2.4.0"
+
 targets:
   KaoriApp:
     type: application
@@ -38,6 +43,7 @@ targets:
           - UIInterfaceOrientationLandscapeLeft
           - UIInterfaceOrientationLandscapeRight
     dependencies:
+      - package: MarkdownUI
       - target: KaoriTimerWidgetExtension
         embed: true
       - target: KaoriShareExtension

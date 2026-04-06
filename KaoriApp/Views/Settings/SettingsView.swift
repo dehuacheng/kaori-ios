@@ -159,6 +159,17 @@ struct SettingsView: View {
                 }
             }
 
+            // MARK: - AI Agent
+            if config.isConfigured {
+                Section(L.t("settings.aiAgent")) {
+                    NavigationLink {
+                        AgentMemoryView()
+                    } label: {
+                        Label(L.t("settings.agentMemory"), systemImage: "brain")
+                    }
+                }
+            }
+
             // MARK: - Card Modules
             if config.isConfigured {
                 Section {
