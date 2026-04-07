@@ -47,6 +47,28 @@ struct SummaryCardModule: CardModule {
     func dataListView() -> AnyView? {
         AnyView(SummaryListView())
     }
+
+    func feedItems(for group: FeedAPIDateGroup, context: CardFeedDateGroupContext) -> [FeedItem] {
+        guard let summary = group.summary,
+              let text = summary.summaryText,
+              !text.isEmpty else {
+            return []
+        }
+        let kind: SummaryKind = (summary.type == "weekly") ? .weekly : .daily
+        return [.summary(id: summary.id, text: text, date: group.date, kind: kind)]
+    }
+
+    @MainActor
+    func deleteFeedItem(_ item: FeedItem, context: CardDeleteContext) async {
+        guard let payload = item.payload as? SummaryPayload,
+              let summaryId = payload.summaryId else { return }
+        let _: SummaryDeleteResponse? = try? await context.api.delete("/api/summary/\(summaryId)")
+    }
+
+    @MainActor
+    func performAddAction(context: CardAddActionContext) async {
+        await context.startSummaryGeneration()
+    }
 }
 
 /// Simple view that triggers summary generation and shows progress.

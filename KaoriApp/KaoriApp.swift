@@ -32,20 +32,8 @@ struct KaoriApp: App {
     init() {
         let config = AppConfig()
         let api = APIClient(config: config)
-        _config = State(initialValue: config)
-        _api = State(initialValue: api)
-        _mealStore = State(initialValue: MealStore(api: api))
-        _weightStore = State(initialValue: WeightStore(api: api))
-        _profileStore = State(initialValue: ProfileStore(api: api))
-        _workoutStore = State(initialValue: WorkoutStore(api: api))
-        _financeStore = State(initialValue: FinanceStore(api: api))
-        _feedStore = State(initialValue: FeedStore(api: api))
-        _cardPreferenceStore = State(initialValue: CardPreferenceStore(api: api))
-        _postStore = State(initialValue: PostStore(api: api))
-        _reminderStore = State(initialValue: ReminderStore(api: api))
-        _agentStore = State(initialValue: AgentStore(api: api, config: config))
 
-        // Register all card modules
+        // Register all card modules first so shared stores can delegate to them.
         let registry = CardRegistry()
         registry.register(MealCardModule())
         registry.register(WeightCardModule())
@@ -57,6 +45,19 @@ struct KaoriApp: App {
         registry.register(PostCardModule())
         registry.register(ReminderCardModule())
         registry.register(WeatherCardModule())
+
+        _config = State(initialValue: config)
+        _api = State(initialValue: api)
+        _mealStore = State(initialValue: MealStore(api: api))
+        _weightStore = State(initialValue: WeightStore(api: api))
+        _profileStore = State(initialValue: ProfileStore(api: api))
+        _workoutStore = State(initialValue: WorkoutStore(api: api))
+        _financeStore = State(initialValue: FinanceStore(api: api))
+        _feedStore = State(initialValue: FeedStore(api: api, cardRegistry: registry))
+        _cardPreferenceStore = State(initialValue: CardPreferenceStore(api: api))
+        _postStore = State(initialValue: PostStore(api: api))
+        _reminderStore = State(initialValue: ReminderStore(api: api))
+        _agentStore = State(initialValue: AgentStore(api: api, config: config))
         _cardRegistry = State(initialValue: registry)
     }
 
@@ -104,8 +105,6 @@ struct ContentView: View {
     @State private var importExistingWorkouts: [Workout] = []
     @State private var selectedTab = 0
     @State private var showAddMenu = false
-    @State private var showMealCreate = false
-    @State private var showWeightCreate = false
     /// Active card module for sheet-based creation (driven by "+" menu)
     @State private var activeCreateModule: String?
     @State private var pendingAddActionCardType: String?
@@ -135,7 +134,7 @@ struct ContentView: View {
                         }
                     }
                 )) {
-                    FeedView(showMealCreate: $showMealCreate, showWeightCreate: $showWeightCreate, refreshToken: feedRefreshToken)
+                    FeedView(refreshToken: feedRefreshToken)
                         .tag(0)
                         .tabItem { Label(L.t("tab.home"), systemImage: "house") }
                     ChatSessionListView()
@@ -268,7 +267,14 @@ struct ContentView: View {
                 // feed/navigation state.
                 try? await Task.sleep(for: .milliseconds(350))
                 selectedTab = 0
-                handleAddAction(for: cardType)
+                await cardRegistry.performAddAction(
+                    for: cardType,
+                    context: CardAddActionContext(
+                        presentCreateModule: { activeCreateModule = $0 },
+                        createWorkout: createWorkout,
+                        startSummaryGeneration: feedStore.startSummaryGeneration
+                    )
+                )
             }
         }
         .overlay {
@@ -306,26 +312,6 @@ struct ContentView: View {
             .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
         }
         .buttonStyle(.plain)
-    }
-
-    /// Route "+" menu tap to the right creation flow.
-    /// Meal/weight/workout have existing bindings; all other card types
-    /// use the generic activeCreateModule sheet — no switch needed for new types.
-    private func handleAddAction(for cardType: String) {
-        switch cardType {
-        case "meal":
-            showMealCreate = true
-        case "weight":
-            showWeightCreate = true
-        case "workout":
-            Task { await createWorkout() }
-        case "summary":
-            Task { await feedStore.startSummaryGeneration() }
-            return
-        default:
-            // Generic: use the module's createView via sheet
-            activeCreateModule = cardType
-        }
     }
 
     private func createWorkout() async {

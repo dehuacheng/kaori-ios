@@ -25,7 +25,7 @@ struct ReminderDetailView: View {
                             .font(.title3.bold())
                             .strikethrough(reminder.isCompleted)
                         if reminder.isOverdue {
-                            Text("overdue")
+                            Text(L.t("reminder.overdue"))
                                 .font(.caption2)
                                 .foregroundStyle(.white)
                                 .padding(.horizontal, 6)

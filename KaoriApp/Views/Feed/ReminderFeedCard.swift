@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ReminderFeedCard: View {
     let reminder: Reminder
+    @Environment(Localizer.self) private var L
 
     var body: some View {
         HStack(spacing: 12) {
@@ -24,7 +25,7 @@ struct ReminderFeedCard: View {
                         .foregroundStyle(reminder.isCompleted ? .secondary : .primary)
 
                     if reminder.isOverdue {
-                        Text("overdue")
+                        Text(L.t("reminder.overdue"))
                             .font(.caption2)
                             .foregroundStyle(.white)
                             .padding(.horizontal, 6)
@@ -47,7 +48,7 @@ struct ReminderFeedCard: View {
                 }
 
                 if reminder.dueDate != reminder.originalDate {
-                    Text("from \(reminder.originalDate)")
+                    Text(L.t("reminder.fromDate", reminder.originalDate))
                         .font(.caption2)
                         .foregroundStyle(.tertiary)
                 }

@@ -16,6 +16,7 @@ class FeedStore {
     var cachedProfile: Profile?
 
     let api: APIClient
+    private let cardRegistry: CardRegistry
     private var loadedDates: Set<String> = []
     private var portfolioRefreshTask: Task<Void, Never>?
     private var useUnifiedEndpoint = true
@@ -27,8 +28,9 @@ class FeedStore {
         return f
     }()
 
-    init(api: APIClient) {
+    init(api: APIClient, cardRegistry: CardRegistry) {
         self.api = api
+        self.cardRegistry = cardRegistry
     }
 
     var todayString: String {
@@ -66,7 +68,6 @@ class FeedStore {
                 applyFeedResponse(response)
                 loadedDates.insert(today)
                 if let y = yesterday { loadedDates.insert(y) }
-                ensureTodayNutrition()
                 isLoading = false
                 return
             } catch {
@@ -79,7 +80,7 @@ class FeedStore {
         if let y = yesterday {
             await loadDateLegacy(y, mealStore: mealStore, weightStore: weightStore, workoutStore: workoutStore)
         }
-        ensureTodayNutrition()
+        ensureTodayNutritionFallback()
         isLoading = false
     }
 
@@ -100,7 +101,6 @@ class FeedStore {
                 // Clear and re-apply
                 feedItems.removeAll()
                 applyFeedResponse(response)
-                ensureTodayNutrition()
                 return
             } catch {
                 useUnifiedEndpoint = false
@@ -118,7 +118,7 @@ class FeedStore {
         if !loadedDates.contains(today) {
             await loadDateLegacy(today, mealStore: mealStore, weightStore: weightStore, workoutStore: workoutStore)
         }
-        ensureTodayNutrition()
+        ensureTodayNutritionFallback()
     }
 
     /// Quick refresh of today via unified endpoint only (no store deps).
@@ -133,7 +133,6 @@ class FeedStore {
             feedItems.removeAll { $0.dateString == today }
             applyFeedResponse(response)
             loadedDates.insert(today)
-            ensureTodayNutrition()
         } catch {}
     }
 
@@ -154,7 +153,6 @@ class FeedStore {
                 feedItems.removeAll { $0.dateString == today }
                 applyFeedResponse(response)
                 loadedDates.insert(today)
-                ensureTodayNutrition()
                 return
             } catch {
                 useUnifiedEndpoint = false
@@ -165,7 +163,7 @@ class FeedStore {
         feedItems.removeAll { $0.dateString == today }
         loadedDates.remove(today)
         await loadDateLegacy(today, mealStore: mealStore, weightStore: weightStore, workoutStore: workoutStore)
-        ensureTodayNutrition()
+        ensureTodayNutritionFallback()
     }
 
     /// Number of loaded day-groups remaining below the current scroll position.
@@ -234,22 +232,13 @@ class FeedStore {
         weightStore: WeightStore,
         workoutStore: WorkoutStore
     ) async {
-        // Dispatch by cardType string — no switch on FeedItem cases needed
-        if let meal = item.payload as? Meal {
-            _ = try? await mealStore.deleteMeal(meal.id)
-        } else if let entry = item.payload as? WeightEntry {
-            try? await weightStore.delete(id: entry.id)
-        } else if let workout = item.payload as? Workout {
-            try? await workoutStore.deleteWorkout(workout.id)
-        } else if let p = item.payload as? HealthKitWorkoutPayload {
-            try? await workoutStore.deleteWorkout(p.workout.id)
-        } else if let post = item.payload as? Post {
-            let _: PostDeleteResponse? = try? await api.delete("/api/post/\(post.id)")
-        } else if let reminder = item.payload as? Reminder {
-            let _: ReminderDeleteResponse? = try? await api.delete("/api/reminders/\(reminder.id)")
-        } else if let p = item.payload as? SummaryPayload, let summaryId = p.summaryId {
-            let _: SummaryDeleteResponse? = try? await api.delete("/api/summary/\(summaryId)")
-        }
+        let context = CardDeleteContext(
+            api: api,
+            mealStore: mealStore,
+            weightStore: weightStore,
+            workoutStore: workoutStore
+        )
+        guard await cardRegistry.deleteFeedItem(item, context: context) else { return }
         feedItems.removeAll { $0.id == item.id }
     }
 
@@ -353,21 +342,19 @@ class FeedStore {
         if let summary = try? await financeStore.getPortfolioSummary(date: today),
            summary.combined != nil {
             await MainActor.run {
-                // Replace or add the portfolio feed item for today
-                feedItems.removeAll { $0.id == "portfolio-\(today)" }
-                feedItems.append(.portfolio(summary))
+                upsertFeedItem(.portfolio(summary))
                 sortFeedItems()
             }
         }
     }
 
-    /// Ensure today always has a nutrition card (even with zero values).
-    private func ensureTodayNutrition() {
+    /// Legacy fallback still needs to preserve today's nutrition card explicitly.
+    private func ensureTodayNutritionFallback() {
         let today = todayString
         let hasNutrition = feedItems.contains { $0.id == "nutrition-\(today)" }
         if !hasNutrition {
             let zeroTotals = NutritionTotals(totalCal: 0, totalProtein: 0, totalCarbs: 0, totalFat: 0)
-            feedItems.append(.nutrition(zeroTotals, cachedProfile, date: today))
+            upsertFeedItem(.nutrition(zeroTotals, cachedProfile, date: today))
         }
         sortFeedItems()
     }
@@ -381,6 +368,14 @@ class FeedStore {
                 return a.sortPriority < b.sortPriority
             }
             return a.sortDate > b.sortDate
+        }
+    }
+
+    private func upsertFeedItem(_ item: FeedItem) {
+        if let idx = feedItems.firstIndex(where: { $0.id == item.id }) {
+            feedItems[idx] = item
+        } else {
+            feedItems.append(item)
         }
     }
 
@@ -409,96 +404,33 @@ class FeedStore {
     }
 
     /// Apply a unified feed API response to local state.
-    private func applyFeedResponse(_ response: FeedAPIResponse) {
+    func applyFeedResponse(_ response: FeedAPIResponse) {
+        let context = makeFeedDecodingContext()
         for group in response.dates {
-            // Regular items (meals, weight, workouts)
             for item in group.items {
-                if let feedItem = convertToFeedItem(item),
-                   !feedItems.contains(where: { $0.id == feedItem.id }) {
-                    feedItems.append(feedItem)
+                if let feedItem = cardRegistry.decodeFeedItem(from: item, context: context) {
+                    upsertFeedItem(feedItem)
                 }
             }
 
-            // Nutrition totals → nutrition card
-            if let totals = group.nutritionTotals, totals.totalCal > 0 {
-                feedItems.removeAll { $0.id == "nutrition-\(group.date)" }
-                feedItems.append(.nutrition(totals, cachedProfile, date: group.date))
-            }
-
-            // Summary → summary card
-            if let summary = group.summary,
-               let text = summary.summaryText, !text.isEmpty {
-                let kind: SummaryKind = (summary.type == "weekly") ? .weekly : .daily
-                removeSummaryItems(for: group.date)
-                feedItems.append(.summary(id: summary.id, text: text, date: group.date, kind: kind))
-            }
-
-            // Portfolio → portfolio card (only on market days for today)
-            if let portfolio = group.portfolio, portfolio.combined != nil {
-                let isToday = group.date == todayString
-                if !isToday || isMarketDay {
-                    feedItems.removeAll { $0.id == "portfolio-\(group.date)" }
-                    feedItems.append(.portfolio(portfolio))
-                }
-            }
-
-            // Weather → current card under this date, forecast under its own date (tomorrow)
-            if let weather = group.weather {
-                if weather.current != nil {
-                    feedItems.removeAll { $0.id == "weather-current-\(group.date)" }
-                    feedItems.append(.weatherCurrent(weather))
-                }
-                if let forecast = weather.forecast {
-                    let forecastDate = forecast.date
-                    feedItems.removeAll { $0.id == "weather-forecast-\(forecastDate)" }
-                    feedItems.append(.weatherForecast(weather))
-                }
+            for feedItem in cardRegistry.feedItems(for: group, context: context) {
+                upsertFeedItem(feedItem)
             }
         }
 
         sortFeedItems()
     }
 
-    /// Decode a single feed item from the raw JSON data within the feed response.
-    /// We re-decode from the original JSON bytes instead of going through AnyCodableValue,
-    /// because AnyCodableValue can't represent nested objects/arrays.
-    private func convertToFeedItem(_ item: FeedAPIItem) -> FeedItem? {
-        guard let rawData = item.rawData else { return nil }
+    private func makeFeedDecodingContext() -> CardFeedDecodingContext {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-
-        switch item.type {
-        case "meal":
-            if let meal = try? decoder.decode(Meal.self, from: rawData) {
-                return .meal(meal)
-            }
-        case "weight":
-            if let weight = try? decoder.decode(WeightEntry.self, from: rawData) {
-                return .weight(weight)
-            }
-        case "workout":
-            if let workout = try? decoder.decode(Workout.self, from: rawData) {
-                if workout.isImported {
-                    return .healthKitWorkout(workout, meta: WorkoutStore.importedMeta(forWorkoutId: workout.id))
-                }
-                return .workout(workout)
-            }
-        case "healthkit_workout":
-            if let workout = try? decoder.decode(Workout.self, from: rawData) {
-                return .healthKitWorkout(workout, meta: WorkoutStore.importedMeta(forWorkoutId: workout.id))
-            }
-        case "post":
-            if let post = try? decoder.decode(Post.self, from: rawData) {
-                return .post(post)
-            }
-        case "reminder":
-            if let reminder = try? decoder.decode(Reminder.self, from: rawData) {
-                return .reminder(reminder)
-            }
-        default:
-            break
-        }
-        return nil
+        return CardFeedDecodingContext(
+            decoder: decoder,
+            todayString: todayString,
+            cachedProfile: cachedProfile,
+            isMarketDay: isMarketDay,
+            importedWorkoutMeta: { WorkoutStore.importedMeta(forWorkoutId: $0) }
+        )
     }
 
     /// Legacy per-endpoint loading (fallback).

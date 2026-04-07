@@ -80,4 +80,49 @@ final class CardRegistryTests: XCTestCase {
         XCTAssertEqual(registry.settingsModules.count, 1)
         XCTAssertEqual(registry.settingsModules.first?.cardType, "withsettings")
     }
+
+    func testDuplicateRegistrationIsRejected() {
+        let registry = CardRegistry()
+        XCTAssertTrue(registry.register(
+            MockCardModule(
+                cardType: "duplicate",
+                supportsManualCreation: false,
+                hasDataListView: false,
+                hasSettingsView: false
+            ),
+            assertingOnDuplicate: false
+        ))
+        XCTAssertFalse(registry.register(
+            MockCardModule(
+                cardType: "duplicate",
+                supportsManualCreation: true,
+                hasDataListView: true,
+                hasSettingsView: true
+            ),
+            assertingOnDuplicate: false
+        ))
+        XCTAssertEqual(registry.modules.count, 1)
+        XCTAssertEqual(registry.module(for: "duplicate")?.supportsManualCreation, false)
+    }
+
+    func testModuleOrderingIsStableAcrossSurfaces() {
+        let registry = CardRegistry()
+        registry.register(MockCardModule(
+            cardType: "first", supportsManualCreation: true,
+            hasDataListView: true, hasSettingsView: false
+        ))
+        registry.register(MockCardModule(
+            cardType: "second", supportsManualCreation: false,
+            hasDataListView: true, hasSettingsView: true
+        ))
+        registry.register(MockCardModule(
+            cardType: "third", supportsManualCreation: true,
+            hasDataListView: false, hasSettingsView: true
+        ))
+
+        XCTAssertEqual(registry.modules.map { $0.cardType }, ["first", "second", "third"])
+        XCTAssertEqual(registry.addableModules.map { $0.cardType }, ["first", "third"])
+        XCTAssertEqual(registry.dataModules.map { $0.cardType }, ["first", "second"])
+        XCTAssertEqual(registry.settingsModules.map { $0.cardType }, ["second", "third"])
+    }
 }

@@ -4,13 +4,14 @@ struct PostFeedCard: View {
     let post: Post
     var displayTime: String?
     @Environment(APIClient.self) private var api
+    @Environment(Localizer.self) private var L
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
                 Image(systemName: "note.text")
                     .foregroundStyle(.purple)
-                Text("Post")
+                Text(L.t("card.post"))
                     .font(.subheadline.bold())
                     .foregroundStyle(.purple)
                 Spacer()

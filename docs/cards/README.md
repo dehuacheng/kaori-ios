@@ -17,7 +17,7 @@ Every feature in Kaori is a **card type** implemented as a `CardModule`. Each ca
 | `summary` | [summary.md](summary.md) | `SummaryCardModule` | `SummaryFeedCard` | `SummaryDetailView` |
 | `post` | [post.md](post.md) | `PostCardModule` | `PostFeedCard` | `PostDetailView` |
 | `reminder` | [reminder.md](reminder.md) | `ReminderCardModule` | `ReminderFeedCard` | `ReminderDetailView` |
-| `weather` | [weather.md](weather.md) | `WeatherCardModule` | `WeatherFeedCard` | — |
+| `weather` | [weather.md](weather.md) | `WeatherCardModule` | `WeatherFeedCard` | `WeatherDetailView` |
 
 ## Shared Visual Components
 
@@ -38,7 +38,15 @@ Feed cards are **passive labels**. All interaction is handled by the feed row:
 
 Feed cards MUST NOT contain interactive controls: no `Button`, `Toggle`, `Menu`, `DisclosureGroup`, `TextField`, or custom `onTapGesture`. Nested controls inside a feed card interfere with FeedView's outer Button tap handler and can corrupt NavigationStack state after navigation, making all feed cards unclickable.
 
+Passive horizontal media scrolling is the one allowed exception. Photo carousels in feed cards are acceptable if they are strictly non-editable and do not introduce nested tap targets, menus, or gestures that compete with the feed row.
+
 If a card needs interactive behavior (expand/collapse, inline editing), that behavior belongs in the **detail view**, not the feed card.
+
+## Registration and Shared Touchpoints
+
+The registry drives rendering, deletion routing, derived date-group card contribution, add-menu behavior, Data surfaces, and settings surfaces. For new card types, the expected shared edit is **manual registration in app bootstrap**.
+
+After this registration step, new cards should not require edits to `FeedView`, `MoreView`, `CardModuleSettingsView`, shared `FeedStore` decode/delete logic, or add-menu routing.
 
 ## Detail View Layout Rules
 

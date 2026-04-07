@@ -95,6 +95,7 @@
 		9405433C46DB2468CA014AD7 /* TimerActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB167B3D5954D349D6D17C4 /* TimerActivity.swift */; };
 		98BA0EC91695C469102CAE23 /* SummaryCardModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30DAC620E10EB8CAD9947C3F /* SummaryCardModule.swift */; };
 		98F64E3441459FDCB7645D51 /* ConnectionBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D956B57C133B098D2E75EE /* ConnectionBanner.swift */; };
+		9E79FF331086E0437D225BC3 /* CardArchitectureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A003F7BB0CB2E64F9780F7E7 /* CardArchitectureTests.swift */; };
 		9FC60404A01F67EA31FB2BCD /* NotificationSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A8BFBB0AA7673018179D63 /* NotificationSettingsView.swift */; };
 		A0BB6066B535399EF86217BD /* FinanceAccountListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1631DF8A92D44CEFF6191980 /* FinanceAccountListView.swift */; };
 		A19A7DCC8DA390F4D546EAEA /* SharedConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDDAD3B33CDEF4CC6BAFE6A /* SharedConfig.swift */; };
@@ -266,6 +267,7 @@
 		9FA605630E157E285492955F /* WorkoutListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListView.swift; sourceTree = "<group>"; };
 		9FE7B77F17ABBAAEEFFC88FB /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		9FF2A2F8F4116DAFA93C2CDC /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		A003F7BB0CB2E64F9780F7E7 /* CardArchitectureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardArchitectureTests.swift; sourceTree = "<group>"; };
 		A4AFD28E8BD5650AC20EE20B /* CardModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardModule.swift; sourceTree = "<group>"; };
 		A4C2F5C7D6D8A6B05FEE2A36 /* PostFeedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFeedCard.swift; sourceTree = "<group>"; };
 		A6DB8B83949719000B2F06C5 /* PortfolioFeedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioFeedCard.swift; sourceTree = "<group>"; };
@@ -504,6 +506,7 @@
 		3AAE6BE394A3EE704CEB2096 /* KaoriAppTests */ = {
 			isa = PBXGroup;
 			children = (
+				A003F7BB0CB2E64F9780F7E7 /* CardArchitectureTests.swift */,
 				8E674FC98786A665C1D2AFD8 /* CardRegistryTests.swift */,
 				E4987B8C124BFF6745DD5238 /* CodableRoundTripTests.swift */,
 				16416DBA4DDD11359F49AB05 /* FeedItemTests.swift */,
@@ -906,6 +909,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E79FF331086E0437D225BC3 /* CardArchitectureTests.swift in Sources */,
 				52C7BB78652E3C5206EA2488 /* CardRegistryTests.swift in Sources */,
 				C35863E731B68FFD9B463866 /* CodableRoundTripTests.swift in Sources */,
 				52F6ABC31B148EAE930A53F1 /* FeedItemTests.swift in Sources */,

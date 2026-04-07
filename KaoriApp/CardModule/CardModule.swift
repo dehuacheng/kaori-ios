@@ -12,6 +12,33 @@ enum CardSwipeAction: Hashable {
     case regenerate
 }
 
+/// Context used when decoding ordinary item-based feed rows from `/api/feed`.
+struct CardFeedDecodingContext {
+    let decoder: JSONDecoder
+    let todayString: String
+    let cachedProfile: Profile?
+    let isMarketDay: Bool
+    let importedWorkoutMeta: (Int) -> ImportedWorkoutMeta?
+}
+
+/// Context used when generating singleton or derived feed rows from a date group.
+typealias CardFeedDateGroupContext = CardFeedDecodingContext
+
+/// Context for module-owned delete behavior.
+struct CardDeleteContext {
+    let api: APIClient
+    let mealStore: MealStore
+    let weightStore: WeightStore
+    let workoutStore: WorkoutStore
+}
+
+/// Context for module-owned "+" menu behavior.
+struct CardAddActionContext {
+    let presentCreateModule: @MainActor (String) -> Void
+    let createWorkout: @MainActor () async -> Void
+    let startSummaryGeneration: @MainActor () async -> Void
+}
+
 /// Protocol that every card type in the app must conform to.
 ///
 /// Each `CardModule` encapsulates everything about a card type:
@@ -91,6 +118,20 @@ protocol CardModule {
     /// Custom leading (swipe-right) actions. Return nil for no leading swipe.
     @MainActor
     func feedLeadingSwipeContent(item: FeedItem) -> AnyView?
+
+    /// Decode a standard feed item from `/api/feed`.
+    func decodeFeedItem(_ item: FeedAPIItem, context: CardFeedDecodingContext) -> FeedItem?
+
+    /// Contribute zero or more singleton/derived feed items for a date group.
+    func feedItems(for group: FeedAPIDateGroup, context: CardFeedDateGroupContext) -> [FeedItem]
+
+    /// Handle deletion for this module's feed items.
+    @MainActor
+    func deleteFeedItem(_ item: FeedItem, context: CardDeleteContext) async
+
+    /// Handle the "+" action for this module.
+    @MainActor
+    func performAddAction(context: CardAddActionContext) async
 }
 
 // Default implementations
@@ -109,4 +150,13 @@ extension CardModule {
     @MainActor func settingsView() -> AnyView? { nil }
     @MainActor func feedTrailingSwipeContent(item: FeedItem) -> AnyView? { nil }
     @MainActor func feedLeadingSwipeContent(item: FeedItem) -> AnyView? { nil }
+    func decodeFeedItem(_ item: FeedAPIItem, context: CardFeedDecodingContext) -> FeedItem? { nil }
+    func feedItems(for group: FeedAPIDateGroup, context: CardFeedDateGroupContext) -> [FeedItem] { [] }
+    @MainActor func deleteFeedItem(_ item: FeedItem, context: CardDeleteContext) async {}
+
+    @MainActor
+    func performAddAction(context: CardAddActionContext) async {
+        guard supportsManualCreation else { return }
+        context.presentCreateModule(cardType)
+    }
 }

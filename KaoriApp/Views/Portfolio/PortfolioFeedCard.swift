@@ -2,6 +2,7 @@ import SwiftUI
 
 struct PortfolioFeedCard: View {
     let summary: PortfolioSummaryResponse
+    @Environment(Localizer.self) private var L
 
     private var combined: PortfolioTotals? { summary.combined }
     private var isGain: Bool { (combined?.dayChange ?? 0) >= 0 }
@@ -14,7 +15,7 @@ struct PortfolioFeedCard: View {
                 Image(systemName: isGain ? "chart.line.uptrend.xyaxis" : "chart.line.downtrend.xyaxis")
                     .foregroundStyle(changeColor)
                     .font(.body.bold())
-                Text("Portfolio")
+                Text(L.t("finance.portfolio"))
                     .font(.subheadline.bold())
                     .foregroundStyle(changeColor)
                 Spacer()
@@ -62,7 +63,7 @@ struct PortfolioFeedCard: View {
                 // Top movers
                 if !summary.topMovers.isEmpty {
                     HStack(spacing: 0) {
-                        Text("Top: ")
+                        Text(L.t("portfolio.topMoversPrefix"))
                             .font(.caption2)
                             .foregroundStyle(.tertiary)
                         ForEach(Array(summary.topMovers.prefix(3).enumerated()), id: \.offset) { idx, mover in

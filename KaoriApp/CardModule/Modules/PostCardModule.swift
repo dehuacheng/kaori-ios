@@ -31,4 +31,18 @@ struct PostCardModule: CardModule {
     func dataListView() -> AnyView? {
         AnyView(PostListView())
     }
+
+    func decodeFeedItem(_ item: FeedAPIItem, context: CardFeedDecodingContext) -> FeedItem? {
+        guard item.type == cardType, let rawData = item.rawData,
+              let post = try? context.decoder.decode(Post.self, from: rawData) else {
+            return nil
+        }
+        return .post(post)
+    }
+
+    @MainActor
+    func deleteFeedItem(_ item: FeedItem, context: CardDeleteContext) async {
+        guard let post = item.payload as? Post else { return }
+        let _: PostDeleteResponse? = try? await context.api.delete("/api/post/\(post.id)")
+    }
 }

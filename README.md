@@ -18,9 +18,12 @@ SwiftUI iOS client for [Kaori](https://github.com/dehuacheng/kaori) — a person
 - **Apple Health** — Sync weight and workouts with HealthKit
 - **LLM backend picker** — Choose between Claude CLI, Anthropic API, or Codex CLI
 - **Notifications & AI summaries** — Configurable meal/weight reminders. AI-generated daily and weekly health summaries with swipe-to-regenerate.
+- **Reminder cards** — Task/reminder cards in the feed with due-state badges, detail view, and swipe actions
+- **Weather cards** — Current conditions and forecast cards in the feed, plus weather history/detail views
 - **iOS 18 design** — Apple Health–inspired dark card aesthetic, Control Center–style add menu
 - **Financial portfolio** — Daily portfolio value card on the feed with live prices, per-account breakdown, top movers. Import holdings via multi-photo screenshots with LLM extraction. Account management in More > Data > Finance.
 - **Share Extension** — Share content from any app (Xiaohongshu, Douyin, Safari, etc.) directly into your Kaori feed as a Post card. Auto-fetches URL metadata (title, description, preview image) via Open Graph tags.
+- **Post cards** — Save shared links, notes, and images into the feed with detail view and data browsing
 - **AI agent chat** — SSE-streaming chat tab with agentic tool loop. The agent can query all your kaori data (meals, weight, workouts, portfolio, reminders) via server-side tools. Markdown rendering with MarkdownUI, tool call indicators, thinking text, session management, and cross-session memory.
 
 ### Requirements
@@ -48,12 +51,15 @@ open KaoriApp.xcodeproj
 
 **Feed-first, card-first.** Pure thin client — no local database. All data lives on the Kaori Python backend and is accessed via JSON API.
 
-Every feature is a **card type** implemented as a `CardModule`. The feed renders all cards uniformly — no card gets special treatment. Adding a new card type means creating one module file and registering it; no changes to FeedView or other shared files.
+Every feature is a **card type** implemented as a `CardModule`. The feed renders all cards uniformly, while each module owns its own feed decoding, derived date-group cards, deletion, and add-menu behavior. Adding a new card type means creating one module file and registering it; shared feed rendering and routing stay untouched apart from manual registration in app bootstrap.
 
 - `CardModule/` — Card module protocol + registry + per-type implementations
 - `Stores/` — `FeedStore` (unified feed state), `CardPreferenceStore`, domain stores
 - `Models/` — `FeedItem` (struct with `payload: Any`), Codable domain types
 - `Views/` — SwiftUI views organized by feature; feed views are card-type-agnostic
+- `Network/` — API client + SSE client for chat streaming
+
+The app uses one external dependency: [MarkdownUI](https://github.com/gonzalezreal/swift-markdown-ui) for chat markdown rendering.
 
 ### Free Provisioning
 
@@ -90,9 +96,12 @@ The Python backend is at [kaori](https://github.com/dehuacheng/kaori).
 - **Apple Health** — 同步体重和健身数据到 HealthKit
 - **LLM 后端选择** — 可选 Claude CLI、Anthropic API 或 Codex CLI
 - **通知与 AI 总结** — 可配置的饮食/体重提醒。AI 生成的每日和每周健康总结，左滑可重新生成。
+- **提醒卡片** — 信息流中的提醒卡片，带到期状态徽标、详情页和左滑操作
+- **天气卡片** — 信息流中的当前天气与预报卡片，并提供天气详情/历史视图
 - **iOS 18 设计** — Apple Health 风格的暗色卡片设计，控制中心风格的添加菜单
 - **投资组合追踪** — 信息流显示每日投资组合涨跌卡片（实时行情），支持多图截图导入持仓（LLM 自动提取），账户管理在更多 > 数据 > 财务。
 - **分享扩展** — 从任意应用（小红书、抖音、Safari 等）直接分享内容到 Kaori 信息流，自动创建随记卡片。自动获取链接元数据（标题、描述、预览图）。
+- **随记卡片** — 保存分享链接、笔记和图片到信息流，支持详情页与数据浏览
 - **AI 助手对话** — SSE 流式对话标签页，支持 Agent 工具循环。助手可通过服务端工具查询所有 kaori 数据（饮食、体重、运动、投资、提醒等）。MarkdownUI 渲染、工具调用指示器、思考过程、会话管理和跨会话记忆。
 
 ### 环境要求
@@ -120,12 +129,15 @@ open KaoriApp.xcodeproj
 
 **信息流优先，卡片优先。** 纯薄客户端 — 无本地数据库。所有数据存储在 Kaori Python 后端，通过 JSON API 访问。
 
-每个功能都是一种**卡片类型**，通过 `CardModule` 协议实现。信息流统一渲染所有卡片 — 没有任何卡片享受特殊待遇。添加新卡片类型只需创建一个模块文件并注册，无需修改 FeedView 或其他共享文件。
+每个功能都是一种**卡片类型**，通过 `CardModule` 协议实现。信息流统一渲染所有卡片，每个模块自行负责自己的 feed 解码、日期组派生卡片、删除逻辑和添加菜单行为。添加新卡片类型时，只需创建模块并在应用启动处注册；共享的信息流渲染和路由代码无需改动。
 
 - `CardModule/` — 卡片模块协议 + 注册表 + 各类型实现
 - `Stores/` — `FeedStore`（统一信息流状态）、`CardPreferenceStore`、各领域 Store
 - `Models/` — `FeedItem`（struct，payload: Any）、各领域 Codable 类型
 - `Views/` — 按功能模块组织的 SwiftUI 视图；信息流视图与卡片类型无关
+- `Network/` — API 客户端与聊天 SSE 流客户端
+
+应用目前有一个外部依赖：[MarkdownUI](https://github.com/gonzalezreal/swift-markdown-ui)，用于聊天 markdown 渲染。
 
 ### 免费签名
 
@@ -139,7 +151,7 @@ Python 后端在 [kaori](https://github.com/dehuacheng/kaori)。
 
 - **个人文档保险库** — 上传和检索个人文档（护照、身份证等），通过密码/Face ID 保护。设计仍在进行中：考虑提供完整的 LLM 助手模式（功能更丰富）和静态展示模式（安全性最高），可能两者都提供，让用户根据自己的 LLM 配置和风险偏好自行选择。
 - **医疗记录管理** — 存储体检报告、化验结果等健康档案。充当你的 AI 全科医生、营养师和私人教练 — 一站式服务。
-- **信息流式 UI 重构** ✅ — 统一的信息流时间线，支持多日无限滚动、Apple Health 风格的卡片设计、每日营养进度条、AI 总结卡片、iOS 18 控制中心风格的添加菜单、数据分析视图。三标签布局：首页 | + | 更多。
+- **信息流式 UI 重构** ✅ — 统一的信息流时间线，支持多日无限滚动、Apple Health 风格的卡片设计、每日营养进度条、AI 总结卡片、iOS 18 控制中心风格的添加菜单、数据分析视图。四标签布局：首页 | 对话 | + | 更多。
 - **财务账户** ✅ — 券商投资组合追踪，截图导入持仓，实时行情，账户管理。
 - **AI 助手对话** ✅ — SSE 流式对话标签页，Agent 工具循环，MarkdownUI 渲染，会话管理，跨会话记忆，助手记忆设置。
 - **个人 AI 助手（终极愿景）** — 最终目标：一个个人 AI 助手（默认叫 Kaori，你也可以自定义名字），全方位照顾你生活的各个方面。核心设计原则：**数据掌握在自己手中**。你需要自行部署或选择信任的 LLM 服务商。应用的其他部分完全免费开源 — 随意 fork，用 AI 编程定制成你自己的版本。

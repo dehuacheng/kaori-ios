@@ -39,4 +39,24 @@ struct WorkoutCardModule: CardModule {
     func settingsView() -> AnyView? {
         AnyView(ExerciseManageView())
     }
+
+    func decodeFeedItem(_ item: FeedAPIItem, context: CardFeedDecodingContext) -> FeedItem? {
+        guard item.type == cardType, let rawData = item.rawData,
+              let workout = try? context.decoder.decode(Workout.self, from: rawData),
+              !workout.isImported else {
+            return nil
+        }
+        return .workout(workout)
+    }
+
+    @MainActor
+    func deleteFeedItem(_ item: FeedItem, context: CardDeleteContext) async {
+        guard let workout = item.payload as? Workout else { return }
+        try? await context.workoutStore.deleteWorkout(workout.id)
+    }
+
+    @MainActor
+    func performAddAction(context: CardAddActionContext) async {
+        await context.createWorkout()
+    }
 }

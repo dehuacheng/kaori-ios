@@ -24,4 +24,20 @@ struct HealthKitWorkoutCardModule: CardModule {
         // Fallback if meta is missing — still show imported detail with basic info
         return AnyView(WorkoutDetailView(workoutId: p.workout.id))
     }
+
+    func decodeFeedItem(_ item: FeedAPIItem, context: CardFeedDecodingContext) -> FeedItem? {
+        guard (item.type == cardType || item.type == "workout"),
+              let rawData = item.rawData,
+              let workout = try? context.decoder.decode(Workout.self, from: rawData),
+              workout.isImported else {
+            return nil
+        }
+        return .healthKitWorkout(workout, meta: context.importedWorkoutMeta(workout.id))
+    }
+
+    @MainActor
+    func deleteFeedItem(_ item: FeedItem, context: CardDeleteContext) async {
+        guard let payload = item.payload as? HealthKitWorkoutPayload else { return }
+        try? await context.workoutStore.deleteWorkout(payload.workout.id)
+    }
 }

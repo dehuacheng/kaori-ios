@@ -31,8 +31,6 @@ struct FeedView: View {
 
     @State private var showAnalytics = false
     @State private var selectedTarget: FeedNavigationTarget?
-    @Binding var showMealCreate: Bool
-    @Binding var showWeightCreate: Bool
     var refreshToken: UUID
 
     private let dateFormatter: DateFormatter = {
@@ -84,28 +82,6 @@ struct FeedView: View {
                         workoutStore: workoutStore
                     )
                 }
-            }
-            .sheet(isPresented: $showMealCreate, onDismiss: {
-                Task {
-                    await feedStore.refreshToday(
-                        mealStore: mealStore,
-                        weightStore: weightStore,
-                        workoutStore: workoutStore
-                    )
-                }
-            }) {
-                MealCreateView()
-            }
-            .sheet(isPresented: $showWeightCreate, onDismiss: {
-                Task {
-                    await feedStore.refreshToday(
-                        mealStore: mealStore,
-                        weightStore: weightStore,
-                        workoutStore: workoutStore
-                    )
-                }
-            }) {
-                WeightCreateView()
             }
             .task {
                 await profileStore.load()

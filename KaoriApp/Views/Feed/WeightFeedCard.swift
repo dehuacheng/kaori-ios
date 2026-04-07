@@ -3,6 +3,7 @@ import SwiftUI
 struct WeightFeedCard: View {
     let entry: WeightEntry
     var displayTime: String?
+    @Environment(Localizer.self) private var L
     @Environment(ProfileStore.self) private var profileStore
     @Environment(WeightStore.self) private var weightStore
 
@@ -13,7 +14,7 @@ struct WeightFeedCard: View {
             HStack {
                 Image(systemName: "scalemass.fill")
                     .foregroundStyle(.cyan)
-                Text("Weight")
+                Text(L.t("card.weight"))
                     .font(.subheadline.bold())
                     .foregroundStyle(.cyan)
                 Spacer()
@@ -30,7 +31,7 @@ struct WeightFeedCard: View {
 
                 if let avg = weightStore.avg7d {
                     let delta = entry.weightKg - avg
-                    Text(UnitConverter.formatWeightDelta(delta, unit: wu) + " vs avg")
+                    Text(L.t("weight.deltaVsAvg", UnitConverter.formatWeightDelta(delta, unit: wu)))
                         .font(.caption)
                         .foregroundStyle(delta < 0 ? .green : delta > 0 ? .red : .secondary)
                 }

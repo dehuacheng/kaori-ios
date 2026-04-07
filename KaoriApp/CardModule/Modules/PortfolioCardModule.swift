@@ -30,4 +30,11 @@ struct PortfolioCardModule: CardModule {
             return f.string(from: Date())
         }()))
     }
+
+    func feedItems(for group: FeedAPIDateGroup, context: CardFeedDateGroupContext) -> [FeedItem] {
+        guard let portfolio = group.portfolio, portfolio.combined != nil else { return [] }
+        let isToday = group.date == context.todayString
+        guard !isToday || context.isMarketDay else { return [] }
+        return [.portfolio(portfolio)]
+    }
 }

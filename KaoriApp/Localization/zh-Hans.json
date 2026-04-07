@@ -83,6 +83,7 @@
   "weight.weightInput": "体重 (%@)",
   "weight.notesOptional": "备注（可选）",
   "weight.invalidWeight": "体重数据无效",
+  "weight.deltaVsAvg": "%@ 对比均值",
 
   "weight.range.1W": "1周",
   "weight.range.1M": "1月",
@@ -352,6 +353,7 @@
   "finance.topMovers": "涨跌榜",
   "finance.accounts": "账户",
   "finance.portfolio": "投资组合",
+  "portfolio.topMoversPrefix": "领涨：",
 
   "common.retry": "重试",
 
@@ -387,6 +389,11 @@
   "weather.location": "位置",
   "weather.history": "历史记录",
   "weather.noData": "暂无天气数据",
+  "weather.uv.low": "低",
+  "weather.uv.moderate": "中等",
+  "weather.uv.high": "高",
+  "weather.uv.veryHigh": "很高",
+  "weather.uv.extreme": "极高",
 
   "post.title": "随记",
   "post.newPost": "新随记",
@@ -421,6 +428,8 @@
   "reminder.noReminders": "暂无提醒",
   "reminder.active": "进行中",
   "reminder.completed": "已完成",
+  "reminder.overdue": "已逾期",
+  "reminder.fromDate": "原始日期 %@",
 
   "tab.chat": "对话",
 

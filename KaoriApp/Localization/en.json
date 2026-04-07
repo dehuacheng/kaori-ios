@@ -83,6 +83,7 @@
   "weight.weightInput": "Weight (%@)",
   "weight.notesOptional": "Notes (optional)",
   "weight.invalidWeight": "Invalid weight",
+  "weight.deltaVsAvg": "%@ vs avg",
 
   "weight.range.1W": "1W",
   "weight.range.1M": "1M",
@@ -352,6 +353,7 @@
   "finance.topMovers": "Top Movers",
   "finance.accounts": "Accounts",
   "finance.portfolio": "Portfolio",
+  "portfolio.topMoversPrefix": "Top: ",
 
   "common.retry": "Retry",
 
@@ -387,6 +389,11 @@
   "weather.location": "Location",
   "weather.history": "History",
   "weather.noData": "No weather data yet",
+  "weather.uv.low": "Low",
+  "weather.uv.moderate": "Moderate",
+  "weather.uv.high": "High",
+  "weather.uv.veryHigh": "Very High",
+  "weather.uv.extreme": "Extreme",
 
   "post.title": "Posts",
   "post.newPost": "New Post",
@@ -421,6 +428,8 @@
   "reminder.noReminders": "No reminders yet",
   "reminder.active": "Active",
   "reminder.completed": "Completed",
+  "reminder.overdue": "overdue",
+  "reminder.fromDate": "from %@",
 
   "tab.chat": "Chat",
 

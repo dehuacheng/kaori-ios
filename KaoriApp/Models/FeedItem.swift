@@ -182,8 +182,7 @@ struct FeedItem: Identifiable {
         )
     }
 
-    static func weatherForecast(_ response: WeatherResponse) -> FeedItem {
-        let date = response.forecast?.date ?? ""
+    static func weatherForecast(_ response: WeatherResponse, forDate date: String) -> FeedItem {
         return FeedItem(
             id: "weather-forecast-\(date)",
             cardType: "weather",

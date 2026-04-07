@@ -88,7 +88,7 @@ struct ReminderListView: View {
                         .font(.caption2)
                         .foregroundStyle(.tertiary)
                     if reminder.isOverdue {
-                        Text("overdue")
+                        Text(L.t("reminder.overdue"))
                             .font(.caption2)
                             .foregroundStyle(.red)
                     }

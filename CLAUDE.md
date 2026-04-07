@@ -15,7 +15,7 @@ KaoriApp/
   Config/         — AppConfig (server URL + token in UserDefaults), SharedConfig (App Group shared defaults for extensions)
   Network/        — APIClient (URLSession wrapper), APIError, SSEClient (agent chat streaming)
   Models/         — Codable structs matching backend JSON responses
-    FeedItem.swift    — Unified feed item enum (meal, weight, workout, summary, portfolio)
+    FeedItem.swift    — Unified feed item struct with `payload: Any`
     Meal.swift        — Meal, MealListResponse, NutritionTotals
     Weight.swift      — WeightEntry, WeightResponse, WeightCreate
     Workout.swift     — Workout, WorkoutDetail, ExerciseSet, etc.
@@ -67,7 +67,7 @@ Kaori is a **feed-first, card-first** app. Every user-facing feature is a **card
 ### Design Principles
 1. **No card is special in the feed.** All cards flow through one unified `ForEach` in FeedView. Ranking (priority) differs per card, but rendering and interaction are uniform.
 2. **Every card follows the same interaction pattern:** tap → detail view (if any), swipe left → contextual actions (if any). No inline expand/collapse, no special buttons.
-3. **Parallel development.** Adding a new card type should NOT require editing FeedView, FeedStore, ContentView, or any other shared file. If your change adds a `switch` or `if cardType ==` to a shared file, you're doing it wrong.
+3. **Parallel development.** Adding a new card type should NOT require editing FeedView, MoreView, CardModuleSettingsView, shared feed decode/delete logic, or add-menu routing. The expected shared touchpoint is manual registration in app bootstrap. If your change adds a `switch` or `if cardType ==` to shared rendering/routing code, you're doing it wrong.
 4. **Data section is for data.** More > Data shows raw data for browsing/editing/deleting. Analytics and charts are separate (accessed via the chart icon in the feed nav bar).
 
 ### FeedItem (struct, not enum)
@@ -77,22 +77,25 @@ Kaori is a **feed-first, card-first** app. Every user-facing feature is a **card
 Defined in `KaoriApp/CardModule/CardModule.swift`. Each card module provides:
 - **Identity**: `cardType`, `displayNameKey`, `iconName`, `accentColor`
 - **Behavior**: `supportsManualCreation`, `presentationStyle`, `feedSwipeActions`, `hasFeedDetailView`
+- **Feed ownership**: `decodeFeedItem`, `feedItems(for:)`, `deleteFeedItem`, `performAddAction`
 - **Views**: `feedCardView(item:)`, `feedDetailView(item:)`, `createView()`, `dataListView()`, `settingsView()`
 
 ### CardRegistry
-`KaoriApp/CardModule/CardRegistry.swift` — holds all registered modules, injected via `@Environment`. Drives feed rendering, "+" menu, Data tab, and card settings. FeedView has **zero** card-type switches — it delegates everything to the registry.
+`KaoriApp/CardModule/CardRegistry.swift` — keyed registry of all registered modules, injected via `@Environment`. It drives feed rendering, feed decoding, derived date-group cards, deletion routing, "+" menu actions, Data tab, and card settings. FeedView has **zero** card-type switches — it delegates everything to the registry.
 
 ### Adding or Editing a Card (iOS + Backend)
 **Read the backend repo's `docs/cards/HOWTO.md` first** — it has the full-stack checklist (backend + iOS), file-by-file, with items-based vs singleton distinction, and common edit patterns.
 
 - Per-card design docs: backend `docs/cards/<type>.md` (template: `docs/cards/README.md`)
 - Simplest reference card module: `PostCardModule.swift` (34 lines)
-- Key iOS-only files when adding a card: `CardModule/Modules/`, `Models/FeedItem.swift`, `Stores/FeedStore.swift` (`convertToFeedItem` for items-based, `applyFeedResponse` for singleton), `KaoriApp.swift` (registration), `Localization/*.json`
+- Key iOS-only files when adding a card: `CardModule/Modules/`, card-specific `Views/`, optional `FeedItem` factory helpers, `KaoriApp.swift` (registration), `Localization/*.json`
+- New cards should own their feed behavior inside the module: items-based cards implement `decodeFeedItem`, singleton/derived cards implement `feedItems(for:)`, deletions go through `deleteFeedItem`, and custom add flows go through `performAddAction`
 
 ### Key Invariants (enforced by pre-commit check)
 - All feed cards MUST use `.feedCard()` modifier
 - All card types MUST be registered in CardRegistry
-- FeedView.swift, MoreView.swift, ContentView MUST NOT contain `switch` or `if`/`case` on card types or `FeedItem` payloads — all card-specific logic lives in CardModule implementations
+- FeedView.swift, MoreView.swift, and app bootstrap/add-menu routing MUST NOT contain `switch` or `if`/`case` on card types or `FeedItem` payloads — all card-specific logic lives in CardModule implementations
+- FeedStore.swift MUST NOT contain central card-type decode switches or payload-casting delete chains for app cards
 - "+" menu options come from `CardRegistry.addableModules` — never hardcode
 - Data tab entries come from `CardRegistry.dataModules` — never hardcode
 - Swipe actions come from `module.feedSwipeActions` — never hardcode per-type
@@ -103,12 +106,16 @@ Defined in `KaoriApp/CardModule/CardModule.swift`. Each card module provides:
 Before pushing to GitHub, verify these constraints:
 ```bash
 # Must return 0 results — no card-type switches in shared files
+grep -n 'switch item.type\|case "meal"\|case "weight"\|case "workout"\|case "summary"' \
+  KaoriApp/Stores/FeedStore.swift \
+  KaoriApp/KaoriApp.swift
 grep -n 'case \.meal\|case \.weight\|case \.workout\|case \.summary\|case \.portfolio\|case \.nutrition' \
   KaoriApp/Views/Feed/FeedView.swift \
   KaoriApp/Views/ManageView.swift \
   KaoriApp/KaoriApp.swift
 # Must return 0 — no payload type checks in shared files
 grep -n 'as? Meal\|as? WeightEntry\|as? Workout\|as? SummaryPayload\|as? PortfolioSummary\|as? NutritionPayload' \
+  KaoriApp/Stores/FeedStore.swift \
   KaoriApp/Views/Feed/FeedView.swift \
   KaoriApp/Views/ManageView.swift
 ```
@@ -249,9 +256,10 @@ The app follows an **Apple Health–inspired** aesthetic:
 - **Tab bar** hides when navigating into detail views (`.toolbar(.hidden, for: .tabBar)`)
 - **Swipe left** on feed items reveals contextual actions (delete for all items, regenerate for summaries). This is the standard pattern for revealing actions — do NOT use inline buttons or `...` menus on feed cards.
 - **Tap** on feed cards navigates to the full detail view. Cards should NOT expand/collapse inline.
+- **Feed cards are passive** — no `Button`, `Toggle`, `Menu`, `DisclosureGroup`, `TextField`, or custom `onTapGesture` inside feed cards. Passive horizontal media scrolling is the one allowed exception for photo carousels such as meal/post cards.
 - **Detail view actions** (delete, reanalyze, etc.) go in a `...` toolbar menu with confirmation alerts for destructive actions.
 - **Nutrition progress bars** use colored bars: red (calories), blue (protein), orange (carbs), yellow (fat)
-- **Feed cards are passive** — no `Button`, `Toggle`, `Menu`, `DisclosureGroup`, `TextField`, or `onTapGesture` inside feed cards. Nested controls conflict with FeedView's outer `Button` tap handler and corrupt NavigationStack state. Interactive behavior (expand/collapse, editing) belongs in the detail view only.
+- Nested controls conflict with FeedView's outer `Button` tap handler and corrupt NavigationStack state. Interactive behavior (expand/collapse, editing) belongs in the detail view only.
 - **Card state badges** use `CardStateBadge` from `Views/Shared/CardStateBadge.swift` — capsule pills for processing/failed/ai/manual/live/loading states. All cards with live-update states MUST use this shared component, not custom indicators.
 - **Processing overlay** — use `.processingOverlay(Bool)` modifier to dim content + show spinner during async operations. Do NOT use ad-hoc opacity changes.
 - **Detail view loading** — use `FullViewLoading(message:)` for centered spinner + text. `FullViewError(message:, onRetry:)` for error states with retry.

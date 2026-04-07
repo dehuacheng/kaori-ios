@@ -143,11 +143,11 @@ struct WeatherDetailView: View {
 
     private func uvDescription(_ uv: Double) -> String {
         switch uv {
-        case ..<3: return "Low"
-        case 3..<6: return "Moderate"
-        case 6..<8: return "High"
-        case 8..<11: return "Very High"
-        default: return "Extreme"
+        case ..<3: return L.t("weather.uv.low")
+        case 3..<6: return L.t("weather.uv.moderate")
+        case 6..<8: return L.t("weather.uv.high")
+        case 8..<11: return L.t("weather.uv.veryHigh")
+        default: return L.t("weather.uv.extreme")
         }
     }
 
