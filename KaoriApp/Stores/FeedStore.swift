@@ -28,6 +28,12 @@ class FeedStore {
         return f
     }()
 
+    private var marketCalendar: Calendar {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "America/New_York") ?? .current
+        return calendar
+    }
+
     init(api: APIClient, cardRegistry: CardRegistry) {
         self.api = api
         self.cardRegistry = cardRegistry
@@ -39,8 +45,16 @@ class FeedStore {
 
     /// Whether today is a US stock market trading day (Mon–Fri).
     private var isMarketDay: Bool {
-        let weekday = Calendar.current.component(.weekday, from: Date())
+        let weekday = marketCalendar.component(.weekday, from: Date())
         return weekday >= 2 && weekday <= 6
+    }
+
+    /// Whether the US stock market is currently open (9:30 AM–4:00 PM ET, Mon–Fri).
+    private var isMarketHours: Bool {
+        guard isMarketDay else { return false }
+        let components = marketCalendar.dateComponents([.hour, .minute], from: Date())
+        let minutes = (components.hour ?? 0) * 60 + (components.minute ?? 0)
+        return minutes >= (9 * 60 + 30) && minutes < (16 * 60)
     }
 
     // MARK: - Public API
@@ -250,12 +264,14 @@ class FeedStore {
             let accounts = (try? await financeStore.loadAccountsQuick()) ?? []
             await MainActor.run { hasPortfolioAccounts = !accounts.isEmpty }
             guard !accounts.isEmpty else { return }
+            guard isMarketHours else { return }
 
             await refreshPortfolio(financeStore: financeStore)
 
             while !Task.isCancelled {
                 try? await Task.sleep(for: .seconds(60))
                 guard !Task.isCancelled else { break }
+                guard isMarketHours else { break }
                 await refreshPortfolio(financeStore: financeStore)
             }
         }
@@ -337,7 +353,7 @@ class FeedStore {
     // MARK: - Private
 
     private func refreshPortfolio(financeStore: FinanceStore) async {
-        guard isMarketDay else { return }
+        guard isMarketHours else { return }
         let today = todayString
         if let summary = try? await financeStore.getPortfolioSummary(date: today),
            summary.combined != nil {

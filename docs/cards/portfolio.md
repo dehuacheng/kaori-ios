@@ -39,6 +39,7 @@ Payload type: `PortfolioSummaryResponse`
 
 ## Notes
 
-- Auto-refreshes every 60 seconds on market days to keep prices current.
+- Auto-refreshes every 60 seconds only during US market hours (9:30 AM-4:00 PM ET).
+- After market close, the feed relies on the backend's frozen end-of-day snapshot for today's card.
 - Hidden on weekends when markets are closed.
 - Pinned near the top of the feed via `sortPriority=1`.
