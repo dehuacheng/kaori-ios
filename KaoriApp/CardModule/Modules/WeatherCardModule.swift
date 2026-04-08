@@ -57,15 +57,15 @@ struct WeatherCardModule: CardModule {
             return formatDateString(forecastDate)
         }
 
+        if let currentDate = parseDateString(weather.current?.date),
+           let nextDay = Calendar(identifier: .gregorian).date(byAdding: .day, value: 1, to: currentDate) {
+            return formatDateString(nextDay)
+        }
+
         if let forecastDate = parseDateString(weather.forecast?.date),
            let groupedDate = parseDateString(groupDate),
            forecastDate > groupedDate {
             return formatDateString(forecastDate)
-        }
-
-        if let currentDate = parseDateString(weather.current?.date),
-           let nextDay = Calendar(identifier: .gregorian).date(byAdding: .day, value: 1, to: currentDate) {
-            return formatDateString(nextDay)
         }
 
         if let nextDay = nextDateString(after: groupDate) {
