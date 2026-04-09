@@ -1,12 +1,15 @@
 import SwiftUI
 
 struct DailyNutritionCard: View {
+    @Environment(ProfileStore.self) private var profileStore
+
     let totals: NutritionTotals
     let profile: Profile?
 
-    private var targetCal: Int? { profile?.targetCalories }
-    private var targetProtein: Int? { profile?.targetProteinG }
-    private var targetCarbs: Int? { profile?.targetCarbsG }
+    private var effectiveProfile: Profile? { profileStore.profile ?? profile }
+    private var targetCal: Int? { effectiveProfile?.targetCalories }
+    private var targetProtein: Int? { effectiveProfile?.targetProteinG }
+    private var targetCarbs: Int? { effectiveProfile?.targetCarbsG }
     // Fat target: remaining calories after protein (4cal/g) and carbs (4cal/g), divided by 9cal/g
     private var targetFat: Int? {
         guard let cal = targetCal, let p = targetProtein, let c = targetCarbs else { return nil }

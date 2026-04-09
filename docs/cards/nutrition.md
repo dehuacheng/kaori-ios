@@ -19,13 +19,13 @@
 ## FeedItem
 
 Factory: `FeedItem.nutrition(...)`
-Payload type: `NutritionPayload` (contains `NutritionTotals` + optional `Profile`)
+Payload type: `NutritionPayload` (contains `NutritionTotals` + optional `Profile` fallback)
 
 ## Views
 
 | View | File | Purpose |
 |------|------|---------|
-| DailyNutritionCard | `Views/Nutrition/DailyNutritionCard.swift` | Feed card showing daily macro totals and progress bars |
+| DailyNutritionCard | `Views/Feed/DailyNutritionCard.swift` | Feed card showing daily macro totals and progress bars |
 
 ## Store
 
@@ -33,6 +33,7 @@ No dedicated store. Nutrition data is derived from meal data (aggregated from `M
 
 ## Notes
 
+- The card prefers the live `ProfileStore.profile` from the environment for target calories/macros and falls back to the payload profile snapshot if needed.
 - Always shown for today's feed even when all values are zero, so the user has a visible target to fill.
 - Pinned near the top of the feed via `sortPriority=2`.
 - Not manually creatable; automatically computed from logged meals.
