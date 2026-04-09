@@ -23,6 +23,8 @@ struct SettingsView: View {
     @Environment(AppLockManager.self) private var appLockManager
     @State private var selectedLLMMode: LLMMode = .claudeCli
     @State private var isSavingLLM = false
+    @State private var isBackfillingPhotos = false
+    @State private var backfillResult: String?
     @State private var bodyWeightUnit: WeightUnit = .kg
     @State private var heightUnit: HeightUnit = .cm
     @State private var exerciseWeightUnit: WeightUnit = .kg
@@ -206,6 +208,34 @@ struct SettingsView: View {
                 }
             }
 
+            // MARK: - Photo Descriptions
+            if config.isConfigured {
+                Section {
+                    Button {
+                        Task { await backfillPhotos() }
+                    } label: {
+                        HStack {
+                            Image(systemName: "photo.badge.arrow.down")
+                                .foregroundStyle(.blue)
+                            Text(L.t("settings.backfillPhotos"))
+                            Spacer()
+                            if isBackfillingPhotos {
+                                ProgressView()
+                            } else if let backfillResult {
+                                Text(backfillResult)
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                    }
+                    .disabled(isBackfillingPhotos)
+                } header: {
+                    Text(L.t("settings.photoDescriptions"))
+                } footer: {
+                    Text(L.t("settings.backfillPhotosFooter"))
+                }
+            }
+
             // MARK: - Card Modules
             if config.isConfigured {
                 Section {
@@ -361,6 +391,22 @@ struct SettingsView: View {
                 exerciseWeightUnit = profile.exerciseWeightUnit
             }
         }
+    }
+
+    private func backfillPhotos() async {
+        isBackfillingPhotos = true
+        backfillResult = nil
+        do {
+            struct BackfillResponse: Codable {
+                let postsProcessed: Int
+                let errors: Int
+            }
+            let result: BackfillResponse = try await api.post("/api/feed/backfill-photos")
+            backfillResult = L.t("settings.backfillResult", result.postsProcessed, result.errors)
+        } catch {
+            backfillResult = "Error"
+        }
+        isBackfillingPhotos = false
     }
 
     private func testConnection() async {

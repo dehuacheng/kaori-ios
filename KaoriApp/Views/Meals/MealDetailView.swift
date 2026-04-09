@@ -85,6 +85,15 @@ struct MealDetailView: View {
                                 .foregroundStyle(.secondary)
                         }
 
+                        if let photoDesc = meal.photoDescription {
+                            DisclosureGroup(L.t("photo.description")) {
+                                Text(photoDesc)
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
+                            .font(.subheadline)
+                        }
+
                         // Nutrition
                         if isPending {
                             FullViewLoading(message: L.t("meal.analyzingNutrition"))

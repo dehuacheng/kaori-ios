@@ -46,6 +46,15 @@ struct PostDetailView: View {
                 LinkedText(post.content)
                     .font(.body)
 
+                if let photoDesc = post.photoDescription {
+                    DisclosureGroup(L.t("photo.description")) {
+                        Text(photoDesc)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    .font(.subheadline)
+                }
+
                 HStack {
                     Text(post.date)
                         .font(.caption)

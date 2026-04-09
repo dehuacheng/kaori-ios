@@ -19,6 +19,7 @@ struct Meal: Codable, Identifiable {
     let mealType: String?
     let photoPath: String?
     let photoPaths: String?  // JSON array of paths, e.g. "[\"a.jpg\",\"b.jpg\"]"
+    let photoDescription: String?
     let notes: String?
     let createdAt: String?
     let updatedAt: String?

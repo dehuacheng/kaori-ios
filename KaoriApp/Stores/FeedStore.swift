@@ -150,6 +150,28 @@ class FeedStore {
         } catch {}
     }
 
+    /// Reload a specific date's feed data via the unified endpoint.
+    func reloadDate(_ dateStr: String) async {
+        guard useUnifiedEndpoint else { return }
+        do {
+            let response: FeedAPIResponse = try await api.get(
+                "/api/feed",
+                query: ["start_date": dateStr, "end_date": dateStr]
+            )
+            await MainActor.run {
+                feedItems.removeAll { $0.dateString == dateStr }
+                applyFeedResponse(response)
+                loadedDates.insert(dateStr)
+            }
+        } catch {}
+    }
+
+    /// Refresh a single post in the feed by fetching its latest data.
+    func refreshPost(id: Int) async {
+        guard let post: Post = try? await api.get("/api/post/\(id)") else { return }
+        await MainActor.run { upsertFeedItem(.post(post)) }
+    }
+
     /// Refresh only today's data.
     func refreshToday(
         mealStore: MealStore,

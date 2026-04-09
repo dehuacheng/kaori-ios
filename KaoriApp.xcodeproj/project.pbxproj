@@ -11,6 +11,7 @@
 		06A917B084A9E912DD511AE8 /* MealCardModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D475E311820FEDFD06B5B4 /* MealCardModule.swift */; };
 		076770AAF9ABECC2B6D9D9E8 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E73336FBC606B1432E7C480 /* ProfileView.swift */; };
 		08759F1C6CEBA94E1F2F1FAC /* AgentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4D3C801FF1604CD7ED95D5 /* AgentStore.swift */; };
+		09451C6F9D8C69D7049E3338 /* DocumentUploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B737AB0DF7407AEF21E0303 /* DocumentUploadView.swift */; };
 		0C7D78FF8414F51BC0F8712A /* en.json in Resources */ = {isa = PBXBuildFile; fileRef = FB7D98DCD9C2AED3E0D3DEDB /* en.json */; };
 		11E092E0D4A1BBBFFDF2C4B9 /* UnitConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133E9D0C32C79FE969939FD8 /* UnitConverterTests.swift */; };
 		1456E9490821F2D168C640BF /* defaults.json in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A03AAB1927618F07B50F2 /* defaults.json */; };
@@ -22,6 +23,7 @@
 		1DDD8059D326D9F7392D1A54 /* CardModuleSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324EAFCDCB2AA529E70DAF5A /* CardModuleSettingsView.swift */; };
 		1F2107DCC3BD6FEF8068B45D /* Finance.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0C761E19D66964B3766176E /* Finance.swift */; };
 		1FA2FC945A1F52BDA1FCBB6E /* ReminderFeedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F557EE85C083C644A79700 /* ReminderFeedCard.swift */; };
+		2029A49188F51CF2D61EE9EE /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993B0747E9D40D46B4C0143D /* Document.swift */; };
 		205EF93C84D2E5265CDDFD5E /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FF2A2F8F4116DAFA93C2CDC /* APIClient.swift */; };
 		21FA4D52BC2D16D40B280CB7 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92170DF1C172891E924064FF /* Post.swift */; };
 		24809FEB7DB2E1D611DAFF99 /* zh-Hans.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E5E0F9ED1381B9AC4ED6D20 /* zh-Hans.json */; };
@@ -70,12 +72,14 @@
 		5CEE4743586641D5E1AD8A76 /* ReminderCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AF1AFD6420F1234DD3F2A06 /* ReminderCreateView.swift */; };
 		5DF697CBBF5E628CBF8E9FE7 /* PostFeedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C2F5C7D6D8A6B05FEE2A36 /* PostFeedCard.swift */; };
 		5E0A6B64DBFFBDB0A7CCC65B /* AgentMemoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695C145117312007051573AC /* AgentMemoryView.swift */; };
+		5EF7276576D841F2F6375218 /* DocumentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1C1E1E9416640A79E03983 /* DocumentStore.swift */; };
 		5F9660B8B3E8A50B8573DC28 /* Summary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331E61143E2DD0F8D055F87B /* Summary.swift */; };
 		619631777EF8C0F95189DF60 /* KaoriShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DC626B3AEA12FB372AD4CE7F /* KaoriShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		622E843913C032C04AB97813 /* FinanceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A1F27D4E61E81445746BF1 /* FinanceStore.swift */; };
 		62C345505E31EAB46B9E3087 /* ChatSessionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A7F9F41767E399BB3D7CD8 /* ChatSessionListView.swift */; };
 		652DACF32CB255993621EF35 /* WeightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647C6A152720E00B28A55515 /* WeightView.swift */; };
 		6DEA6E7611A31F4BDAFE4E69 /* WorkoutListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA605630E157E285492955F /* WorkoutListView.swift */; };
+		6E44220786DC886E264BCB5A /* DocumentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32892B7492889DCC567701 /* DocumentListView.swift */; };
 		6E5E05F6A94D0E9B26B1740B /* MealRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4088294A4BCBA4D82EF459A4 /* MealRowView.swift */; };
 		73AC9F0DAB9F0B963BA14D16 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B31E33107217C57F296F400 /* AppDelegate.swift */; };
 		7735EBC883D5CD034BADCCEF /* MealEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071BF34F3746B40727AB45DC /* MealEditView.swift */; };
@@ -188,6 +192,7 @@
 		071BF34F3746B40727AB45DC /* MealEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealEditView.swift; sourceTree = "<group>"; };
 		07F3F907BD72DB2E3480A612 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		086EF4517801CABE1067D87D /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		0B737AB0DF7407AEF21E0303 /* DocumentUploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentUploadView.swift; sourceTree = "<group>"; };
 		0D5656813267E1EEA4F21326 /* WeightChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightChartView.swift; sourceTree = "<group>"; };
 		0F5926285FF29F6902466E44 /* SummaryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryListView.swift; sourceTree = "<group>"; };
 		12D3D48551429C850EBE2565 /* FeedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItem.swift; sourceTree = "<group>"; };
@@ -205,6 +210,7 @@
 		1DC56D55B05AEE8D272DABC6 /* URLMetadataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLMetadataFetcher.swift; sourceTree = "<group>"; };
 		234E063F50E26DA9197E727B /* NutritionCardModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionCardModule.swift; sourceTree = "<group>"; };
 		29C6C3743E658F8E2E6F667C /* CardRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardRegistry.swift; sourceTree = "<group>"; };
+		2D32892B7492889DCC567701 /* DocumentListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentListView.swift; sourceTree = "<group>"; };
 		2E5E0F9ED1381B9AC4ED6D20 /* zh-Hans.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "zh-Hans.json"; sourceTree = "<group>"; };
 		303B1E52034AEBB719445463 /* ProfileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStore.swift; sourceTree = "<group>"; };
 		30DAC620E10EB8CAD9947C3F /* SummaryCardModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryCardModule.swift; sourceTree = "<group>"; };
@@ -260,6 +266,7 @@
 		8F4CBC90D3E2E1018B6D94CC /* TimerEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerEngine.swift; sourceTree = "<group>"; };
 		92170DF1C172891E924064FF /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		95564C2B8291EAE2D59742C3 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
+		993B0747E9D40D46B4C0143D /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
 		99DF9B688A1041D6787EE0A9 /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
 		9D085BBC8CB56BB2B218B390 /* MealDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDetailView.swift; sourceTree = "<group>"; };
 		9E73336FBC606B1432E7C480 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -297,6 +304,7 @@
 		D13D1111C4EBEDC3AF4FA747 /* KaoriApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = KaoriApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D82352D904666CB869919AD1 /* AnalyticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsView.swift; sourceTree = "<group>"; };
 		D99AD8BBFFF23F562B463C20 /* WorkoutRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutRowView.swift; sourceTree = "<group>"; };
+		DC1C1E1E9416640A79E03983 /* DocumentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentStore.swift; sourceTree = "<group>"; };
 		DC626B3AEA12FB372AD4CE7F /* KaoriShareExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = KaoriShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCD339C8B5D5941E4356EC91 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DD9AB8A03863BD0C08D6697D /* MealStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealStore.swift; sourceTree = "<group>"; };
@@ -522,6 +530,7 @@
 				D82352D904666CB869919AD1 /* AnalyticsView.swift */,
 				F521DDA29FA86345A415C3B9 /* ManageView.swift */,
 				F873F32F504B604D81957F2E /* Chat */,
+				62B7496BE29957CCEF890D13 /* Documents */,
 				1997825C977296845B17AF07 /* Feed */,
 				F6A7FEEC8F6F9E0D78750603 /* Finance */,
 				34D1D7AE9F248DB3A2D0B5D8 /* Meals */,
@@ -565,6 +574,15 @@
 				ADDDAD3B33CDEF4CC6BAFE6A /* SharedConfig.swift */,
 			);
 			path = Config;
+			sourceTree = "<group>";
+		};
+		62B7496BE29957CCEF890D13 /* Documents */ = {
+			isa = PBXGroup;
+			children = (
+				2D32892B7492889DCC567701 /* DocumentListView.swift */,
+				0B737AB0DF7407AEF21E0303 /* DocumentUploadView.swift */,
+			);
+			path = Documents;
 			sourceTree = "<group>";
 		};
 		7325357F98EDE5F9F9D74814 /* Security */ = {
@@ -650,6 +668,7 @@
 			children = (
 				BE4D3C801FF1604CD7ED95D5 /* AgentStore.swift */,
 				BF5C8FA0A94976536ACFF877 /* CardPreferenceStore.swift */,
+				DC1C1E1E9416640A79E03983 /* DocumentStore.swift */,
 				798AB8F4211084BBB87259CF /* FeedStore.swift */,
 				69A1F27D4E61E81445746BF1 /* FinanceStore.swift */,
 				DD9AB8A03863BD0C08D6697D /* MealStore.swift */,
@@ -677,6 +696,7 @@
 			isa = PBXGroup;
 			children = (
 				4BCA67E70C3D529DEBDC082A /* Agent.swift */,
+				993B0747E9D40D46B4C0143D /* Document.swift */,
 				12D3D48551429C850EBE2565 /* FeedItem.swift */,
 				F0C761E19D66964B3766176E /* Finance.swift */,
 				76C24199376F64DF38580BBC /* ImportedWorkoutMeta.swift */,
@@ -943,6 +963,10 @@
 				482AA56B888C855709FA3537 /* ChatView.swift in Sources */,
 				98F64E3441459FDCB7645D51 /* ConnectionBanner.swift in Sources */,
 				E84AE89720D0A2F9CE85808E /* DailyNutritionCard.swift in Sources */,
+				2029A49188F51CF2D61EE9EE /* Document.swift in Sources */,
+				6E44220786DC886E264BCB5A /* DocumentListView.swift in Sources */,
+				5EF7276576D841F2F6375218 /* DocumentStore.swift in Sources */,
+				09451C6F9D8C69D7049E3338 /* DocumentUploadView.swift in Sources */,
 				BBE49675447E4CB29B8C426C /* ExerciseManageView.swift in Sources */,
 				1BD326F61B192FF000E13F56 /* ExercisePickerView.swift in Sources */,
 				17DB6EC4C460811FC4717BFF /* FeedCardStyle.swift in Sources */,

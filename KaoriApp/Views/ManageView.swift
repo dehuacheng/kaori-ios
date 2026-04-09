@@ -28,6 +28,11 @@ struct MoreView: View {
                     } label: {
                         Label(L.t("timer.title"), systemImage: "timer")
                     }
+                    NavigationLink {
+                        DocumentListView()
+                    } label: {
+                        Label(L.t("document.title"), systemImage: "doc.text.magnifyingglass")
+                    }
                 }
 
                 Section {

@@ -7,6 +7,7 @@ struct Post: Codable, Identifiable {
     let content: String
     let photoPath: String?
     let photoPaths: String?
+    let photoDescription: String?
     let isPinned: Int
     let createdAt: String?
     let updatedAt: String?

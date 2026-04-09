@@ -19,6 +19,7 @@ struct KaoriApp: App {
     @State private var feedStore: FeedStore
     @State private var cardPreferenceStore: CardPreferenceStore
     @State private var postStore: PostStore
+    @State private var documentStore: DocumentStore
     @State private var reminderStore: ReminderStore
     @State private var agentStore: AgentStore
     @State private var cardRegistry = CardRegistry()
@@ -56,6 +57,7 @@ struct KaoriApp: App {
         _feedStore = State(initialValue: FeedStore(api: api, cardRegistry: registry))
         _cardPreferenceStore = State(initialValue: CardPreferenceStore(api: api))
         _postStore = State(initialValue: PostStore(api: api))
+        _documentStore = State(initialValue: DocumentStore(api: api))
         _reminderStore = State(initialValue: ReminderStore(api: api))
         _agentStore = State(initialValue: AgentStore(api: api, config: config))
         _cardRegistry = State(initialValue: registry)
@@ -76,6 +78,7 @@ struct KaoriApp: App {
                 .environment(cardPreferenceStore)
                 .environment(cardRegistry)
                 .environment(postStore)
+                .environment(documentStore)
                 .environment(reminderStore)
                 .environment(agentStore)
                 .environment(timerEngine)
