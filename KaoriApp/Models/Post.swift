@@ -9,8 +9,12 @@ struct Post: Codable, Identifiable {
     let photoPaths: String?
     let photoDescription: String?
     let isPinned: Int
+    let source: String?
+    let isRead: Int?
     let createdAt: String?
     let updatedAt: String?
+
+    var isAgentPost: Bool { source == "agent" }
 
     var allPhotoPaths: [String] {
         if let photoPaths,

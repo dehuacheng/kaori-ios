@@ -18,10 +18,14 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
         let id = response.notification.request.identifier
+        let userInfo = response.notification.request.content.userInfo
         if id == "kaori.summary.daily" {
             NotificationRouter.shared.pendingDestination = .dailySummary
         } else if id == "kaori.summary.weekly" {
             NotificationRouter.shared.pendingDestination = .weeklySummary
+        } else if userInfo["type"] as? String == "agent_post",
+                  let postId = userInfo["post_id"] as? Int {
+            NotificationRouter.shared.pendingDestination = .agentPost(postId)
         }
         completionHandler()
     }

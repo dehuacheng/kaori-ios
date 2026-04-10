@@ -9,6 +9,7 @@ enum CardState {
     case failed
     case ai
     case manual
+    case agent
 }
 
 // MARK: - CardStateBadge
@@ -45,6 +46,7 @@ struct CardStateBadge: View {
         case .failed: L.t("shared.failed")
         case .ai: L.t("shared.ai")
         case .manual: L.t("shared.manual")
+        case .agent: L.t("shared.kaori")
         }
     }
 
@@ -65,6 +67,8 @@ struct CardStateBadge: View {
             Image(systemName: "sparkles")
         case .manual:
             Image(systemName: "pencil")
+        case .agent:
+            Image(systemName: "heart.fill")
         }
     }
 
@@ -76,6 +80,7 @@ struct CardStateBadge: View {
         case .failed: .red
         case .ai: .blue
         case .manual: .green
+        case .agent: .pink
         }
     }
 
@@ -87,6 +92,7 @@ struct CardStateBadge: View {
         case .failed: .red.opacity(0.2)
         case .ai: .blue.opacity(0.15)
         case .manual: .green.opacity(0.15)
+        case .agent: .pink.opacity(0.15)
         }
     }
 }

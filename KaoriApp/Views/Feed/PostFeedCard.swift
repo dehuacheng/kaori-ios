@@ -14,6 +14,9 @@ struct PostFeedCard: View {
                 Text(L.t("card.post"))
                     .font(.subheadline.bold())
                     .foregroundStyle(.purple)
+                if post.isAgentPost {
+                    CardStateBadge(.agent)
+                }
                 Spacer()
                 if let time = displayTime {
                     Text(time)

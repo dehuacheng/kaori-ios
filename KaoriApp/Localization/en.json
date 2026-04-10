@@ -38,6 +38,7 @@
   "shared.failed": "Failed",
   "shared.ai": "AI",
   "shared.manual": "Manual",
+  "shared.kaori": "Kaori",
   "shared.loading": "Loading",
   "shared.live": "Live",
   "shared.camera": "Camera",
@@ -309,6 +310,7 @@
   "notification.thursday": "Thursday",
   "notification.friday": "Friday",
   "notification.saturday": "Saturday",
+  "notification.agentPostTitle": "Kaori left you a note",
 
   "summary.aiSummary": "AI Summary",
   "summary.viewDaily": "View Daily Summary",

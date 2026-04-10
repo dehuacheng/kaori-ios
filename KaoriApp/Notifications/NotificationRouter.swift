@@ -9,6 +9,7 @@ class NotificationRouter {
     enum Destination {
         case dailySummary
         case weeklySummary
+        case agentPost(Int)
     }
 
     private init() {}

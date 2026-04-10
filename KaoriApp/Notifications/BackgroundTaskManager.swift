@@ -3,6 +3,7 @@ import UserNotifications
 
 enum BackgroundTaskManager {
     static let dailySummaryTaskId = "com.dehuacheng.kaori.app.daily-summary"
+    static let agentPostCheckId = "com.dehuacheng.kaori.app.agent-post-check"
 
     // MARK: - Registration
 
@@ -12,6 +13,12 @@ enum BackgroundTaskManager {
             using: nil
         ) { task in
             handleDailySummaryTask(task as! BGAppRefreshTask)
+        }
+        BGTaskScheduler.shared.register(
+            forTaskWithIdentifier: agentPostCheckId,
+            using: nil
+        ) { task in
+            handleAgentPostCheckTask(task as! BGAppRefreshTask)
         }
     }
 
@@ -104,6 +111,69 @@ enum BackgroundTaskManager {
         dataTask.resume()
     }
 
+    // MARK: - Agent Post Check
+
+    static func scheduleAgentPostCheck() {
+        let request = BGAppRefreshTaskRequest(identifier: agentPostCheckId)
+        // Check every ~15 minutes
+        request.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60)
+        try? BGTaskScheduler.shared.submit(request)
+    }
+
+    private static func handleAgentPostCheckTask(_ task: BGAppRefreshTask) {
+        let serverURL = UserDefaults.standard.string(forKey: "serverURL") ?? ""
+        let token = UserDefaults.standard.string(forKey: "token") ?? ""
+
+        guard !serverURL.isEmpty, !token.isEmpty,
+              let baseURL = URL(string: serverURL) else {
+            task.setTaskCompleted(success: false)
+            scheduleAgentPostCheck()
+            return
+        }
+
+        let url = baseURL.appendingPathComponent("api/post/agent-unread")
+        var request = URLRequest(url: url)
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        request.timeoutInterval = 30
+
+        let urlSession = URLSession(configuration: .default)
+        let dataTask = urlSession.dataTask(with: request) { data, response, error in
+            defer {
+                task.setTaskCompleted(success: error == nil)
+                scheduleAgentPostCheck()
+            }
+
+            guard let data,
+                  let http = response as? HTTPURLResponse,
+                  http.statusCode == 200 else { return }
+
+            guard let posts = try? JSONDecoder().decode([AgentPostNotification].self, from: data),
+                  !posts.isEmpty else { return }
+
+            // Show notification for the first unread agent post
+            let post = posts[0]
+            let content = UNMutableNotificationContent()
+            content.title = post.title ?? Localizer.localized("notification.agentPostTitle")
+            content.body = String(post.content.prefix(200))
+            content.sound = .default
+            content.userInfo = ["type": "agent_post", "post_id": post.id]
+
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+            let notifRequest = UNNotificationRequest(
+                identifier: "kaori.agent.post.\(post.id)",
+                content: content,
+                trigger: trigger
+            )
+            UNUserNotificationCenter.current().add(notifRequest)
+        }
+
+        task.expirationHandler = {
+            dataTask.cancel()
+        }
+
+        dataTask.resume()
+    }
+
     // MARK: - Helpers
 
     private static func nextDate(hour: Int, minute: Int) -> Date {
@@ -117,4 +187,11 @@ enum BackgroundTaskManager {
         guard let candidate = calendar.date(from: components) else { return now }
         return candidate > now ? candidate : calendar.date(byAdding: .day, value: 1, to: candidate)!
     }
+}
+
+/// Lightweight model for decoding agent post notifications
+private struct AgentPostNotification: Codable {
+    let id: Int
+    let title: String?
+    let content: String
 }

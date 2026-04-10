@@ -172,6 +172,20 @@ class FeedStore {
         await MainActor.run { upsertFeedItem(.post(post)) }
     }
 
+    /// Mark agent posts as read when they appear in the feed.
+    func markAgentPostsAsRead() {
+        for item in feedItems {
+            guard let post = item.payload as? Post,
+                  post.isAgentPost,
+                  post.isRead == 0 else { continue }
+            Task {
+                struct Empty: Codable {}
+                struct R: Codable { let id: Int; let isRead: Bool }
+                let _: R? = try? await api.put("/api/post/\(post.id)/mark-read", body: Empty())
+            }
+        }
+    }
+
     /// Refresh only today's data.
     func refreshToday(
         mealStore: MealStore,
@@ -457,6 +471,7 @@ class FeedStore {
         }
 
         sortFeedItems()
+        markAgentPostsAsRead()
     }
 
     private func makeFeedDecodingContext() -> CardFeedDecodingContext {

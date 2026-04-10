@@ -203,6 +203,7 @@ struct ContentView: View {
                 if notificationSettings.notificationsEnabled {
                     notificationManager.rescheduleAll(settings: notificationSettings)
                     BackgroundTaskManager.scheduleDailySummaryFetch()
+                    BackgroundTaskManager.scheduleAgentPostCheck()
                 }
                 locationManager.requestLocation(api: api)
                 await workoutStore.checkForNewHealthKitWorkouts(healthKit: healthKit)

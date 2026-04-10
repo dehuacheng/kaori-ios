@@ -38,6 +38,7 @@
   "shared.failed": "失败",
   "shared.ai": "AI",
   "shared.manual": "手动",
+  "shared.kaori": "Kaori",
   "shared.loading": "加载中",
   "shared.live": "实时",
   "shared.camera": "拍照",
@@ -309,6 +310,7 @@
   "notification.thursday": "周四",
   "notification.friday": "周五",
   "notification.saturday": "周六",
+  "notification.agentPostTitle": "Kaori 给你留了一条消息",
 
   "summary.aiSummary": "AI 总结",
   "summary.viewDaily": "查看每日总结",

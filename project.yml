@@ -36,6 +36,7 @@ targets:
         NSSupportsLiveActivities: true
         BGTaskSchedulerPermittedIdentifiers:
           - com.dehuacheng.kaori.app.daily-summary
+          - com.dehuacheng.kaori.app.agent-post-check
         UIBackgroundModes:
           - fetch
         UIApplicationSupportsIndirectInputEvents: true
